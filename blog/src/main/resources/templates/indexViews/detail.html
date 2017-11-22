@@ -1,0 +1,320 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; Charset=utf-8">
+<meta http-equiv="Content-Language" content="zh-CN">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, user-scalable=no" />
+<title th:text="文章详情"></title>
+<link rel="shortcut icon" th:href="@{/images/Logo_40.png}"
+	type="image/x-icon">
+<!--Layui-->
+<link th:href="@{/plug/layui/css/layui.css}" rel="stylesheet" />
+<!--font-awesome-->
+<link th:href="@{/plug/font-awesome/css/font-awesome.min.css}"
+	rel="stylesheet" />
+<!--全局样式表-->
+<link th:href="@{/css/global.css}" rel="stylesheet" />
+<!-- 比较好用的代码着色插件 -->
+<link th:href="@{/css/prettify.css}" rel="stylesheet" />
+<!-- 本页样式表 -->
+<link th:href="@{/css/detail.css}" rel="stylesheet" />
+</head>
+<body>
+	<!-- 导航 -->
+	<nav class="blog-nav layui-header">
+		<div class="blog-container">
+			<!-- QQ互联登陆 -->
+			<a th:href="@{http://wpa.qq.com/msgrd?v=3&uin=568845948&site=qq&menu=yes}"
+			 class="blog-user"> <i class="fa fa-qq"></i>
+			</a> <a href="javascript:;" class="blog-user layui-hide"> <img
+				th:src="@{/images/Absolutely.jpg}" alt="Absolutely"
+				title="Absolutely" />
+			</a> <a class="blog-logo" th:href="@{/indexHome}">梦境迷离</a>
+			<!-- 导航菜单 -->
+			<ul class="layui-nav" lay-filter="nav">
+				<li class="layui-nav-item layui-this"><a
+					th:href="@{/indexHome}"><i class="fa fa-home fa-fw"></i>&nbsp;网站首页</a>
+				</li>
+				<li class="layui-nav-item"><a
+					th:href="@{/indexViews/article.html}"><i
+						class="fa fa-file-text fa-fw"></i>&nbsp;文章专栏</a></li>
+				<li class="layui-nav-item"><a
+					th:href="@{/indexViews/resource.html}"><i
+						class="fa fa-tags fa-fw"></i>&nbsp;资源分享</a></li>
+				<li class="layui-nav-item"><a
+					th:href="@{/indexViews/timeline.html}"><i
+						class="fa fa-hourglass-half fa-fw"></i>&nbsp;点点滴滴</a></li>
+				<li class="layui-nav-item"><a
+					th:href="@{/indexViews/about.html}"><i class="fa fa-info fa-fw"></i>&nbsp;关于本站</a>
+				</li>
+			</ul>
+			<!-- 手机和平板的导航开关 -->
+			<a class="blog-navicon" href="javascript:;"> <i
+				class="fa fa-navicon"></i>
+			</a>
+		</div>
+	</nav>
+	<!-- 主体（一般只改变这里的内容） -->
+	<div class="blog-body">
+		<div class="blog-container">
+			<blockquote class="layui-elem-quote sitemap layui-breadcrumb shadow">
+				<a th:href="@{/indexViews/home.html}" title="网站首页">网站首页</a> <a
+					th:href="@{/indexViews/article.html}" title="文章专栏">文章专栏</a> <a><cite
+					th:text="${blog.title}">基于layui的laypage扩展模块！</cite></a>
+			</blockquote>
+			<div class="blog-main">
+				<div class="blog-main-left">
+					<!-- 文章内容（使用Kingeditor富文本编辑器发表的） -->
+					<div class="article-detail shadow">
+						<div class="article-detail-title">
+							<span th:text="${blog.title}"></span>
+						</div>
+						<div class="article-detail-info">
+							<span>编辑时间：<span th:text="${blog.releaseDateStr}"></span></span> <span>作者：<span
+								th:text="${blogger.nickName}"></span></span> <span>浏览量：<span
+								th:text="${blog.clickHit}"></span></span>
+						</div>
+						<div class="article-detail-content">
+							<span th:utext="${blog.content}"></span>
+						</div>
+					</div>
+					<!-- 评论区域 -->
+					<div class="blog-module shadow"
+						style="box-shadow: 0 1px 8px #a6a6a6;">
+						<div class="aboutinfo-figure">
+							<fieldset class="layui-elem-field layui-field-title">
+								<legend>Leave a message</legend>
+								<div class="layui-field-box">
+									<div class="leavemessage" style="text-align:initial">
+										<form class="layui-form blog-editor" action="">
+											<div class="layui-form-item">
+												<textarea name="content" lay-verify="content" id="content"
+													placeholder="请输入内容" class="layui-textarea layui-hide"></textarea>
+											</div><a class="layui-btn layui-btn-primary " style="padding: 0 0 0 ;border: 0" data-type="refresh">
+												<img  id="imgObj" alt="验证码" style="margin:0 0" th:src="@{/blog/validateCode}"
+												/> </a><hr>
+											<div class="layui-form-item layui-input-inline">
+											
+													<input type="text" name="code"  lay-verify="required"
+														placeholder="请输入验证码" autocomplete="off" class="layui-input"
+														id="code" value="">
+												
+												</div>
+											<div class="layui-form-item" >
+													<span  id="error" style="font-size: 12px; color: red;"></span>
+												
+											</div>
+											<div class="layui-form-item">
+											<a class="layui-btn  layui-btn-primary layui-btn-xs" data-type="refresh">
+												换一张</a>
+												<button class="layui-btn" lay-submit="formLeaveMessage"
+													lay-filter="formLeaveMessage">提交</button>
+											</div>
+										</form>
+									</div>
+
+									<fieldset class="layui-elem-field"
+										th:each="comment,commentStat: ${commentList}"
+										th:if="${not #lists.isEmpty(commentList)}">
+										<legend th:text="${commentStat.index+1}+'楼  用户：'+${comment.userIp}+' '+${comment.commentDateStr}"></legend>
+										<div class="layui-field-box">
+											<div class="content">
+												<p th:utext="${comment.content}"></p>
+											</div>
+										</div>
+									</fieldset>
+
+								</div>
+							</fieldset>
+						</div>
+					</div>
+				</div>
+				<div class="blog-main-right">
+					<!--右边悬浮 平板或手机设备显示-->
+					<div class="category-toggle">
+						<i class="fa fa-chevron-left"></i>
+					</div>
+					<!--这个div位置不能改，否则需要添加一个div来代替它或者修改样式表-->
+					<div class="article-category shadow">
+
+						<div class="article-category-title">分类导航</div>
+						<!-- 点击分类后的页面和artile.html页面一样，只是数据是某一类别的 -->
+						<span style="margin-left: 10px;margin-left: 10px; "
+							th:each="blogType : ${blogTypeList}"
+							th:if="${not #lists.isEmpty(blogTypeList)}"> <a
+							th:href="@{'/indexHome?typeId='+${blogType.id}}"> <span
+								style="font-size: 18px;font-family: "
+								th:text="${blogType.typeName}"></span></a>
+						</span>
+						<div class="clear"></div>
+
+					</div>
+					<div class="article-category shadow"
+						th:each="blogType : ${blogTypeList}"
+						th:if="${#lists.isEmpty(blogTypeList)}">
+						<div class="article-category-title">分类导航</div>
+						<span th:text="暂无标签"></span>
+						<div class="clear"></div>
+					</div>
+					<div class="blog-module shadow">
+						<div class="blog-module-title">随便看看</div>
+						<ul class="fa-ul blog-module-ul" th:each="blog :${blogList}"
+							th:if="${not #lists.isEmpty(blogList)}">
+							<li><i class="fa-li fa fa-hand-o-right"></i><a
+								th:href="@{'/blog/articles/'+${blog.id}}"><span
+									th:text="${blog.title}">文章标题</span></a></li>
+						</ul>
+						<ul class="fa-ul blog-module-ul" th:each="blog :${blogList}"
+							th:if="${#lists.isEmpty(blogList)}">
+							<li>暂无文章</li>
+						</ul>
+					</div>
+				</div>
+				<div class="clear"></div>
+			</div>
+		</div>
+	</div>
+	<!-- 底部 -->
+	<footer class="blog-footer">
+		<p>
+			<span>Copyright</span><span>&copy;</span><span>2017</span><a
+				th:href="@{http://www.lyblogs.cn}">梦境迷离</a><span>Design By LY</span>
+		</p>
+		<p>
+			<a th:href="@{http://www.miibeian.gov.cn}" target="_blank">蜀ICP备16029915号-1</a>
+		</p>
+	</footer>
+	<!--侧边导航-->
+	<ul
+		class="layui-nav layui-nav-tree layui-nav-side blog-nav-left layui-hide"
+		lay-filter="nav">
+		<li class="layui-nav-item layui-this"><a th:href="home.html"><i
+				class="fa fa-home fa-fw"></i>&nbsp;网站首页</a></li>
+		<li class="layui-nav-item"><a th:href="article.html"><i
+				class="fa fa-file-text fa-fw"></i>&nbsp;文章专栏</a></li>
+		<li class="layui-nav-item"><a th:href="resource.html"><i
+				class="fa fa-tags fa-fw"></i>&nbsp;资源分享</a></li>
+		<li class="layui-nav-item"><a th:href="timeline.html"><i
+				class="fa fa-road fa-fw"></i>&nbsp;点点滴滴</a></li>
+		<li class="layui-nav-item"><a th:href="about.html"><i
+				class="fa fa-info fa-fw"></i>&nbsp;关于本站</a></li>
+	</ul>
+	<!--分享窗体-->
+	<div class="blog-share layui-hide">
+		<div class="blog-share-body">
+			<div style="width: 200px;height:100%;">
+				<div class="bdsharebuttonbox">
+					<a class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a> <a
+						class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a> <a
+						class="bds_weixin" data-cmd="weixin" title="分享到微信"></a> <a
+						class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--遮罩-->
+	<div class="blog-mask animated layui-hide"></div>
+	<!-- layui.js -->
+	<script th:src="@{/layui/layui.js}"></script>
+	<!-- 自定义全局脚本 -->
+	<script th:src="@{/js/global.js}"></script>
+	<!-- 比较好用的代码着色插件 -->
+	<script th:src="@{/js/prettify.js}"></script>
+	<!-- 本页脚本 -->
+	<script type="text/javascript" th:inline="javascript">
+    
+  layui.use([ 'form', 'layedit','jquery' ], function() {
+	var form = layui.form;
+	var $ = layui.jquery;
+	var layedit = layui.layedit;
+	//评论和留言的编辑器
+	var editIndex = layedit.build('content', {
+		height : 150,
+		tool : [ 'face', '|', 'left', 'center', 'right', '|', 'link' ],
+	});
+	//评论和留言的编辑器的验证
+	form.verify({
+		content : function(value) {
+			value = $.trim(layedit.getText(editIndex));
+			if (value == "")
+				return "自少得有一个字吧";
+			layedit.sync(editIndex);
+		}
+	});
+	form.on('submit(formLeaveMessage)', function(data) {
+		//获取博客内容 带标记
+		var content = layedit.getContent(editIndex);
+		var blogId = [[${blog.id}]];
+		var code = $("#code").val();
+		$.ajax({
+			async : false,
+			url : '../comment/save',
+			data : {
+				'content' : content,
+				'blog.id' : blogId,
+				'code' : code,
+			},
+			type : 'post',
+			success : function(result) {
+					var result = JSON.parse(result);
+					console.log(result)
+					if (result.success) {
+						layer.alert('评论成功，您的评论将在审核后显示！', {
+							title : '系统提示',
+							icon : 6,
+						}, function(index) {
+							layer.close(index); //关闭
+							location.reload();
+							//$('#LAY_layedit_1').contents().find('body').html('');//清空
+						});
+					} if (!result.success) {
+							var error = result.errorInfo
+							console.log(error);
+							$('#error').text(error); //设置span标签的值
+							return false;
+					}
+			}
+		});
+		return false;
+	});
+	//注册自定义函数
+	var $ = layui.$,
+    active = {
+        /**
+		 *定义函数绑定到按钮的data-type上 delBlogType
+		 */
+        refresh: function() {
+       	    var imgSrc = $("#imgObj");  
+	        var src = '/blog/validateCode';
+	        var url = src;
+	        var timestamp = (new Date()).valueOf();  
+	        var index = url.indexOf("?",url);  
+	        if (index > 0) {  
+	            url = url.substring(0, url.indexOf(url, "?"));  
+	        }  
+	        if ((url.indexOf("&") >= 0)) {  
+	            url = url + "×tamp=" + timestamp;  
+	        } else {  
+	            url = url + "?timestamp=" + timestamp;  
+	        } 
+	        imgSrc.attr("src", url);  
+        },
+       }
+       
+	 $('.layui-form-item .layui-btn-primary').on('click',
+	    function() {
+	        var type = $(this).data('type');
+	        active[type] ? active[type].call(this) : '';
+	    });
+	 $('.layui-form-item .layui-btn-primary').on('click',
+	    function() {
+	        var type = $(this).data('type');
+	        active[type] ? active[type].call(this) : '';
+	    });
+	
+});
+    
+</script>
+</body>
+</html>

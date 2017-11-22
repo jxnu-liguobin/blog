@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>欢迎</title>
+<link rel="stylesheet" th:href="@{/layui/css/layui.css}" media="all">
+<link rel="stylesheet" type="text/css" th:href="@{/plug/font-awesome/css/font-awesome.css}">
+<style>
+.info-box {
+	height: 85px;
+	background-color: white;
+	background-color: #ecf0f5;
+}
+
+.info-box .info-box-icon {
+	border-top-left-radius: 2px;
+	border-top-right-radius: 0;
+	border-bottom-right-radius: 0;
+	border-bottom-left-radius: 2px;
+	display: block;
+	float: left;
+	height: 85px;
+	width: 85px;
+	text-align: center;
+	font-size: 45px;
+	line-height: 85px;
+	background: rgba(0, 0, 0, 0.2);
+}
+
+.info-box .info-box-content {
+	padding: 5px 10px;
+	margin-left: 85px;
+}
+
+.info-box .info-box-content .info-box-text {
+	display: block;
+	font-size: 18px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	text-transform: uppercase;
+}
+
+.info-box .info-box-content .info-box-number {
+	display: block;
+	font-weight: bold;
+	font-size: 25px;
+}
+
+.major {
+	font-weight: 10px;
+	color: #01AAED;
+}
+
+.main {
+	margin-top: 25px;
+}
+
+.main .layui-row {
+	margin: 10px 0;
+}
+</style>
+</head>
+<body>
+	<p
+		style="padding: 15px 25px; margin-bottom: 0px; margin-top: 15px; margin-left:21px; border:1px solid #ddd;display:inline-block;">
+		上次登陆 <span style="padding-left:1em;">IP：<span
+			th:text="${application.ip}"></span></span> <span style="padding-left:1em;">地点：<span
+			th:text="${application.address}"></span></span> <span
+			style="padding-left:1em;">时间:<span
+			th:text="${application.str}"></span></span>
+	</p>
+	<div class="layui-fluid main" style="margin-top: 0px;">
+		<div class="layui-row layui-col-space15">
+			<div class="layui-col-md3">
+				<div class="info-box">
+					<span class="info-box-icon"
+						style="background-color:#00c0ef !important;color:white;"><i
+						class="fa fa-ambulance" aria-hidden="true"></i></span>
+					<div class="info-box-content">
+						<span class="info-box-text" style="margin-top: 14px;">待审核评论数</span>
+						<span class="info-box-number"
+							th:text="${application.commentCount0}"></span>
+					</div>
+				</div>
+			</div>
+			<div class="layui-col-md3">
+				<div class="info-box">
+					<span class="info-box-icon"
+						style="background-color:#dd4b39 !important;color:white;"><i
+						class="fa fa-google-plus" aria-hidden="true"></i></span>
+					<div class="info-box-content">
+						<span class="info-box-text" style="margin-top: 14px;">总评论数</span>
+						<span class="info-box-number"
+							th:text="${application.commentCount}"></span>
+					</div>
+				</div>
+			</div>
+
+			<div class="layui-col-md3">
+				<div class="info-box">
+					<span class="info-box-icon"
+						style="background-color:#00a65a !important;color:white;"><i
+						class="fa fa-shopping-bag" aria-hidden="true"></i></span>
+					<div class="info-box-content">
+						<span class="info-box-text" style="margin-top: 14px;">总文章数</span>
+						<span class="info-box-number"
+							th:text="${application.articleCount}"></span>
+					</div>
+				</div>
+			</div>
+			<div class="layui-col-md3">
+				<div class="info-box">
+					<span class="info-box-icon"
+						style="background-color:#f39c12 !important;color:white;"><i
+						class="fa fa-users" aria-hidden="true"></i></span>
+					<div class="info-box-content">
+						<span class="info-box-text" style="margin-top: 14px;">总浏览量</span>
+						<span class="info-box-number"
+							th:text="${application.blogClickCount}"></span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="layui-row">
+		<div class="layui-col-md7">
+			<ul class="layui-timeline">
+				<li class="layui-timeline-item"><i
+					class="layui-icon layui-timeline-axis">&#xe63f;</i>
+					<div class="layui-timeline-content layui-text">
+						<h3 class="layui-timeline-title">置顶的说明</h3>
+						<ul>
+							<li>龟速更新...</li>
+						</ul>
+					</div></li>
+				<li class="layui-timeline-item"><i
+					class="layui-icon layui-timeline-axis">&#xe63f;</i>
+					<div class="layui-timeline-content layui-text">
+						<h3 class="layui-timeline-title">11月8日</h3>
+						<ul>
+							<li>统计信息完善</li>
+							<li>为博客分类增加文章数量显示</li>
+						</ul>
+					</div></li>
+				<li class="layui-timeline-item"><i
+					class="layui-icon layui-timeline-axis">&#xe63f;</i>
+					<div class="layui-timeline-content layui-text">
+						<h3 class="layui-timeline-title">11月7日</h3>
+						<ul>
+							<li>完成统计信息显示</li>
+						</ul>
+					</div></li>
+				<li class="layui-timeline-item"><i
+					class="layui-icon layui-timeline-axis">&#xe63f;</i>
+					<div class="layui-timeline-content layui-text">
+						<h3 class="layui-timeline-title">11月6日</h3>
+						<ul>
+							<li>layui富文本编辑器初始化bug,火狐内核以外的浏览器必须禁用缓存。大致完成后台重构</li>
+						</ul>
+					</div></li>
+				<li class="layui-timeline-item"><i
+					class="layui-icon layui-timeline-axis">&#xe63f;</i>
+					<div class="layui-timeline-content layui-text">
+						<h3 class="layui-timeline-title">11月4日</h3>
+						<ul>
+							<li>完成友情链接管理（查询，添加，删除）</li>
+						</ul>
+					</div></li>
+				<li class="layui-timeline-item"><i
+					class="layui-icon layui-timeline-axis">&#xe63f;</i>
+					<div class="layui-timeline-content layui-text">
+						<h3 class="layui-timeline-title">11月3日</h3>
+						<ul>
+							<li>完成刷前台数据缓存</li>
+						</ul>
+					</div></li>
+				<li class="layui-timeline-item"><i
+					class="layui-icon layui-timeline-axis">&#xe63f;</i>
+					<div class="layui-timeline-content layui-text">
+						<h3 class="layui-timeline-title">11月1日</h3>
+						<ul>
+							<li>完成修改资料重构（使用tab），图片上传，预览</li>
+							<li>完成博客分类重构（使用iframe），添加自定义的表单验证</li>
+						</ul>
+					</div></li>
+				<li class="layui-timeline-item"><i
+					class="layui-icon layui-timeline-axis">&#xe63f;</i>
+					<div class="layui-timeline-content layui-text">
+						<h3 class="layui-timeline-title">10月31日</h3>
+						<ul>
+							<li>修复博客分类监听器只能重启服务器才能更新数据</li>
+							<li>添加修改资料，获取，更新（bug：iframe层和a标签的单击事件无效问题，使用新开页面暂时替代）</li>
+						</ul>
+					</div></li>
+				<li class="layui-timeline-item"><i
+					class="layui-icon layui-timeline-axis">&#xe63f;</i>
+					<div class="layui-timeline-content layui-text">
+						<h3 class="layui-timeline-title">10月30日</h3>
+						<ul>
+							<li>添加欢迎首页</li>
+							<li>完成博客类别CRUD（iframe父子层互相传输数据）</li>
+						</ul>
+					</div></li>
+				<li class="layui-timeline-item"><i
+					class="layui-icon layui-timeline-axis">&#xe63f;</i>
+					<div class="layui-timeline-content layui-text">
+						<h3 class="layui-timeline-title">10月27日</h3>
+						<ul>
+							<li>完成博客评论授权模块</li>
+						</ul>
+					</div></li>
+				<li class="layui-timeline-item"><i
+					class="layui-icon layui-timeline-axis">&#xe63f;</i>
+					<div class="layui-timeline-content layui-text">
+						<h3 class="layui-timeline-title">10月26日</h3>
+						<ul>
+							<li>完成博客评论管理模块</li>
+						</ul>
+					</div></li>
+				<li class="layui-timeline-item"><i
+					class="layui-icon layui-timeline-axis">&#xe63f;</i>
+					<div class="layui-timeline-content layui-text">
+						<h3 class="layui-timeline-title">10月20日</h3>
+						<ul>
+							<li>完成登录验证码，添加mybatis缓存，优化sql,以及小bug</li>
+						</ul>
+					</div></li>
+				<li class="layui-timeline-item"><i
+					class="layui-icon layui-timeline-axis">&#xe63f;</i>
+					<div class="layui-timeline-content layui-text">
+						<h3 class="layui-timeline-title">10月15日</h3>
+						<ul>
+							<li>完成博客管理模块（多删，单删，查询，修改）</li>
+							<li>添加templet模板引擎显示格式化信息</li>
+						</ul>
+					</div></li>
+				<li class="layui-timeline-item"><i
+					class="layui-icon layui-timeline-axis">&#xe63f;</i>
+					<div class="layui-timeline-content layui-text">
+						<h3 class="layui-timeline-title">10月10日</h3>
+						<ul>
+							<li>完成博客文章写模块</li>
+							<li>修复弹窗闪退</li>
+						</ul>
+					</div></li>
+				<li class="layui-timeline-item"><i
+					class="layui-icon layui-timeline-axis">&#xe63f;</i>
+					<div class="layui-timeline-content layui-text">
+						<h3 class="layui-timeline-title">10月7日</h3>
+						<p>
+						<ul>
+							<li>项目重构，基于layui2.1+SpringBoot1.58+Shiro+Mysql+Mybatis+Jquery</li>
+							<li>还有不想写了....</li>
+						</ul>
+					</div></li>
+				<li class="layui-timeline-item"><i
+					class="layui-icon layui-timeline-axis">&#xe63f;</i>
+					<div class="layui-timeline-content layui-text">
+						<div class="layui-timeline-title">2017年</div>
+					</div></li>
+				<li class="layui-timeline-item"><i
+					class="layui-icon layui-timeline-axis">&#xe63f;</i>
+					<div class="layui-timeline-content layui-text">
+						<div class="layui-timeline-title">更新日志</div>
+					</div></li>
+			</ul>
+		</div>
+	</div>
+
+</body>
+</html>
