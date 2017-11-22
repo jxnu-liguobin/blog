@@ -51,7 +51,7 @@
 		<div class="layui-form-item">
 			<div class="layui-input-block">
 				<button class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button>
-				<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+				<button data-type="del" class="layui-btn layui-btn-primary">重置</button>
 			</div>
 		</div>
 	</form>
@@ -63,9 +63,8 @@
 	<script th:src="@{/layui/layui.js}" charset="utf-8"></script>
 	<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
 	<script th:inline="javascript" type="text/javascript">
-		/*<![CDATA[*/
-		layui.use(['form', 'layedit', 'laydate', 'jquery', 'layer'],
-function() {
+ layui.use(['form', 'layedit', 'laydate', 'jquery', 'layer'],
+ function() {
     var form = layui.form,
     layer = layui.layer,
     layedit = layui.layedit,
@@ -145,9 +144,24 @@ function() {
         });
         return false;
     });
+    
+    //清空富文本编辑器  
+    var $ = layui.$,
+	active = {
+        /* 搜索框 */
+        del: function() {
+            	$('#LAY_layedit_1').contents().find('body').html('');
+            },
+        };
+        
+    $('.del .layui-btn').on('click',
+	    function() {
+	        var type = $(this).data('type');
+	        active[type] ? active[type].call(this) : '';
+	    });
 });
-		/*]]>*/
-	</script>
+	
+</script>
 
 </body>
 </html>

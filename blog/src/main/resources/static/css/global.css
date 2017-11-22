@@ -1,13 +1,4 @@
-﻿/*
-
-@Name：不落阁整站模板源码 
-@Author：Absolutely 
-@Site：http://www.lyblogs.cn
-
-*/
-
-/*全局样式*/
-body {
+﻿body {
     background: #eee;
     color: #444;
 }
@@ -621,7 +612,7 @@ body {
         background: #009688;
         width: 98%;
         text-align: center;
-        line-height: 19px;
+        line-height: 25px;
         word-break: keep-all; /* 不换行 */
         white-space: nowrap; /* 不换行 */
         overflow: hidden; /* 内容超出宽度时隐藏超出部分的内容 */

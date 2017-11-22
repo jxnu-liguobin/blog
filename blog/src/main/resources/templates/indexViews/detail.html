@@ -30,14 +30,14 @@
 			</a> <a href="javascript:;" class="blog-user layui-hide"> <img
 				th:src="@{/images/Absolutely.jpg}" alt="Absolutely"
 				title="Absolutely" />
-			</a> <a class="blog-logo" th:href="@{/indexHome}">梦境迷离</a>
+			</a> <a class="blog-logo" th:href="@{/index/home}">梦境迷离</a>
 			<!-- 导航菜单 -->
 			<ul class="layui-nav" lay-filter="nav">
 				<li class="layui-nav-item layui-this"><a
-					th:href="@{/indexHome}"><i class="fa fa-home fa-fw"></i>&nbsp;网站首页</a>
+					th:href="@{/index/home}"><i class="fa fa-home fa-fw"></i>&nbsp;网站首页</a>
 				</li>
 				<li class="layui-nav-item"><a
-					th:href="@{/indexViews/article.html}"><i
+					th:href="@{/index/article}"><i
 						class="fa fa-file-text fa-fw"></i>&nbsp;文章专栏</a></li>
 				<li class="layui-nav-item"><a
 					th:href="@{/indexViews/resource.html}"><i
@@ -59,8 +59,8 @@
 	<div class="blog-body">
 		<div class="blog-container">
 			<blockquote class="layui-elem-quote sitemap layui-breadcrumb shadow">
-				<a th:href="@{/indexViews/home.html}" title="网站首页">网站首页</a> <a
-					th:href="@{/indexViews/article.html}" title="文章专栏">文章专栏</a> <a><cite
+				<a th:href="@{/index/home}" title="网站首页">网站首页</a> <a
+					th:href="@{/index/article}" title="文章专栏">文章专栏</a> <a><cite
 					th:text="${blog.title}">基于layui的laypage扩展模块！</cite></a>
 			</blockquote>
 			<div class="blog-main">
@@ -139,24 +139,20 @@
 					<div class="article-category shadow">
 
 						<div class="article-category-title">分类导航</div>
-						<!-- 点击分类后的页面和artile.html页面一样，只是数据是某一类别的 -->
-						<span style="margin-left: 10px;margin-left: 10px; "
+						<!-- 点击分类后的页面和artile.html页面一样，只是数据是某一类别的 --><i>
+						<span style=" padding-right: 0px;"
 							th:each="blogType : ${blogTypeList}"
 							th:if="${not #lists.isEmpty(blogTypeList)}"> <a
-							th:href="@{'/indexHome?typeId='+${blogType.id}}"> <span
-								style="font-size: 18px;font-family: "
+							th:href="@{'/index/home?typeId='+${blogType.id}}"> <span
+								style="font-size: 15px;border:0px; font-family:;font-style:normal "
 								th:text="${blogType.typeName}"></span></a>
-						</span>
+						</span></i>
 						<div class="clear"></div>
-
-					</div>
-					<div class="article-category shadow"
-						th:each="blogType : ${blogTypeList}"
-						th:if="${#lists.isEmpty(blogTypeList)}">
-						<div class="article-category-title">分类导航</div>
+				<div th:if="${#lists.isEmpty(blogTypeList)}">
 						<span th:text="暂无标签"></span>
-						<div class="clear"></div>
+						</div>
 					</div>
+					
 					<div class="blog-module shadow">
 						<div class="blog-module-title">随便看看</div>
 						<ul class="fa-ul blog-module-ul" th:each="blog :${blogList}"

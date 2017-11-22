@@ -2,218 +2,159 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta http-equiv="Content-Type" content="text/html; Charset=utf-8">
-    <meta http-equiv="Content-Language" content="zh-CN">
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-    <title>不落阁 - 文章专栏</title>
-    <link rel="shortcut icon" href="../images/Logo_40.png" type="image/x-icon">
+<meta http-equiv="Content-Language" content="zh-CN">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, user-scalable=no" />
+<title th:text="文章详情"></title>
+  <link rel="shortcut icon" href="../images/Logo_40.png" type="image/x-icon">
     <!--Layui-->
-    <link href="../plug/layui/css/layui.css" rel="stylesheet" />
-    <!--font-awesome-->
-    <link href="../plug/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
-    <!--全局样式表-->
-    <link href="../css/global.css" rel="stylesheet" />
-    <!--本页样式表-->
-    <link href="../css/article.css" rel="stylesheet" />
+<link th:href="@{/css/article.css}" rel="stylesheet" />
+<link rel="shortcut icon" th:href="@{/images/Logo_40.png}"
+	type="image/x-icon">
+<!--Layui-->
+<link th:href="@{/plug/layui/css/layui.css}" rel="stylesheet" />
+<!--font-awesome-->
+<link th:href="@{/plug/font-awesome/css/font-awesome.min.css}"
+	rel="stylesheet" />
+<!--全局样式表-->
+<link th:href="@{/css/global.css}" rel="stylesheet" />
+<!-- 比较好用的代码着色插件 -->
+<link th:href="@{/css/prettify.css}" rel="stylesheet" />
+<!-- 本页样式表 -->
+<link th:href="@{/css/detail.css}" rel="stylesheet" />
 </head>
 <body>
-    <!-- 导航 -->
-    <nav class="blog-nav layui-header">
-        <div class="blog-container">
-            <!-- QQ互联登陆 -->
-            <a href="javascript:;" class="blog-user">
-                <i class="fa fa-qq"></i>
-            </a>
-            <a href="javascript:;" class="blog-user layui-hide">
-                <img src="../images/Absolutely.jpg" alt="Absolutely" title="Absolutely" />
-            </a>
-            <!-- 不落阁 -->
-            <a class="blog-logo" href="home.html">不落阁</a>
-            <!-- 导航菜单 -->
-            <ul class="layui-nav" lay-filter="nav">
-                <li class="layui-nav-item">
-                    <a th:href="@{/indexViews/home.html}"><i class="fa fa-home fa-fw"></i>&nbsp;网站首页</a>
-                </li>
-                <li class="layui-nav-item layui-this">
-                    <a th:href="@{/indexViews/article.html}"><i class="fa fa-file-text fa-fw"></i>&nbsp;文章专栏</a>
-                </li>
-                <li class="layui-nav-item">
-                    <a th:href="@{/indexViews/resource.html}"><i class="fa fa-tags fa-fw"></i>&nbsp;资源分享</a>
-                </li>
-                <li class="layui-nav-item">
-                    <a th:href="@{/indexViews/timeline.html}"><i class="fa fa-hourglass-half fa-fw"></i>&nbsp;点点滴滴</a>
-                </li>
-                <li class="layui-nav-item">
-                    <a th:href="@{/indexViews/about.html}"><i class="fa fa-info fa-fw"></i>&nbsp;关于本站</a>
-                </li>
-            </ul>
-            <!-- 手机和平板的导航开关 -->
-            <a class="blog-navicon" href="javascript:;">
-                <i class="fa fa-navicon"></i>
-            </a>
-        </div>
-    </nav>
-    <!-- 主体（一般只改变这里的内容） -->
-    <div class="blog-body">
-        <div class="blog-container">
-            <blockquote class="layui-elem-quote sitemap layui-breadcrumb shadow">
-                <a href="home.html" title="网站首页">网站首页</a>
-                <a><cite>文章专栏</cite></a>
-            </blockquote>
-            <div class="blog-main">
-                <div class="blog-main-left">
-                    <div class="shadow" style="text-align:center;font-size:16px;padding:40px 15px;background:#fff;margin-bottom:15px;">
+	<!-- 主体（一般只改变这里的内容） -->
+	<div class="blog-body">
+		<!-- canvas -->
+		<canvas id="canvas-banner" style="background: #393D49;"></canvas>
+		<!--为了及时效果需要立即设置canvas宽高，否则就在home.js中设置-->
+		<script type="text/javascript">
+			var canvas = document.getElementById('canvas-banner');
+			canvas.width = window.document.body.clientWidth - 10;//减去滚动条的宽度
+			if (screen.width >= 992) {
+				canvas.height = window.innerHeight * 1 / 3;
+			} else {
+				canvas.height = window.innerHeight * 2 / 7;
+			}
+		</script>
+		<!-- 导航 -->
+		<nav class="blog-nav layui-header">
+			<div class="blog-container">
+				<!-- QQ互联登陆 -->
+				<a
+					th:href="@{http://wpa.qq.com/msgrd?v=3&uin=568845948&site=qq&menu=yes}"
+					class="blog-user"> <i class="fa fa-qq"></i>
+				</a> <a href="javascript:;" class="blog-user layui-hide"> <img
+					th:src="@{/images/Absolutely.jpg}" alt="Absolutely"
+					title="Absolutely" />
+				</a> <a class="blog-logo" th:href="@{/index/home}">梦境迷离</a>
+				<!-- 导航菜单 -->
+				<ul class="layui-nav" lay-filter="nav">
+					<li class="layui-nav-item"><a th:href="@{/index/home}"><i
+							class="fa fa-home fa-fw"></i>&nbsp;网站首页</a></li>
+					<li class="layui-nav-item layui-this"><a
+						th:href="@{/index/article}"><i class="fa fa-file-text fa-fw"></i>&nbsp;文章专栏</a>
+					</li>
+					<li class="layui-nav-item"><a
+						th:href="@{/indexViews/resource.html}"><i
+							class="fa fa-tags fa-fw"></i>&nbsp;资源分享</a></li>
+					<li class="layui-nav-item"><a
+						th:href="@{/indexViews/timeline.html}"><i
+							class="fa fa-hourglass-half fa-fw"></i>&nbsp;点点滴滴</a></li>
+					<li class="layui-nav-item"><a
+						th:href="@{/indexViews/about.html}"><i
+							class="fa fa-info fa-fw"></i>&nbsp;关于本站</a></li>
+				</ul>
+				<!-- 手机和平板的导航开关 -->
+				<a class="blog-navicon" href="javascript:;"> <i
+					class="fa fa-navicon"></i>
+				</a>
+			</div>
+		</nav>
+	<!-- 主体（一般只改变这里的内容） -->
+	<div class="blog-container">
+		<div class="blog-main">
+		  <div class="shadow" style="text-align:center;font-size:16px;padding:40px 15px;background:#fff;margin-bottom:15px;">
                         未搜索到与【<span style="color: #FF5722;">keywords</span>】有关的文章，随便看看吧！
                     </div>
-                    <div class="article shadow">
-                        <div class="article-left">
-                            <img src="../images/cover/201703181909057125.jpg" alt="基于laypage的layui扩展模块（pagesize.js）！" />
-                        </div>
-                        <div class="article-right">
-                            <div class="article-title">
-                                <a href="detail.html">基于laypage的layui扩展模块（pagesize.js）！</a>
-                            </div>
-                            <div class="article-abstract">
-                                该模块主要是针对当前版本laypage没有页容量控制功能而制作，使用该模块后即可实现每页显示多少条数据的控制！本人原创，但是可能有可能只对本人的分页写法有用！
-                            </div>
-                        </div>
-                        <div class="clear"></div>
-                        <div class="article-footer">
-                            <span><i class="fa fa-clock-o"></i>&nbsp;&nbsp;2017-03-18</span>
-                            <span class="article-author"><i class="fa fa-user"></i>&nbsp;&nbsp;Absolutely</span>
-                            <span><i class="fa fa-tag"></i>&nbsp;&nbsp;<a href="#">Web前端</a></span>
-                            <span class="article-viewinfo"><i class="fa fa-eye"></i>&nbsp;0</span>
-                            <span class="article-viewinfo"><i class="fa fa-commenting"></i>&nbsp;4</span>
-                        </div>
-                    </div>
-                    <div class="article shadow">
-                        <div class="article-left">
-                            <img src="../images/cover/201703181909057125.jpg" alt="基于laypage的layui扩展模块（pagesize.js）！" />
-                        </div>
-                        <div class="article-right">
-                            <div class="article-title">
-                                <a href="detail.html">基于laypage的layui扩展模块（pagesize.js）！</a>
-                            </div>
-                            <div class="article-abstract">
-                                该模块主要是针对当前版本laypage没有页容量控制功能而制作，使用该模块后即可实现每页显示多少条数据的控制！本人原创，但是可能有可能只对本人的分页写法有用！
-                            </div>
-                        </div>
-                        <div class="clear"></div>
-                        <div class="article-footer">
-                            <span><i class="fa fa-clock-o"></i>&nbsp;&nbsp;2017-03-18</span>
-                            <span class="article-author"><i class="fa fa-user"></i>&nbsp;&nbsp;Absolutely</span>
-                            <span><i class="fa fa-tag"></i>&nbsp;&nbsp;<a href="#">Web前端</a></span>
-                            <span class="article-viewinfo"><i class="fa fa-eye"></i>&nbsp;0</span>
-                            <span class="article-viewinfo"><i class="fa fa-commenting"></i>&nbsp;4</span>
-                        </div>
-                    </div>
-                    <div class="article shadow">
-                        <div class="article-left">
-                            <img src="../images/cover/201703181909057125.jpg" alt="基于laypage的layui扩展模块（pagesize.js）！" />
-                        </div>
-                        <div class="article-right">
-                            <div class="article-title">
-                                <a href="detail.html">基于laypage的layui扩展模块（pagesize.js）！</a>
-                            </div>
-                            <div class="article-abstract">
-                                该模块主要是针对当前版本laypage没有页容量控制功能而制作，使用该模块后即可实现每页显示多少条数据的控制！本人原创，但是可能有可能只对本人的分页写法有用！
-                            </div>
-                        </div>
-                        <div class="clear"></div>
-                        <div class="article-footer">
-                            <span><i class="fa fa-clock-o"></i>&nbsp;&nbsp;2017-03-18</span>
-                            <span class="article-author"><i class="fa fa-user"></i>&nbsp;&nbsp;Absolutely</span>
-                            <span><i class="fa fa-tag"></i>&nbsp;&nbsp;<a href="#">Web前端</a></span>
-                            <span class="article-viewinfo"><i class="fa fa-eye"></i>&nbsp;0</span>
-                            <span class="article-viewinfo"><i class="fa fa-commenting"></i>&nbsp;4</span>
-                        </div>
-                    </div>
-                    <div class="article shadow">
-                        <div class="article-left">
-                            <img src="../images/cover/201703181909057125.jpg" alt="基于laypage的layui扩展模块（pagesize.js）！" />
-                        </div>
-                        <div class="article-right">
-                            <div class="article-title">
-                                <a href="detail.html">基于laypage的layui扩展模块（pagesize.js）！</a>
-                            </div>
-                            <div class="article-abstract">
-                                该模块主要是针对当前版本laypage没有页容量控制功能而制作，使用该模块后即可实现每页显示多少条数据的控制！本人原创，但是可能有可能只对本人的分页写法有用！
-                            </div>
-                        </div>
-                        <div class="clear"></div>
-                        <div class="article-footer">
-                            <span><i class="fa fa-clock-o"></i>&nbsp;&nbsp;2017-03-18</span>
-                            <span class="article-author"><i class="fa fa-user"></i>&nbsp;&nbsp;Absolutely</span>
-                            <span><i class="fa fa-tag"></i>&nbsp;&nbsp;<a href="#">Web前端</a></span>
-                            <span class="article-viewinfo"><i class="fa fa-eye"></i>&nbsp;0</span>
-                            <span class="article-viewinfo"><i class="fa fa-commenting"></i>&nbsp;4</span>
-                        </div>
-                    </div>
-                    <div class="article shadow">
-                        <div class="article-left">
-                            <img src="../images/cover/201703181909057125.jpg" alt="基于laypage的layui扩展模块（pagesize.js）！" />
-                        </div>
-                        <div class="article-right">
-                            <div class="article-title">
-                                <a href="detail.html">基于laypage的layui扩展模块（pagesize.js）！</a>
-                            </div>
-                            <div class="article-abstract">
-                                该模块主要是针对当前版本laypage没有页容量控制功能而制作，使用该模块后即可实现每页显示多少条数据的控制！本人原创，但是可能有可能只对本人的分页写法有用！
-                            </div>
-                        </div>
-                        <div class="clear"></div>
-                        <div class="article-footer">
-                            <span><i class="fa fa-clock-o"></i>&nbsp;&nbsp;2017-03-18</span>
-                            <span class="article-author"><i class="fa fa-user"></i>&nbsp;&nbsp;Absolutely</span>
-                            <span><i class="fa fa-tag"></i>&nbsp;&nbsp;<a href="#">Web前端</a></span>
-                            <span class="article-viewinfo"><i class="fa fa-eye"></i>&nbsp;0</span>
-                            <span class="article-viewinfo"><i class="fa fa-commenting"></i>&nbsp;4</span>
-                        </div>
-                    </div>
-                    <div class="article shadow">
-                        <div class="article-left">
-                            <img src="../images/cover/201703181909057125.jpg" alt="基于laypage的layui扩展模块（pagesize.js）！" />
-                        </div>
-                        <div class="article-right">
-                            <div class="article-title">
-                                <a href="detail.html">基于laypage的layui扩展模块（pagesize.js）！</a>
-                            </div>
-                            <div class="article-abstract">
-                                该模块主要是针对当前版本laypage没有页容量控制功能而制作，使用该模块后即可实现每页显示多少条数据的控制！本人原创，但是可能有可能只对本人的分页写法有用！
-                            </div>
-                        </div>
-                        <div class="clear"></div>
-                        <div class="article-footer">
-                            <span><i class="fa fa-clock-o"></i>&nbsp;&nbsp;2017-03-18</span>
-                            <span class="article-author"><i class="fa fa-user"></i>&nbsp;&nbsp;Absolutely</span>
-                            <span><i class="fa fa-tag"></i>&nbsp;&nbsp;<a href="#">Web前端</a></span>
-                            <span class="article-viewinfo"><i class="fa fa-eye"></i>&nbsp;0</span>
-                            <span class="article-viewinfo"><i class="fa fa-commenting"></i>&nbsp;4</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="blog-main-right">
+			<!--左边文章列表-->
+			<div class="blog-main-left">
+				<div class="article shadow"
+					th:each="blog : ${application.pageBean.result}">
+					<div class="article-left"
+						th:if="${not #lists.isEmpty(blog.imageList)}">
+						<div th:utext="${blog.imageList[0]}"></div>
+					</div>
+					<div class="article-left" th:if="${#lists.isEmpty(blog.imageList)}">
+						<img src="../images/cover/201703181909057125.jpg" alt="默认显示的图片" />
+					</div>
+					<div class="article-right">
+						<!-- 文章标题 -->
+						<div class="article-title">
+							<a th:href="@{'/blog/articles/'+${blog.id}}"> <span
+								th:text="${blog.title}">标题</span></a>
+						</div>
+						<!-- 文章摘要 -->
+						<div class="article-abstract">
+							<span th:text="${blog.summary}">摘要</span>
+						</div>
+					</div>
+					<div class="clear"></div>
+					<div class="article-footer">
+						<!-- 文章的访问信息 -->
+						<span><i class="fa fa-clock-o"></i>&nbsp;&nbsp;<span
+							th:text="${blog.releaseDateStr}">日期</span></span> <span><i
+							class="fa fa-tag"></i>&nbsp;&nbsp;<a
+							th:href="@{'/index/home?typeId='+${blog.blogType.id}}"><span
+								th:text="${blog.blogType.typeName}">类型</span></a></span> <span
+							class="article-viewinfo"><i class="fa fa-eye"></i>&nbsp;<span
+							th:text="${blog.clickHit}">浏览量</span></span> <span
+							class="article-viewinfo"><i class="fa fa-commenting"></i>&nbsp;<span
+							th:text="${blog.replyHit}">评论量</span></span>
+					</div>
+				</div>
+				<fieldset class="layui-elem-field layui-field-title"
+					style="margin-top: 30px;">
+					<legend></legend>
+				</fieldset>
+
+				<div id="demo2"></div>
+			</div>
+
+			<div class="blog-main-right">
+			<!--右边悬浮 平板或手机设备显示-->
+					<div class="category-toggle">
+						<i class="fa fa-chevron-left"></i>
+					</div>
                     <div class="blog-search">
-                        <form class="layui-form" action="">
-                            <div class="layui-form-item">
-                                <div class="search-keywords  shadow">
-                                    <input type="text" name="keywords" lay-verify="required" placeholder="输入关键词搜索" autocomplete="off" class="layui-input">
+                          <form class="layui-form" action="">
+                            <div class="layui-form-item " >
+                                <div class="search-keywords  shadow ">
+                                    <input type="text" name="keywords" lay-verify="required" placeholder="输入关键词搜索" 
+                                    autocomplete="off" class="layui-input">
                                 </div>
-                                <div class="search-submit  shadow">
+                                <div class="search-submit  shadow ">
                                     <a class="search-btn" lay-submit="formSearch" lay-filter="formSearch"><i class="fa fa-search"></i></a>
                                 </div>
                             </div>
                         </form>
                     </div>
                     <div class="article-category shadow">
-                        <div class="article-category-title">分类导航</div>
-                        <a href="javascript:layer.msg(&#39;切换到相应分类&#39;)">ASP.NET MVC</a>
-                        <a href="javascript:layer.msg(&#39;切换到相应分类&#39;)">SQL Server</a>
-                        <a href="javascript:layer.msg(&#39;切换到相应分类&#39;)">Entity Framework</a>
-                        <a href="javascript:layer.msg(&#39;切换到相应分类&#39;)">Web前端</a>
-                        <a href="javascript:layer.msg(&#39;切换到相应分类&#39;)">C#基础</a>
-                        <a href="javascript:layer.msg(&#39;切换到相应分类&#39;)">杂文随笔</a>
-                        <div class="clear"></div>
-                    </div>
+							<div class="article-category-title">分类导航</div>
+							<!-- 点击分类后的页面和artile.html页面一样，只是数据是某一类别的 --><i>
+							<span style=" padding-right: 0px;"
+								th:each="blogId,key : ${application.keysMap}"
+								th:if="${not #lists.isEmpty(application.keysMap)}"> <a
+								th:href="@{'/blog/articles/'+${key.current.key} }"> <span
+									style="font-size: 15px;right:0px;border:0px; font-family: ;font-style:normal"
+								th:text="${key.current.value}"></span></a>
+						</span></i>
+						<div class="clear"></div>
+							<div th:if="${#lists.isEmpty(application.keysMap)}">
+						<span th:text="暂无标签"></span>
+						</div>
+					</div>
                     <div class="blog-module shadow">
                         <div class="blog-module-title">作者推荐</div>
                         <ul class="fa-ul blog-module-ul">
@@ -249,47 +190,72 @@
             </div>
         </div>
     </div>
-    <!-- 底部 -->
-    <footer class="blog-footer">
-        <p><span>Copyright</span><span>&copy;</span><span>2017</span><a href="http://www.lyblogs.cn">不落阁</a><span>Design By LY</span></p>
-        <p><a href="http://www.miibeian.gov.cn/" target="_blank">蜀ICP备16029915号-1</a></p>
-    </footer>
-    <!--侧边导航-->
-    <ul class="layui-nav layui-nav-tree layui-nav-side blog-nav-left layui-hide" lay-filter="nav">
-        <li class="layui-nav-item">
-            <a href="home.html"><i class="fa fa-home fa-fw"></i>&nbsp;网站首页</a>
-        </li>
-        <li class="layui-nav-item layui-this">
-            <a href="article.html"><i class="fa fa-file-text fa-fw"></i>&nbsp;文章专栏</a>
-        </li>
-        <li class="layui-nav-item">
-            <a href="resource.html"><i class="fa fa-tags fa-fw"></i>&nbsp;资源分享</a>
-        </li>
-        <li class="layui-nav-item">
-            <a href="timeline.html"><i class="fa fa-road fa-fw"></i>&nbsp;点点滴滴</a>
-        </li>
-        <li class="layui-nav-item">
-            <a href="about.html"><i class="fa fa-info fa-fw"></i>&nbsp;关于本站</a>
-        </li>
-    </ul>
-    <!--分享窗体-->
-    <div class="blog-share layui-hide">
-        <div class="blog-share-body">
-            <div style="width: 200px;height:100%;">
-                <div class="bdsharebuttonbox">
-                    <a class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
-                    <a class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
-                    <a class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
-                    <a class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!--遮罩-->
-    <div class="blog-mask animated layui-hide"></div>
-    <!-- layui.js -->
-    <script src="../plug/layui/layui.js"></script>
-    <!-- 全局脚本 -->
-    <script src="../js/global.js"></script>
+	<!-- 底部 -->
+	<footer class="blog-footer">
+		<p>
+			<span>Copyright</span><span>&copy;</span><span>2017</span><a
+				href="http://www.lyblogs.cn">不落阁</a><span>Design By LY</span>
+		</p>
+		<p>
+			<a href="http://www.miibeian.gov.cn/" target="_blank">蜀ICP备16029915号-1</a>
+		</p>
+	</footer>
+	<!--分享窗体-->
+	<div class="blog-share layui-hide">
+		<div class="blog-share-body">
+			<div style="width: 200px;height:100%;">
+				<div class="bdsharebuttonbox">
+					<a class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a> <a
+						class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a> <a
+						class="bds_weixin" data-cmd="weixin" title="分享到微信"></a> <a
+						class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--遮罩-->
+	<div class="blog-mask animated layui-hide"></div>
+	<!-- layui.js -->
+	<script th:src="@{/layui/layui.js}"></script>
+	<!-- 全局脚本 -->
+	<script th:src="@{/js/global.js}"></script>
+	<!-- 本页脚本 -->
+	<script th:src="@{/js/home.js}"></script>
+	<script th:inline="javascript" type="text/javascript">
+	layui.use(['laypage', 'layer','jquery'], function(){
+	  var laypage = layui.laypage,layer = layui.layer,$ = layui.jquery;
+	  //自定义样式
+	 // $("#imageName").attr('src','../uploads/'+[[${application.blogger.imageName}]]); //显示博主头像
+	  var pindex = [[${application.pageBean.currPage}]];// 当前页
+      var pcount = [[${application.pageBean.total}]];// 总记录数
+      if(pcount==0) {
+      	layer.alert('暂无分类，确认并返回主页！', {
+                        title: '系统提示',
+                        icon: 5,
+                    },
+                    function(index) {
+                        layer.close(index); //关闭
+                         window.location.href="/index/article?page=1";
+                    });
+      }
+	  laypage.render({
+	    elem: 'demo2'
+	    ,count: pcount //总记录数
+	    ,theme: '#1E9FFF'
+	    ,limit : 5//每页十条
+	    ,curr :pindex,
+	    jump: function(obj, first){
+	    //obj包含了当前分页的所有参数，比如：
+	    console.log(obj.curr); //得到当前页，以便向服务端请求对应页的数据。
+	    console.log(obj.limit); //得到每页显示的条数
+	    console.log(obj.count); //得到每页显示的条数
+	      if(!first){
+            window.location.href="/index/article?page="+obj.curr
+       }
+	  }
+	  });
+	  
+	});
+</script>
 </body>
 </html>

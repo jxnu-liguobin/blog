@@ -101,15 +101,13 @@ public class ShiroConfiguration {
 														// (404.html)
 														// 因为shiro自己带的setUnauthorizedUrl不生效
 		filterChainDefinitionMap.put("/views/*", "authc");// 指定认证才可访问子页面
-		filterChainDefinitionMap.put("/indexViews/*", "anon");// 
+		filterChainDefinitionMap.put("/index/*", "anon");// 
 		filterChainDefinitionMap.put("/static/**", "anon");// 静态资源不需要拦截
 		filterChainDefinitionMap.put("/errors/**", "anon");// 静态资源不需要拦截
 		filterChainDefinitionMap.put("/admin/**", "anon");
-		filterChainDefinitionMap.put("/admin/**", "anon");
-		filterChainDefinitionMap.put("/admin/**", "anon");
 		filterChainDefinitionMap.put("/baiduShare/**", "anon");
 		filterChainDefinitionMap.put("/blog/validateCode", "anon");
-		filterChainDefinitionMap.put("/**", "anon");// 静态资源不需要拦截
+		//filterChainDefinitionMap.put("/**", "anon");// 静态资源不需要拦截
 
 		shiroFilterFactoryBean
 				.setFilterChainDefinitionMap(filterChainDefinitionMap);

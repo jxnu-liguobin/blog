@@ -33,6 +33,7 @@ import cn.edu.jxnu.blog.service.LinkService;
  * 
  */
 @Controller
+@RequestMapping("/index")
 public class IndexController {
 
 	@Resource
@@ -48,7 +49,7 @@ public class IndexController {
 	 * @Description 请求主页
 	 * @return
 	 */
-	@RequestMapping("/indexHome")
+	@RequestMapping("/home")
 	public ModelAndView index(
 			@RequestParam(value = "page", required = false) String page,
 			@RequestParam(value = "typeId", required = false) String typeId,
