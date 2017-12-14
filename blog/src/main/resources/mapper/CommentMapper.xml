@@ -9,13 +9,16 @@
 		<result property="commentDate" column="comment_date" />
 		<result property="commentDateStr" column="commentDateStr" />
 		<result property="state" column="state" />
+		<result property="address" column="address" />
 		<association property="blog" column="blog_id"
 			select="cn.edu.jxnu.blog.dao.BlogDao.getById" />
 	</resultMap>
 	<!-- 获取评论分页，按日期排序 -->
 	<select id="listByPage" parameterType="java.util.Map" resultMap="CommentResultMap">
-		SELECT id,user_ip,content,comment_date,state, blog_id ,DATE_FORMAT(comment_date,'%Y年%m月%d日 %H:%i:%S') AS commentDateStr 
-		from t_comment
+		SELECT id,user_ip,content,comment_date,state, blog_id,address
+		,DATE_FORMAT(comment_date,'%Y年%m月%d日 %H:%i:%S') AS commentDateStr
+		from
+		t_comment
 		<where>
 			<if test="blogId!=null">
 				and blog_id=#{blogId}
@@ -32,7 +35,9 @@
 	<!-- 根据id获取评论信息 -->
 	<select id="getById" parameterType="java.lang.Integer"
 		resultMap="CommentResultMap">
-		select id,user_ip,content,comment_date,state, blog_id,DATE_FORMAT(comment_date,'%Y年%m月%d日 %H:%i:%S') AS commentDateStr from 
+		select id,user_ip,content,comment_date,state,address,
+		blog_id,DATE_FORMAT(comment_date,'%Y年%m月%d日 %H:%i:%S') AS
+		commentDateStr from
 		t_comment
 		where id=#{id}
 	</select>
@@ -48,7 +53,7 @@
 	<!-- 添加评论 -->
 	<insert id="saveComment">
 		insert into t_comment VALUES
-		(null,#{userIp},#{blog.id},#{content},now(),0)
+		(null,#{userIp},#{blog.id},#{content},now(),0,#{address})
 	</insert>
 	<!--删除评论 -->
 	<delete id="deleteComment" parameterType="java.lang.Integer">
@@ -68,7 +73,9 @@
 	<!-- 根据blog id查询评论信息 -->
 	<select id="queryByBlogId" resultMap="CommentResultMap"
 		parameterType="java.lang.Integer">
-		SELECT id,user_ip,content,comment_date,state, blog_id,DATE_FORMAT(comment_date,'%Y年%m月%d日 %H:%i:%S') AS commentDateStr
+		SELECT id,user_ip,content,comment_date,state,address,
+		blog_id,DATE_FORMAT(comment_date,'%Y年%m月%d日 %H:%i:%S') AS
+		commentDateStr
 		FROM t_comment
 		where blog_id=#{blogId}
 	</select>

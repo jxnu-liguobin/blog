@@ -2,6 +2,9 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="utf-8" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, maximum-scale=1" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <title>登陆</title>
 <!--用百度的静态资源库的cdn安装bootstrap环境-->
 <!-- Bootstrap 核心 CSS 文件 -->
@@ -52,8 +55,10 @@ body {
 
 .form {
 	background: rgba(255, 255, 255, 0.2);
-	width: 400px;
-	margin: 100px auto;
+	width:450px;
+	margin:100px auto;
+	padding-left: 10px;
+	padding-right: 10px;
 }
 
 #login_form {
@@ -88,7 +93,7 @@ input[type="text"],input[type="password"] {
 				class="form-horizontal col-sm-offset-3 col-md-offset-3"
 				method="post" id="login_form">
 				<!-- 标题 -->
-				<h3 class="form-title">SpringBoot Blog</h3>
+				<h3 class="form-title" style="margin-left: 10%">SpringBoot Blog</h3>
 				<div class="col-sm-9 col-md-9">
 					<div class="form-group">
 						<i class="fa fa-user fa-lg"> </i>

@@ -4,9 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @Author xp
+ * @Author liguobin
  * @Description 字符串工具类
- * @Date 2017/4/19 10:43
  */
 public class StringUtil {
 

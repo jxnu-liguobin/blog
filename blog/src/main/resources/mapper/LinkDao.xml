@@ -52,4 +52,5 @@
 		</set>
 		where id=#{id}
 	</update>
+	<cache flushInterval="1000000"></cache>
 </mapper>

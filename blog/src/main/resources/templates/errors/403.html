@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+<title>拒绝访问</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="keywords"
+	content="Fantasy Error Page Responsive Widget,Login form widgets, Sign up Web forms , Login signup Responsive web form,Flat Pricing table,Flat Drop downs,Registration Forms,News letter Forms,Elements" />
+<script th:inline="javascript" type="application/x-javascript">
+	
+	
+	
+	
+	 addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false);
+function hideURLbar(){ window.scrollTo(0,1); } 
+
+
+
+
+</script>
+<link th:href="@{/css/style.css}" rel="stylesheet" type="text/css"
+	media="all">
+<link rel="stylesheet" th:href="@{/css/font-awesome.css}">
+<link th:href="@{//fonts.googleapis.com/css?family=Pinyon+Script}"
+	rel="stylesheet">
+<link
+	th:href="@{//fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700,700i,900,900i&amp;subset=latin-ext}"
+	rel="stylesheet">
+</head>
+<body>
+	<div class="header">
+		<h1>Sorry，您没有访问权限或登陆失效，请登陆！</h1>
+	</div>
+	<div class="w3-main">
+		<div class="agile-info">
+			<h2>403</h2>
+			<h3>SORRY</h3>
+			<p>The Page You have no access rights.</p>
+			<a target="_Parent" th:href="@{/login}"><i class="fa fa-angle-double-left"
+				aria-hidden="true"></i>登陆</a>
+		</div>
+	</div>
+
+</body>
+<footer style="margin-top:5%;"> &copy; 2017 All rights reserved
+	| Design by blog for jxnu-liguobin </footer>
+</html>

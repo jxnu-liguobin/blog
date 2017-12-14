@@ -217,7 +217,7 @@
         font-size: 30px;
         color: white;
         font-weight: bold;
-        font-family: KaiTi;
+        font-style:normal;
         display: inline-block;
         z-index: 10;
     }
@@ -568,6 +568,9 @@
         padding: 0 0 5px 0;
         margin-bottom: 5px;
     }
+     .footprint dd {
+        overflow: hidden;
+    }
 
 .blog-module-ul li,
 .blog-module-ul .fa {
@@ -585,7 +588,7 @@
     top: 64px;
     right: 0;
     bottom: 0;
-    background: #393D49;
+    background: #c2c2c2;
     color: #eee;
     width: 130px;
     font-size: 11px;
@@ -816,12 +819,12 @@
 
         .article-category a {
             background: inherit;
-            border: 1px solid #d2d2d2;
             color: #444;
+                        margin-left: 5px;
+            
         }
 
             .article-category a:hover {
-                border: 1px solid #5FB878;
                 background: inherit;
                 color: #5FB878;
             }

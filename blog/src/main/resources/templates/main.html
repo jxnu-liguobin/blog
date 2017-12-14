@@ -67,7 +67,7 @@
 
 					<li class="layui-nav-item"><a class="" href="javascript:;">
 							<i class="fa fa-plug" aria-hidden="true"></i> <i
-							class="layui-icon">&#xe606;</i><span> 评论</span>
+							class="layui-icon">&#xe606;</i><span> 评论与留言</span>
 					</a>
 						<dl class="layui-nav-child">
 							<dd>
@@ -78,8 +78,20 @@
 							</dd>
 							<dd>
 								<a href="javascript:;" kit-target
-									data-options="{url:'/views/commentReview.html',icon:'&#xe6b2;',title:'评论审核',id:'4'}">
+									data-options="{url:'/views/messageManage.html',icon:'&#xe63a;',title:'全部留言',id:'4'}">
+									<i class="layui-icon">&#xe63a;</i><span> 全部留言</span>
+								</a>
+							</dd>
+							<dd>
+								<a href="javascript:;" kit-target
+									data-options="{url:'/views/commentReview.html',icon:'&#xe6b2;',title:'评论审核',id:'5'}">
 									<i class="layui-icon">&#xe6b2;</i><span> 评论审核</span>
+								</a>
+							</dd>
+							<dd>
+								<a href="javascript:;" kit-target
+									data-options="{url:'/views/messageReview.html',icon:'&#xe6b2;',title:'留言审核',id:'6'}">
+									<i class="layui-icon">&#xe6b2;</i><span> 留言审核</span>
 								</a>
 							</dd>
 						</dl></li>
@@ -91,7 +103,7 @@
 						<dl class="layui-nav-child">
 							<dd>
 								<a href="javascript:;" kit-target
-									data-options="{url:'/views/blogTypeManage.html',icon:'&#xe60a;',title:'全部类别',id:'5'}">
+									data-options="{url:'/views/blogTypeManage.html',icon:'&#xe60a;',title:'全部类别',id:'7'}">
 									<i class="layui-icon">&#xe60a;</i><span> 全部类别</span>
 								</a>
 							</dd>
@@ -102,7 +114,18 @@
 								</a>
 							</dd> -->
 						</dl></li>
-
+							<li class="layui-nav-item"><a class="" href="javascript:;">
+							<i class="fa fa-plug" aria-hidden="true"></i> <i
+							class="layui-icon">&#xe645;</i><span> 公告</span>
+								</a>
+						<dl class="layui-nav-child">
+							<dd>
+								<a href="javascript:;" kit-target
+									data-options="{url:'/views/noticeManage.html',icon:'&#xe645;',title:'全部公告',id:'8'}">
+									<i class="layui-icon">&#xe645;</i><span> 全部公告</span>
+								</a>
+							</dd>
+						</dl></li>
 					<li class="layui-nav-item"><a class="" href="javascript:;">
 							<i class="fa fa-plug" aria-hidden="true"></i><i
 							class="layui-icon">&#xe64c;</i> <span> 链接</span>
@@ -110,13 +133,13 @@
 						<dl class="layui-nav-child">
 							<dd>
 								<a href="javascript:;" kit-target
-									data-options="{url:'/views/linkManage.html',icon:'&#xe64c;',title:'全部链接',id:'7'}">
+									data-options="{url:'/views/linkManage.html',icon:'&#xe64c;',title:'全部链接',id:'9'}">
 									<i class="layui-icon">&#xe64c;</i><span> 全部链接</span>
 								</a>
 							</dd>
 							<dd>
 								<a href="javascript:;" kit-target
-									data-options="{url:'/views/addLinkForm.html',icon:'&#xe61f;',title:'添加链接',id:'8'}">
+									data-options="{url:'/views/addLinkForm.html',icon:'&#xe61f;',title:'添加链接',id:'10'}">
 									<i class="layui-icon">&#xe61f;</i><span> 添加链接</span>
 								</a>
 							</dd>
@@ -130,19 +153,19 @@
 						<dl class="layui-nav-child">
 							<dd>
 								<a href="javascript:;" kit-target
-									data-options="{url:'/views/refreshSystem',icon:'&#x1002;',title:'刷新缓存',id:'8'}">
+									data-options="{url:'/views/refreshSystem',icon:'&#x1002;',title:'刷新缓存',id:'11'}">
 									<i lay-id="refresh" class="layui-icon">&#x1002;</i><span> 刷新缓存</span>
 								</a>
 							</dd>
 							<dd>
 								<a href="javascript:;" kit-target
-									data-options="{url:'/views/modifyBloggerInfo.html',icon:'&#xe642;',title:'修改资料',id:'9'}">
+									data-options="{url:'/views/modifyBloggerInfo.html',icon:'&#xe642;',title:'修改资料',id:'12'}">
 									<i class="layui-icon">&#xe642;</i><span> 修改资料</span>
 								</a>
 							</dd>
 							<dd>
 								<a href="javascript:;" kit-target
-									data-options="{url:'/views/modifyPassword.html',icon:'&#xe616;',title:'修改密码',id:'10'}">
+									data-options="{url:'/views/modifyPassword.html',icon:'&#xe616;',title:'修改密码',id:'13'}">
 									<i class="layui-icon">&#xe616;</i><span> 修改密码</span>
 								</a>
 							</dd>

@@ -31,6 +31,7 @@ import cn.edu.jxnu.blog.service.BlogTypeService;
 import cn.edu.jxnu.blog.service.BloggerService;
 import cn.edu.jxnu.blog.service.CommentService;
 import cn.edu.jxnu.blog.service.LinkService;
+import cn.edu.jxnu.blog.service.MessageService;
 
 import com.alibaba.druid.util.StringUtils;
 
@@ -51,6 +52,8 @@ public class BloggerController {
 	private LinkService linkService;
 	@Autowired
 	private CommentService commentService;
+	@Autowired
+	private MessageService messageService;
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public String login(Blogger blogger,
@@ -79,6 +82,8 @@ public class BloggerController {
 			// 得到后台session的验证码
 			HttpSession session = request.getSession();
 			String sessionCode = (String) session.getAttribute("code");
+			System.out.println("当前session超时="
+					+ session.getMaxInactiveInterval() + "S");
 			if (!StringUtils.equalsIgnoreCase(code, sessionCode)) { // 忽略验证码大小写
 				System.out.println("验证码对应不上code=" + code + "  sessionCode="
 						+ sessionCode);
@@ -87,35 +92,45 @@ public class BloggerController {
 			}
 			System.out.println("**********************************");
 			// 获取博客总数量
-			Map<String, Object> map = new HashMap<String,Object>();
-			long  articleCount= blogService.getTotal(map);
-			//获取博客总访问量
+			Map<String, Object> map = new HashMap<String, Object>();
+			long articleCount = blogService.getTotal(map);
+			// 获取博客总访问量
 			Map<String, Object> mapBlogClick = new HashMap<>();
 			List<Blog> blogClick = blogService.listBlog(mapBlogClick);
 			int blogClickCount = 0;
-			for(Blog blog :blogClick) {
+			for (Blog blog : blogClick) {
 				blogClickCount += blog.getClickHit();
 			}
-			
+
 			Map<String, Object> ismap = new HashMap<>();
 			Map<String, Object> unmap = new HashMap<>();
 			unmap.put("state", 0);// 待审核
 			Long commentCount0 = commentService.getTotal(unmap);// 待审核
 			Long commentCount = commentService.getTotal(ismap);// 评论总数量
-			String ip = request.getRemoteAddr(); // ip
+			String ip = AddressUtils.getRealIp(request);
+			System.out.println("博主：ip=" + ip);
+			// String ip = request.getRemoteAddr(); // ip
 			String address = AddressUtils.getAddress("ip=" + ip, "utf-8"); // 地址
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			java.util.Date date = new java.util.Date(); // 登录的时间
 			String str = sdf.format(date);
 			ServletContext application = RequestContextUtils
 					.findWebApplicationContext(request).getServletContext();
+			Map<String, Object> map2 = new HashMap<>();
+			Map<String, Object> map3 = new HashMap<>();
+			map2.put("state", 0);// 待审核
+			Long messageCount0 = messageService.getTotal(map2);
+			Long messageCount = messageService.getTotal(map3);// 总留言
 			application.setAttribute("articleCount", articleCount);
 			application.setAttribute("commentCount0", commentCount0);
 			application.setAttribute("commentCount", commentCount);
 			application.setAttribute("blogClickCount", blogClickCount);
+			application.setAttribute("messageCount0", messageCount0);
+			application.setAttribute("messageCount", messageCount);
 			application.setAttribute("ip", ip);
 			application.setAttribute("address", address);
 			application.setAttribute("str", str);
+
 			System.out.println("ip:" + ip);
 			return "main";
 		} catch (UnknownAccountException e) {

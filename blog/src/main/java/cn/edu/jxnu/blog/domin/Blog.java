@@ -10,7 +10,7 @@ import java.util.List;
  * 
  */
 
-public class Blog implements Serializable{
+public class Blog implements Serializable, Comparable<Blog> {
 
 	/**
 	 * 
@@ -19,7 +19,7 @@ public class Blog implements Serializable{
 	private Integer id;// id
 	private String title;// 标题
 	private String summary;// 摘要
-	private Date releaseDate;// 发布日期
+	private Date releaseDate;// 发布日期 最近修改日期
 	private Integer clickHit;// 阅读次数
 	private Integer replyHit;// 回复次数
 	private String content;// 博客内容
@@ -137,6 +137,29 @@ public class Blog implements Serializable{
 
 	public void setReleaseDateStr(String releaseDateStr) {
 		this.releaseDateStr = releaseDateStr;
+	}
+
+	/**
+	 * 实现自然排序接口 并且默认以回复量排序 当前元素相等时强制返回前面大
+	 */
+	@Override
+	public int compareTo(Blog blogTwo) {
+		if (this.replyHit > blogTwo.replyHit)
+			return -1;
+		if (this.replyHit < blogTwo.replyHit)
+			return 1;
+		return 0;
+	}
+
+	@Override
+	public String toString() {
+		return "Blog [id=" + id + ", title=" + title + ", summary=" + summary
+				+ ", releaseDate=" + releaseDate + ", clickHit=" + clickHit
+				+ ", replyHit=" + replyHit + ", content=" + content
+				+ ", keyWord=" + keyWord + ", contentNoTag=" + contentNoTag
+				+ ", blogType=" + blogType + ", blogCount=" + blogCount
+				+ ", releaseDateStr=" + releaseDateStr + ", imageList="
+				+ imageList + "]";
 	}
 
 }

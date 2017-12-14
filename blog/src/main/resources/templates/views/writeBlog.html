@@ -24,7 +24,7 @@
 		<div class="layui-form-item">
 			<label class="layui-form-label">所属类别：</label>
 			<div class="layui-input-block">
-				<select id="blogTypeId" lay-verify="required" name="blogTypeId"
+				<select id="blogTypeId" lay-verify="type" name="blogTypeId"
 					lay-search>
 					<option value="selected"></option>
 					<option th:each="blogType:${application.blogTypeList}"
@@ -88,6 +88,18 @@
     //创建一个编辑器  id=LAY_demo_editor
     var editIndex = layedit.build('LAY_demo_editor');
     //自定义验证规则（只要非空即可）
+   	form.verify({
+	content : function(value) {
+		value = $.trim(layedit.getText(editIndex));
+		if (value == "")
+			return "自少得有一个字吧";
+		layedit.sync(editIndex);
+	},type :function(value){
+		if(value=='selected') {
+			return '请选择分类'
+		}
+	}
+	});
     //监听提交
     form.on('submit(demo1)',
     function(data) {
@@ -97,12 +109,12 @@
         var blogTypeId = data.field["blogTypeId"]
         //获取博客内容 带标记
         var content = layedit.getContent(editIndex)
-        //截取博客前155字符 作为博客简介
-        var summary = layedit.getText(editIndex).substr(0, 155);
         //博客关键词
         var keyWord = data.field["keyWord"]
         //获取博客内容  不带标签 纯文本
         var contentNoTag = layedit.getText(editIndex) ;
+        //截取博客前155字符 作为博客简介
+		var summary = layedit.getText(editIndex).substr(0, 155);
         $.ajax({
             async: false,
             url: '../admin/blog/save',
@@ -162,6 +174,5 @@
 });
 	
 </script>
-
 </body>
 </html>

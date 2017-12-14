@@ -2,7 +2,9 @@
     background: #fff;
     min-height: 100vh;
 }
-
+#Lazy p{
+	margin-left: 5px;
+}
     .layui-tab-brief .layui-tab-title {
         text-align: center;
         border-bottom: 1px solid #5FB878;

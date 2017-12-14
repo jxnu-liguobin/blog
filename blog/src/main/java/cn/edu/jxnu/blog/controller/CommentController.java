@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import cn.edu.jxnu.blog.commons.AddressUtils;
 import cn.edu.jxnu.blog.commons.ResponseUtil;
-import cn.edu.jxnu.blog.domin.Blog;
 import cn.edu.jxnu.blog.domin.Comment;
 import cn.edu.jxnu.blog.service.BlogService;
 import cn.edu.jxnu.blog.service.CommentService;
@@ -19,8 +19,7 @@ import com.alibaba.druid.util.StringUtils;
 import com.alibaba.fastjson.JSONObject;
 
 /**
- * @Description 前台评论控制器 此控制器使用SpringBoot的@RestController。
- * 验证码为了方便放在java的session中
+ * @Description 前台评论控制器 此控制器使用SpringBoot的@RestController。 验证码为了方便放在java的session中
  */
 @RestController
 @RequestMapping(value = "/blog/comment")
@@ -52,16 +51,20 @@ public class CommentController {
 		} else {
 			int resultTotal = 0; // 执行记录数
 			// 获取评论者ip
-			String ip = request.getRemoteAddr();
-			System.out.println("ip=" + ip);
+			// String ip = request.getRemoteAddr();
+			String ip = AddressUtils.getRealIp(request);
+			System.out.println("评论者：ip=" + ip);
+			String address = AddressUtils.getAddress("ip=" + ip, "utf-8");
 			comment.setUserIp(ip);
+			comment.setAddress(address);
 			if (comment.getId() == null) {
 				resultTotal = commentService.saveComment(comment); // 添加评论
-				Blog blog = blogService.getById(comment.getBlog().getId()); // 更新一下博客的评论次数
-				blog.setReplyHit(blog.getReplyHit() + 1);
-				blogService.updateBlog(blog);
+				// Blog blog = blogService.getById(comment.getBlog().getId());
+				// // 更新一下博客的评论次数
+				// blog.setReplyHit(blog.getReplyHit() + 1);//在这里不加1
+				// blogService.updateBlog(blog);
 			} else {
-				// 更新操作
+				// 更新操作 暂时不考虑
 			}
 
 			if (resultTotal > 0) {

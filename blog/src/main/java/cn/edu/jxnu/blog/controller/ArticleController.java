@@ -28,8 +28,7 @@ import cn.edu.jxnu.blog.service.BloggerService;
 import cn.edu.jxnu.blog.service.LinkService;
 
 /**
- * @Description 主页Controller
- * 
+ * @Description 文章主题
  */
 @Controller
 @RequestMapping("/index")
@@ -44,10 +43,6 @@ public class ArticleController {
 	@Resource
 	private BlogTypeService blogTypeService;
 
-	/**
-	 * @Description 请求主页
-	 * @return
-	 */
 	@RequestMapping("/article")
 	public String index(
 			@RequestParam(value = "page", required = false) String page,
@@ -55,12 +50,11 @@ public class ArticleController {
 			@RequestParam(value = "releaseDateStr", required = false) String releaseDateStr,
 			HttpServletRequest request) throws Exception {
 
-
 		if (StringUtil.isEmpty(page)) {
 			page = "1";
 		}
 		// 获取分页的bean
-		PageBean<Blog> pageBean = new PageBean<Blog>(Integer.parseInt(page), 5); // 每页显示10条数据
+		PageBean<Blog> pageBean = new PageBean<Blog>(Integer.parseInt(page), 10); // 每页显示10条数据
 
 		// map中封装起始页和每页的记录，按条件分类
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -82,13 +76,8 @@ public class ArticleController {
 			pageBean.setTotal(blogService.listBlog(
 					new HashMap<String, Object>()).size());// 给前台总的记录数
 		}
-		Map<Object,String> keysMap = new HashMap<Object,String>();
 		pageBean.setResult(blogList);
 		for (Blog blog : blogList) {
-			String []strings = blog.getKeyWord().split(" ");
-			for(String string : strings) {
-				keysMap.put(blog.getId(),string);//保存所有id-关键字
-			}
 			List<String> imageList = blog.getImageList();
 			String blogInfo = blog.getContent(); // 获取博客内容
 			Document doc = Jsoup.parse(blogInfo); // 将博客内容(网页中也就是一些html)转为jsoup的Document
@@ -108,14 +97,16 @@ public class ArticleController {
 		Blogger blogger = bloggerService.getBloggerData();
 		ServletContext application = RequestContextUtils
 				.findWebApplicationContext(request).getServletContext();
-		application.setAttribute("blogger", blogger);
-		application.setAttribute("pageBean", pageBean);
-		application.setAttribute("linkList", linkList);
+		List<Blog> bloglist = blogService
+				.listBlog(new HashMap<String, Object>());
 		List<Blog> blogCountList = blogService.countList();
-		application.setAttribute("blogCountList", blogCountList); // 日期分档博客信息
-		application.setAttribute("keysMap", keysMap); // 关键字
+			application.setAttribute("bloglist", bloglist); //阅读排行
+			application.setAttribute("blogger", blogger); //博主信息
+			application.setAttribute("linkList", linkList); //友情链接
+			application.setAttribute("blogCountList", blogCountList); // 日期分档博客信息
 
-		return "/indexViews/article";
+		application.setAttribute("pageBean", pageBean);
+		return "indexViews/article";
 
 	}
 }

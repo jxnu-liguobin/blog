@@ -7,9 +7,6 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta http-equiv="cache-control" content="no-cache,no-store, must-revalidate" />
-<meta http-equiv="pragma" content="no-cache" />
-<meta http-equiv="Expires" content="0" />
 <script th:src="@{/layui/layui.js}" charset="utf-8"></script>
 <link rel="stylesheet" th:href="@{/layui/css/layui.css}" media="all">
 <script th:inline="javascript" type="text/javascript">
@@ -30,8 +27,8 @@
 	    }
 	    ,done: function(result){
 	      //如果上传失败
-	      if(result.code > 0){
-	        return layer.msg('上传失败');
+	      if(result.code == 1){
+	        return layer.msg('图片宽大于1000px将无法上传');
 	      } if(result.code == 0){
 	      	$('#imageName').val(result.data["title"]); //图片名称保存到隐藏域
 	      	layer.msg('上传成功');
@@ -117,123 +114,141 @@
 			</div>
 		</div>
 	</form>
-	<script type="text/javascript" th:inline="javascript">
-    	layui.use(['jquery','layer','form'],function(){  
-    		var form = layui.form
-	        var $ = layui.jquery;  
-	        $(document).ready(function(){
-			$.ajax({
-					url: "../admin/blogger/getBloggerInfo?rand="+Math.random() ,
-					type: "get" ,
-					dataType:'json',
-					success:function(result){
-					if([[result.success]]){
-					
-						var index = layer.load(2, {time: 5*1000}); //又换了种风格，并且设定最长等待5秒 
-						 /* var resultt = eval("(" + result.responseText + ")"); */
-	                 	 /* result = JSON.parse(result.responseText); */
-	                    $("#userName").val(result.userName);
-	                    $("#nickName").val(result.nickName);
-	                   //var finalurl ='/uploads/2017/10/'+result.imageName; //这里需要动态获取，根据img前面6个字符
-	                    $("#imageFile").attr('src','../uploads/'+result.imageName); //去除年月日了
-	                    $("#sign").val(result.sign);
-	                    $("#LAY_demo_editor").val(result.profile);
-	                    
-						layer.close(index);     
-					}else{
-							layer.msg("加载失败！");
-						}
-					} //end success
-				});//end ajax
-								
-		});		//end $()	
-    });  
-	</script>
-	<script th:inline="javascript" type="text/javascript">
-	layui.use(['form', 'layedit', 'laydate', 'jquery', 'layer'],
-		function() {
-		    var form = layui.form,
-		    layer = layui.layer,
-		    layedit = layui.layedit,
-		    laydate = layui.laydate,
-		    $ = layui.jquery;
-		    //上传图片,必须放在 创建一个编辑器前面
-		    layedit.set({
-		        uploadImage: {
-		            url: '../uploadFile' //接口url
-		            ,
-		            type: 'post' //默认post
-		        }
-		    });
-		
-		    //创建一个编辑器  id=LAY_demo_editor
-		    var editIndex = layedit.build('LAY_demo_editor');
-		    //自定义验证规则（只要非空即可）
-		    //监听提交
-		  form.on('submit(demo1)',
-	   function(data) {
-		        var userName = data.field["userName"]
-		        var nickName = data.field["nickName"]
-		        var sign = data.field["sign"]
-		      	var imageName = data.field["imageName"]
-		      // 	var imageFile = imageName.substring(11);
-		        var profile = layedit.getContent(editIndex)
-		        $.ajax({
-		            async: false,
-		            url: '../admin/blogger/save',
-		            data: {
-		                //thymeleaf获取request参数id值
-		                'userName': userName,
-		                'nickName': nickName,
-		                'imageName': imageName,
-		                'sign': sign,
-		                'profile': profile,
-		            },
-		            type: 'post',
-		            success: function(result) {
-		                if ([[result.success]]) {
-		                    layer.alert('修改成功！', {
-		                        title: '系统提示',
-		                        icon: 6,
-		                    },
-		                    function(index) {
-		                        layer.close(index); //关闭并回到管理页面
-		                         location.reload() //重写加载表格
-		                        window.location.href = '/views/modifyBloggerInfo'
-		                    });
-		                } else {
-		                    layer.alert('修改失败。。', {
-		                        title: '系统提示',
-		                        icon: 5,
-		                    },
-		                    function(index) {
-		                        layer.close(index); //关闭 重新回调修改页面
-		                        location.reload() //重写加载表格
-		                        window.location.href = '/views/modifyBloggerInfo'
-		
-		                    }); //end layer.alert
-		                } //end else
-		            } //end success
-		        }); //end ajax
-		        return false;
-		    }); //end form on 
-		        //清空富文本编辑器  
-    var $ = layui.$,
-	active = {
-        /* 搜索框 */
-        del: function() {
-            	$('#LAY_layedit_1').contents().find('body').html('');
-            	return false;
-            },
-        };
-        
-    $('.del .layui-btn').on('click',
-	    function() {
-	        var type = $(this).data('type');
-	        active[type] ? active[type].call(this) : '';
-	    });
-		});	
-	</script>
-
+<script type="text/javascript" th:inline="javascript">
+  layui.use(['jquery','layer','form'],function(){  
+  	   var form = layui.form
+       var $ = layui.jquery;  
+       $(document).ready(function(){
+	   $.ajax({
+			url: "../admin/blogger/getBloggerInfo?rand="+Math.random() ,
+			type: "get" ,
+			dataType:'json',
+			success:function(result){
+			if([[result.success]]){
+				var index = layer.load(2, {time: 5*1000}); //又换了种风格，并且设定最长等待5秒 
+				 /* var resultt = eval("(" + result.responseText + ")"); */
+                	 /* result = JSON.parse(result.responseText); */
+                   $("#userName").val(result.userName);
+                   $("#nickName").val(result.nickName);
+                  //var finalurl ='/uploads/2017/10/'+result.imageName; //这里需要动态获取，根据img前面6个字符
+                   $("#imageFile").attr('src','../uploads/'+result.imageName); //去除年月日了
+                   $("#sign").val(result.sign);
+                   $("#LAY_demo_editor").val(result.profile);
+				layer.close(index);     
+			}else{
+					layer.msg("加载失败！");
+				}
+			} //end success
+		});//end ajax
+						
+});		//end $()	
+  });  
+</script>
+<script th:inline="javascript" type="text/javascript">
+layui.use(['form', 'layedit', 'laydate', 'jquery', 'layer'],
+	function() {
+    var form = layui.form,
+    layer = layui.layer,
+    layedit = layui.layedit,
+    laydate = layui.laydate,
+    $ = layui.jquery;
+    //上传图片,必须放在 创建一个编辑器前面
+    layedit.set({
+        uploadImage: {
+            url: '../uploadFile' //接口url
+            ,
+            type: 'post' //默认post
+        }
+    });
+	window.onload = function() {  
+     var w = $('#imageFile').width()*1/4;//设置最大宽度,也可根据img的外部容器 而动态获得,比如：$("#demo").width();  
+      $("img").each(function() {//如果有很多图片,使用each()遍历   
+            var img_w = $(this).width();//图片宽度   
+            var img_h = $(this).height();//图片高度   
+            if (img_w > w) {//如果图片宽度超出指定最大宽度   
+                var height = (w * img_h) / img_w; //高度等比缩放   
+                $(this).css( {  
+                    "width" : w,"height" : height  
+                });//设置缩放后的宽度和高度   
+            }  
+        });  
+  
+    } 
+    //创建一个编辑器  id=LAY_demo_editor
+    var editIndex = layedit.build('LAY_demo_editor');
+    //自定义验证规则（只要非空即可）
+       	form.verify({
+		content : function(value) {
+			value = $.trim(layedit.getText(editIndex));
+			if (value == "")
+				return "自少得有一个字吧";
+				layedit.sync(editIndex);
+			}
+		});
+    //监听提交
+  form.on('submit(demo1)',
+   function(data) {
+	        var userName = data.field["userName"]
+	        var nickName = data.field["nickName"]
+	        var sign = data.field["sign"]
+	      	var imageName = data.field["imageName"]
+	      // 	var imageFile = imageName.substring(11);
+	        var profile = layedit.getContent(editIndex)
+	        $.ajax({
+	            async: false,
+	            url: '../admin/blogger/save',
+	            data: {
+	                //thymeleaf获取request参数id值
+	                'userName': userName,
+	                'nickName': nickName,
+	                'imageName': imageName,
+	                'sign': sign,
+	                'profile': profile,
+	            },
+	            type: 'post',
+	            success: function(result) {
+	                if ([[result.success]]) {
+	                    layer.alert('修改成功！', {
+	                        title: '系统提示',
+	                        icon: 6,
+	                    },
+	                    function(index) {
+	                        layer.close(index); //关闭并回到管理页面
+	                        location.reload() //重写加载表格
+	                        //window.location.href = '/views/modifyBloggerInfo'
+	                    });
+	                } else {
+	                    layer.alert('修改失败。。', {
+	                        title: '系统提示',
+	                        icon: 5,
+	                    },
+	                    function(index) {
+	                        layer.close(index); //关闭 重新回调修改页面
+	                        location.reload() //重写加载表格
+	                        //window.location.href = '/views/modifyBloggerInfo'
+	
+	                    }); //end layer.alert
+	                } //end else
+	            } //end success
+	        }); //end ajax
+	        return false;
+	    }); //end form on 
+	        //清空富文本编辑器  
+   var $ = layui.$,
+active = {
+       /* 搜索框 */
+       del: function() {
+           	$('#LAY_layedit_1').contents().find('body').html('');
+           	return false;
+           },
+       };
+       
+   $('.del .layui-btn').on('click',
+    function() {
+        var type = $(this).data('type');
+        active[type] ? active[type].call(this) : '';
+    });
+	});	
+</script>
 </body>
 </html>

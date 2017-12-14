@@ -1,11 +1,14 @@
 package cn.edu.jxnu.blog.controller.admin;
 
+import java.util.Date;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import cn.edu.jxnu.blog.commons.ResponseUtil;
@@ -21,7 +24,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 
 /**
- * 此处不需要@ResponseBody 或者@RestController
+ * @Description 此处不需要@ResponseBody 或者@RestController
  * 
  * @Description 管理员博客Controller层
  */
@@ -33,7 +36,7 @@ public class BlogAdminController {
 	private BlogService blogService;
 	@Resource
 	private BlogIndex blogIndex;
-	
+
 	@Autowired
 	private CommentService commentService;
 
@@ -86,11 +89,14 @@ public class BlogAdminController {
 	}
 
 	// 更新或者新增博客
-	@RequestMapping(value = "/save")
+	@RequestMapping(value = "/save",method=RequestMethod.POST)
 	public String saveBlog(Blog blog, HttpServletResponse response)
 			throws Exception {
 		int resultTotal = 0;
+		//博客id 不为空则是对博客的修改
 		if (blog.getId() != null) {
+			Date time = new Date();
+			blog.setReleaseDate(time);
 			// 更新操作
 			resultTotal = blogService.updateBlog(blog);
 			// 更新索引
@@ -112,7 +118,7 @@ public class BlogAdminController {
 	}
 
 	// 删除博客
-	@RequestMapping(value = "/delete")
+	@RequestMapping(value = "/delete",method=RequestMethod.POST)
 	public String deleteBlog(@RequestParam("ids") String ids,
 			HttpServletResponse response) throws Exception {
 		String[] idsStr = ids.split(",");
@@ -121,6 +127,7 @@ public class BlogAdminController {
 			// 先删除博客所关联的评论 现在没有完成评论的功能 先注释
 			commentService.deleteCommentByBlogId(id);
 			blogService.deleteBlog(id);
+			blogIndex.deleteIndex(String.valueOf(id));// 删除索引
 		}
 		JSONObject result = new JSONObject();
 		result.put("success", true);
@@ -129,7 +136,7 @@ public class BlogAdminController {
 	}
 
 	// 通过id获取博客
-	@RequestMapping(value = "/get",produces="application/json;charset=UTF-8")
+	@RequestMapping(value = "/get", produces = "application/json;charset=UTF-8")
 	public String getById(@RequestParam("id") String id,
 			HttpServletResponse response) throws Exception {
 

@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import cn.edu.jxnu.blog.commons.ResponseUtil;
@@ -38,7 +39,7 @@ public class BlogTypeAdminController {
 	public String listBlogType(
 			@RequestParam(value = "page", required = false) String page,
 			@RequestParam(value = "limit", required = false) String limit,
-			HttpServletResponse response, HttpServletRequest httpServletRequest)
+			HttpServletResponse response)
 			throws Exception {
 		// 定义分页bean
 		PageBean<BlogType> pageBean = new PageBean<BlogType>(
@@ -61,7 +62,7 @@ public class BlogTypeAdminController {
 	}
 
 	// 添加和更新博客类别
-	@RequestMapping("/save")
+	@RequestMapping(value="/save",method=RequestMethod.POST)
 	public String save(BlogType blogType, HttpServletResponse response,
 			HttpServletRequest httpServletRequest) throws Exception {
 
@@ -86,7 +87,7 @@ public class BlogTypeAdminController {
 	}
 
 	// 博客类别信息删除
-	@RequestMapping(value = "/delete")
+	@RequestMapping(value = "/delete",method=RequestMethod.POST)
 	public String deleteBlog(
 			@RequestParam(value = "ids", required = false) String ids,
 			HttpServletResponse response, HttpServletRequest httpServletRequest)

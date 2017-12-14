@@ -9,7 +9,6 @@ import cn.edu.jxnu.blog.domin.Comment;
 
 /**
  * @Description 评论dao类
- * @Date 2017/4/20 07:40
  */
 @Repository
 public interface CommentDao {

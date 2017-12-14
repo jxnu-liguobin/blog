@@ -36,6 +36,7 @@ public interface CommentService {
      * 添加评论信息
      * @param comment
      * @return
+     * @throws IllegalAccessException 
      */
     public Integer saveComment(Comment comment);
 

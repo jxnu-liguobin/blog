@@ -40,12 +40,10 @@ public class InitBlogTypeData implements ServletContextAttributeListener,
 	}
 
 	public void contextDestroyed(ServletContextEvent sce) {
-		System.out.println("ServletContextListener---（contextDestroyed）...");
 	}
 
 	@Override
 	public void attributeAdded(ServletContextAttributeEvent args) {
-		System.out.println("ServletContextAttributeListener---（attributeAdded）...");
 	}
 
 	/**
@@ -65,12 +63,12 @@ public class InitBlogTypeData implements ServletContextAttributeListener,
 		// System.out.println("blogTypeService="+blogTypeService);
 		List<BlogType> blogTypeList = blogTypeService.getBlogTypeData();
 		application.setAttribute("blogTypeList", blogTypeList);
-		System.out.println("ServletContextAttributeListener---（attributeRemoved）...");
+		System.out
+				.println("ServletContextAttributeListener---（attributeRemoved）...");
 	}
 
 	@Override
 	public void attributeReplaced(ServletContextAttributeEvent args) {
-		System.out.println("ServletContextAttributeListener---（attributeReplaced）...");
 	}
 
 }

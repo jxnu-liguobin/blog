@@ -9,7 +9,7 @@
 <link rel="shortcut icon" th:href="@{/images/Logo_40.png}"
 	type="image/x-icon">
 <!--Layui-->
-<link th:href="@{/plug/layui/css/layui.css}" rel="stylesheet" />
+<link th:href="@{/layui/css/layui.css}" rel="stylesheet" />
 <!--font-awesome-->
 <link th:href="@{/plug/font-awesome/css/font-awesome.min.css}"
 	rel="stylesheet" />
@@ -23,11 +23,11 @@
 	<nav class="blog-nav layui-header">
 		<div class="blog-container">
 			<!-- QQ互联登陆 -->
-			<a th:href="@{http://wpa.qq.com/msgrd?v=3&uin=568845948&site=qq&menu=yes}"
+			<a target="_blank" th:href="@{http://wpa.qq.com/msgrd?v=3&uin=568845948&site=qq&menu=yes}"
 			 class="blog-user"> <i class="fa fa-qq"></i>
 			</a> <a href="javascript:;" class="blog-user layui-hide"> <img
-				th:src="@{/images/Absolutely.jpg}" alt="Absolutely"
-				title="Absolutely" />
+				th:src="@{/images/Absolutely.png}" alt="jxnu-liguobin"
+				title="jxnu-liguobin" />
 			</a> <a class="blog-logo" th:href="@{/index/home}">梦境迷离</a>
 			<!-- 导航菜单 -->
 			<ul class="layui-nav" lay-filter="nav">
@@ -44,7 +44,7 @@
 					th:href="@{/indexViews/timeline.html}"><i
 						class="fa fa-hourglass-half fa-fw"></i>&nbsp;点点滴滴</a></li>
 				<li class="layui-nav-item"><a
-					th:href="@{/indexViews/about.html}"><i class="fa fa-info fa-fw"></i>&nbsp;关于本站</a>
+					th:href="@{/index/about}"><i class="fa fa-info fa-fw"></i>&nbsp;关于本站</a>
 				</li>
 			</ul>
 			<!-- 手机和平板的导航开关 -->
@@ -70,9 +70,18 @@
 		<!-- 这个一般才是真正的主体内容 -->
 		<div class="blog-container">
 			<div class="blog-main">
+			  <div class="home-tips shadow">
+                    <i style="float:left;line-height:17px;" class="fa fa-volume-up"></i>
+                    <!-- 如果存在重要公告则优先显示  -->
+                    <div class="home-tips-container">
+                        <span th:if="${notice.level} eq 2" style="color: red" th:each="notice : ${application.notice}" th:text="${notice.content}">这个是公告 </span>
+                        <span th:if="${notice.level} eq 1" style="color: #1E9FFF;" th:each="notice : ${application.notice}" th:text="${notice.content}"></span>
+                        <span th:if="${notice.level} eq 0" style="color: #009688" th:each="notice : ${application.notice}" th:text="${notice.content}"></span>
+                    </div>
+                </div>
 				<!--左边文章列表-->
 				<div class="blog-main-left">
-					<div class="article shadow"
+					<div id="imageForArticle" class="article shadow"
 						th:each="blog : ${application.pageBean.result}">
 						<div class="article-left"
 							th:if="${not #lists.isEmpty(blog.imageList)}">
@@ -80,7 +89,7 @@
 						</div>
 						<div class="article-left"
 							th:if="${#lists.isEmpty(blog.imageList)}">
-							<img src="../images/cover/201703181909057125.jpg" alt="默认显示的图片" />
+							<img th:src="@{/images/cover/201703181909057125.jpg}" alt="默认显示的图片" />
 						</div>
 						<div class="article-right">
 							<!-- 文章标题 -->
@@ -117,7 +126,7 @@
 				<div class="blog-main-right">
 					<div class="blogerinfo shadow">
 						<div class="blogerinfo-figure">
-							<img alt="头像" id="imageName" style="width: 100px;height: 100px;" />
+							<img alt="jxnu-liguobin" id="imageName" style="width: 100px;height: 100px;" />
 						</div>
 						<p class="blogerinfo-nickname">
 							<span th:text="${application.blogger.nickName}"> </span>
@@ -147,7 +156,7 @@
 					<div></div>
 					<!--占位-->
 					<div class="blog-module shadow">
-						<div class="blog-module-title">日期归档</div>
+						<div class="blog-module-title">文章存档</div>
 						<ul class="fa-ul blog-module-ul" style="margin-left: 0px;"
 							th:each="dateList : ${application.blogCountList}"
 							th:if="${not #lists.isEmpty(application.blogCountList)}">
@@ -159,7 +168,7 @@
 									（<span th:text="${dateList.blogCount }"></span>）</a>
 							</li>
 							<li th:if="${#lists.isEmpty(application.blogCountList)}">
-							<span>暂无分档信息</span>
+							<span>暂无信息！</span>
 							</li>
 						</ul>
 					</div>
@@ -185,18 +194,70 @@
 							<dt>2017年11月22日</dt>
 							<dd>1、添加文章关键字侧栏</dd>
 							<dd>2、修复写文章和修改文章不能清空富文本bug</dd>
+							<dt>2017年11月28日</dt>
+							<dd>1、修复未审核的评论也被计算在内</dd>
+							<dd>2、IdentityHashMap造成的乱序问题（覆盖TreeMap的CompareTo方法）未修复</dd>
+							<dd>3、搜索下方显示最近搜索（cookies）未完成</dd>
+							<dt>2017年11月29日</dt>
+							<dd>1、添加代码高亮显示（bug:如果是直接复制的图片，大小无法控制，图片宽度超过屏幕）</dd>
+							<dd>2、添加lucene全文检索，关键字高亮（bug:摘要 博客类型构建索引失败--解决）</dd>
+							<dt>2017年12月1日</dt>
+							<dd>1、添加代码高亮显示（显示行数，有bug）</dd>
+							<dd>2、完善lucene全文检索</dd>
+							<dd>3、添加搜索排行，显示前20条最高搜索次数的关键词</dd>
+							<dt>2017年12月4日</dt>
+							<dd>1、添加前台ip拦截，禁止访问与倒计时</dd>
+							<dd>2、完善开发文档</dd>
+							<dd>3、修复IdentityHashMap造成的乱序问题（与此同时，同key的value仍无法解决）</dd>
+							<dt>2017年12月5日</dt>
+							<dd>1、添加留言以及其他小修改</dd>
+							<dt>2017年12月6日</dt>
+							<dd>1、开启事务支持</dd>
+							<dd>2、修复ip解析地址时超时，添加数据库字段address存储地址</dd>
+							<dt>2017年12月9日</dt>
+							<dd>添加403 404 405 406 500等页面的处理 </dd>
+							<dd>1、404 405特殊处理->实现ErrorController接口</dd>
+							<dd>2、500->实现容器的customize方法</dd>
+							<dd>3、403使用Shiro session 406使用拦截器</dd>
+							<dd>添加公告功能，完成公告dao以及service层接口与测试</dd>
+							<dt>2017年12月10日</dt>
+							<dd>1、修正手机Ipad的悬浮窗显示不正确</dd>
+							<dd>2、头像上传改为缩略图显示，前台文章和个人信息也缩放。后台管理系统不兼容手机等小屏幕，表格过于密集</dd>
+							<dt>2017年12月11日</dt>
+							<dd>1、修正layui富文本编辑器带来的自定义验证问题（初始化仍然有可能失败）</dd>
+							<dd>2、完成公告控制层，修改留言的邮箱正则表达式</dd>
+							<dt>2017年12月12日</dt>
+							<dd>1、完成服务器的路径配置</dd>
+							<dd>2、优化手机样式</dd>
+							<dt>2017年12月13日</dt>
+							<dd>1、修复关于作者缩略图失效问题，通过绑定tab的切换事件（bug:刷新会复原）</dd>
+							<dd>2、完善手机显示样式（bug:无法随机取出map的元素）</dd>
+							<dd>3、添加留言板的流加载（懒加载）</dd>
+							<dt>2017年12月14日</dt>
+							<dd>1、添加文章评论懒加载，全文检索分页修复</dd>
 						</dl>
 					</div>
 					<div class="blog-module shadow">
 						<div class="blog-module-title">友情链接</div>
+						<fieldset class="layui-elem-field">
+							  <legend>友情链接要求：</legend>
+							  <div class="layui-field-box">
+							  	<i class="fa fa-close"></i>经常宕机&nbsp;
+                                    <i class="fa fa-close"></i>不合法规&nbsp;
+                                    <i class="fa fa-close"></i>插边球站&nbsp;
+                                    <i class="fa fa-close"></i>红标报毒&nbsp;
+                                    <i class="fa fa-check"></i>原创优先&nbsp;
+                                    <i class="fa fa-check"></i>技术优先
+							  </div>
+							</fieldset>
 						<ul class="blogroll" th:each="link : ${application.linkList}"
 							th:if="${not #lists.isEmpty(application.linkList)}">
 							<li><a target="_blank" th:href="${link.linkUrl}"
-								th:title="${link.linkName}"><span th:text="${link.linkName}"></span></a></li>
+								th:title="${link.linkName}"><span th:text="${link.linkName}+'  '+${link.linkUrl}"></span></a></li>
 						</ul>
 						<ul class="blogroll" th:each="link : ${application.linkList}"
 							th:if="${#lists.isEmpty(application.linkList)}">
-							<li>暂无友情链接</li>
+							<li>暂无信息！</li>
 						</ul>
 					</div>
 				</div>
@@ -207,26 +268,25 @@
 	<!-- 底部 -->
 	<footer class="blog-footer">
 		<p>
-			<span>Copyright</span><span>&copy;</span><span>2017</span><a
-				th:href="@{http://www.lyblogs.cn}">梦境迷离</a><span>Design By LY</span>
+			<span>Copyright</span><span>&copy;</span><span>2017</span><a>梦境迷离</a><span>Design By jxnu-liguobin</span>
 		</p>
 		<p>
-			<a th:href="@{http://www.miibeian.gov.cn}" target="_blank">蜀ICP备16029915号-1</a>
+			<a  target="_blank">??</a>
 		</p>
 	</footer>
 	<!--侧边导航-->
 	<ul
 		class="layui-nav layui-nav-tree layui-nav-side blog-nav-left layui-hide"
 		lay-filter="nav">
-		<li class="layui-nav-item layui-this"><a th:href="home.html"><i
+		<li class="layui-nav-item layui-this"><a th:href="@{/index/home}"><i
 				class="fa fa-home fa-fw"></i>&nbsp;网站首页</a></li>
-		<li class="layui-nav-item"><a th:href="article.html"><i
+		<li class="layui-nav-item"><a th:href="@{/index/article}"><i
 				class="fa fa-file-text fa-fw"></i>&nbsp;文章专栏</a></li>
-		<li class="layui-nav-item"><a th:href="resource.html"><i
+		<li class="layui-nav-item"><a th:href="@{/indexViews/resource.html}"><i
 				class="fa fa-tags fa-fw"></i>&nbsp;资源分享</a></li>
-		<li class="layui-nav-item"><a th:href="timeline.html"><i
+		<li class="layui-nav-item"><a th:href="@{/indexViews/timeline.html}"><i
 				class="fa fa-road fa-fw"></i>&nbsp;点点滴滴</a></li>
-		<li class="layui-nav-item"><a th:href="about.html"><i
+		<li class="layui-nav-item"><a th:href="@{/index/about}"><i
 				class="fa fa-info fa-fw"></i>&nbsp;关于本站</a></li>
 	</ul>
 	<!--分享窗体-->
@@ -253,25 +313,40 @@
 	<script th:inline="javascript" type="text/javascript">
 	layui.use(['laypage', 'layer','jquery'], function(){
 	  var laypage = layui.laypage,layer = layui.layer,$ = layui.jquery;
+	  	//图片缩放
+	window.onload = function() {  
+      var w = $('#imageForArticle').width()-$('.article-title').width();//设置最大宽度,也可根据img的外部容器 而动态获得,比如：$("#demo").width();
+      console.info("当前宽："+w);
+      $("img").each(function() {//如果有很多图片,使用each()遍历   
+            var img_w = $(this).width();//图片宽度   
+            var img_h = $(this).height();//图片高度   
+            if (img_w > w) {//如果图片宽度超出指定最大宽度   
+                var height = (w * img_h) / img_w; //高度等比缩放   
+                $(this).css( {  
+                    "width" : w,"height" : height  
+                });//设置缩放后的宽度和高度   
+            }  
+        });  
+       }
 	  //自定义样式
 	  $("#imageName").attr('src','../uploads/'+[[${application.blogger.imageName}]]); //显示博主头像
 	  var pindex = [[${application.pageBean.currPage}]];// 当前页
       var pcount = [[${application.pageBean.total}]];// 总记录数
       if(pcount==0) {
-      	layer.alert('暂无分类，确认并返回主页！', {
+      	layer.msg('暂无内容！', {
                         title: '系统提示',
                         icon: 5,
                     },
                     function(index) {
                         layer.close(index); //关闭
-                         window.location.href="/index/home?page=1";
+                         //window.location.href="/index/home?page=1";
                     });
       }
 	  laypage.render({
 	    elem: 'demo2'
 	    ,count: pcount //总记录数
 	    ,theme: '#1E9FFF'
-	    ,limit : 5//每页十条
+	    ,limit : 10//每页十条
 	    ,curr :pindex,
 	    jump: function(obj, first){
 	    //obj包含了当前分页的所有参数，比如：

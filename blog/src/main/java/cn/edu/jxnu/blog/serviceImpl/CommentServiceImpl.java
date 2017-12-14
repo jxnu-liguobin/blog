@@ -6,6 +6,7 @@ import java.util.Map;
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import cn.edu.jxnu.blog.dao.CommentDao;
 import cn.edu.jxnu.blog.domin.Comment;
@@ -13,7 +14,7 @@ import cn.edu.jxnu.blog.domin.PageBean;
 import cn.edu.jxnu.blog.service.CommentService;
 
 /**
- * 实现评论service接口
+ * @Description 实现评论service接口
  */
 @Service
 public class CommentServiceImpl implements CommentService {
@@ -40,22 +41,22 @@ public class CommentServiceImpl implements CommentService {
         return commentDao.getById(id);
     }
 
-
-    public Integer saveComment(Comment comment) {
+    @Transactional
+    public Integer saveComment(Comment comment){
         return commentDao.saveComment(comment);
     }
 
-
+    @Transactional
     public Integer deleteComment(Integer id) {
         return commentDao.deleteComment(id);
     }
 
-
+    @Transactional
     public Integer updateComment(Comment comment) {
         return commentDao.updateComment(comment);
     }
 
-
+    @Transactional
     public Long deleteCommentByBlogId(Integer blogId) {
         return commentDao.deleteCommentByBlogId(blogId);
     }

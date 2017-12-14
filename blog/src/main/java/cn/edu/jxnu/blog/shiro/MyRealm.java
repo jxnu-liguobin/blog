@@ -58,9 +58,9 @@ public class MyRealm extends AuthorizingRealm {
 			// 不等于空的时候还要判断密码正确
 			System.out.println("正在验证密码......");
 			/***** 注意：此处把当前登录的用户的信息保存在session中 ********/
-			SecurityUtils.getSubject().getSession().setTimeout(1000*60*10);
+			SecurityUtils.getSubject().getSession().setTimeout(1000*60);
 			SecurityUtils.getSubject().getSession()
-					.setAttribute("currentUser", blogger);// 把当前用户存到session中
+					.setAttribute("currentUser", blogger);// 把当前用户存到session中  //当前session共享系统session的过期时间
 			// 把数据库的用户名，密码，取出交给SimpleAuthenticationInfo
 			authcInfo = new SimpleAuthenticationInfo(username,
 					blogger.getPassword(), "MyRealm");

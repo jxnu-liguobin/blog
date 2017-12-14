@@ -1,12 +1,13 @@
 package cn.edu.jxnu.blog.domin;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * @Description 评论实体类
- * @Date 2017/4/19 23:10
  */
-public class Comment {
+@SuppressWarnings("serial")
+public class Comment implements Serializable {
 
 	/**
 	 * 
@@ -18,18 +19,28 @@ public class Comment {
 	private String commentDateStr; // 评论日期str
 	private Integer state; // 审核状态 0待审核 1通过 2未通过
 	private Blog blog; // 所评论博客
+	private String address; // 所评论博客
 
 	public Comment() {
 	}
 
 	public Comment(Integer id, String userIp, String content, Date commentDate,
-			Integer state, Blog blog) {
+			String address, Integer state, Blog blog) {
 		this.id = id;
 		this.userIp = userIp;
 		this.content = content;
 		this.commentDate = commentDate;
 		this.state = state;
 		this.blog = blog;
+		this.address = address;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
 	}
 
 	public Integer getId() {
@@ -80,11 +91,13 @@ public class Comment {
 		this.blog = blog;
 	}
 
+
 	@Override
 	public String toString() {
-		return "Comment{" + "id=" + id + ", userIp='" + userIp + '\''
-				+ ", content='" + content + '\'' + ", commentDate="
-				+ commentDate + ", state=" + state + ", blog=" + blog + '}';
+		return "Comment [id=" + id + ", userIp=" + userIp + ", content="
+				+ content + ", commentDate=" + commentDate
+				+ ", commentDateStr=" + commentDateStr + ", state=" + state
+				+ ", blog=" + blog + ", address=" + address + "]";
 	}
 
 	public String getCommentDateStr() {

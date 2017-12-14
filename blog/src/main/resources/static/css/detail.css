@@ -4,6 +4,7 @@
     padding: 15px;
     box-shadow: 0 1px 8px #a6a6a6;
     margin-bottom: 15px;
+    
 }
 
 .article-detail-title {
@@ -27,6 +28,7 @@
 
     .article-detail-info span {
         margin: 0 5px;
+        
     }
 
 .article-detail-content {

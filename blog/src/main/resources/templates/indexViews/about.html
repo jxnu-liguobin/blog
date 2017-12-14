@@ -2,190 +2,227 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta http-equiv="Content-Type" content="text/html; Charset=utf-8">
-    <meta http-equiv="Content-Language" content="zh-CN">
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-    <title>不落阁 - 关于本站</title>
-    <link rel="shortcut icon" href="../images/Logo_40.png" type="image/x-icon">
-    <!--Layui-->
-    <link href="../plug/layui/css/layui.css" rel="stylesheet" />
-    <!--font-awesome-->
-    <link href="../plug/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
-    <!--全局样式表-->
-    <link href="../css/global.css" rel="stylesheet" />
-    <!-- 本页样式表 -->
-    <link href="../css/about.css" rel="stylesheet" />
+<meta http-equiv="Content-Language" content="zh-CN">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, user-scalable=no" />
+<title>梦境迷离 - 关于本站</title>
+<link rel="shortcut icon" th:href="@{/images/Logo_40.png}"
+	type="image/x-icon">
+<!--Layui-->
+<link th:href="@{/layui/css/layui.css}" rel="stylesheet" />
+<!--font-awesome-->
+<link th:href="@{/plug/font-awesome/css/font-awesome.min.css}"
+	rel="stylesheet" />
+<!--全局样式表-->
+<link th:href="@{/css/global.css}" rel="stylesheet" />
+<!-- 本页样式表 -->
+<link th:href="@{/css/about.css}" rel="stylesheet" />
 </head>
 <body>
-    <!-- 导航 -->
-    <nav class="blog-nav layui-header">
-        <div class="blog-container">
-            <!-- QQ互联登陆 -->
-            <a href="javascript:;" class="blog-user">
-                <i class="fa fa-qq"></i>
-            </a>
-            <a href="javascript:;" class="blog-user layui-hide">
-                <img src="../images/Absolutely.jpg" alt="Absolutely" title="Absolutely" />
-            </a>
-            <!-- 不落阁 -->
-            <a class="blog-logo" href="home.html">不落阁</a>
-            <!-- 导航菜单 -->
-            <ul class="layui-nav" lay-filter="nav">
-                <li class="layui-nav-item">
-                    <a href="home.html"><i class="fa fa-home fa-fw"></i>&nbsp;网站首页</a>
-                </li>
-                <li class="layui-nav-item">
-                    <a href="article.html"><i class="fa fa-file-text fa-fw"></i>&nbsp;文章专栏</a>
-                </li>
-                <li class="layui-nav-item">
-                    <a href="resource.html"><i class="fa fa-tags fa-fw"></i>&nbsp;资源分享</a>
-                </li>
-                <li class="layui-nav-item">
-                    <a href="timeline.html"><i class="fa fa-hourglass-half fa-fw"></i>&nbsp;点点滴滴</a>
-                </li>
-                <li class="layui-nav-item layui-this">
-                    <a href="about.html"><i class="fa fa-info fa-fw"></i>&nbsp;关于本站</a>
-                </li>
-            </ul>
-            <!-- 手机和平板的导航开关 -->
-            <a class="blog-navicon" href="javascript:;">
-                <i class="fa fa-navicon"></i>
-            </a>
-        </div>
-    </nav>
-    <!-- 主体（一般只改变这里的内容） -->
-    <div class="blog-body">
-        <div class="blog-container">
-            <blockquote class="layui-elem-quote sitemap layui-breadcrumb shadow">
-                <a href="home.html" title="网站首页">网站首页</a>
-                <a><cite>关于本站</cite></a>
-            </blockquote>
-            <div class="blog-main">
-                <div class="layui-tab layui-tab-brief shadow" lay-filter="tabAbout">
-                    <ul class="layui-tab-title">
-                        <li lay-id="1">关于博客</li>
-                        <li lay-id="2">关于作者</li>
-                        <li lay-id="3" id="frinedlink">友情链接</li>
-                        <li lay-id="4">留言墙</li>
-                    </ul>
-                    <div class="layui-tab-content">
-                        <div class="layui-tab-item">
-                            <div class="aboutinfo">
-                                <div class="aboutinfo-figure">
-                                    <img src="../images/Logo_100.png" alt="不落阁" />
-                                </div>
-                                <p class="aboutinfo-nickname">不落阁</p>
-                                <p class="aboutinfo-introduce">一个.NET程序员的个人博客，记录博主学习和成长之路，分享.NET方面技术和源码</p>
-                                <p class="aboutinfo-location"><i class="fa fa-link"></i>&nbsp;&nbsp;<a target="_blank" href="http://www.lyblogs.cn">www.lyblogs.cn</a></p>
-                                <hr />
-                                <div class="aboutinfo-contact">
-                                    <a target="_blank" title="网站首页" href="home.html"><i class="fa fa-home fa-2x" style="font-size:2.5em;position:relative;top:3px"></i></a>
-                                    <a target="_blank" title="文章专栏" href="article.html"><i class="fa fa-file-text fa-2x"></i></a>
-                                    <a target="_blank" title="资源分享" href="resource.html"><i class="fa fa-tags fa-2x"></i></a>
-                                    <a target="_blank" title="点点滴滴" href="timeline.html"><i class="fa fa-hourglass-half fa-2x"></i></a>
-                                </div>
+	<!-- 导航 -->
+	<nav class="blog-nav layui-header">
+		<div class="blog-container">
+			<!-- QQ互联登陆 -->
+			<a target="_blank" th:href="@{http://wpa.qq.com/msgrd?v=3&uin=568845948&site=qq&menu=yes}"
+			 class="blog-user"> <i class="fa fa-qq"></i>
+			</a> <a href="javascript:;" class="blog-user layui-hide"> <img
+				th:src="@{/images/Absolutely.jpg}" alt="jxnu-liguobin"
+				title="jxnu-liguobin" />
+			</a> <a class="blog-logo" th:href="@{/index/home}">梦境迷离</a>
+			<!-- 导航菜单 -->
+			<ul class="layui-nav" lay-filter="nav">
+				<li class="layui-nav-item"><a th:href="@{/index/home}"><i
+						class="fa fa-home fa-fw"></i>&nbsp;网站首页</a></li>
+				<li class="layui-nav-item"><a th:href="@{/index/article}"><i
+						class="fa fa-file-text fa-fw"></i>&nbsp;文章专栏</a></li>
+				<li class="layui-nav-item"><a
+					th:href="@{/indexViews/resource.html}"><i
+						class="fa fa-tags fa-fw"></i>&nbsp;资源分享</a></li>
+				<li class="layui-nav-item"><a
+					th:href="@{/indexViews/timeline.html}"><i
+						class="fa fa-hourglass-half fa-fw"></i>&nbsp;点点滴滴</a></li>
+				<li class="layui-nav-item layui-this"><a
+					th:href="@{/index/about}"><i class="fa fa-info fa-fw"></i>&nbsp;关于本站</a>
+				</li>
+			</ul>
+			<!-- 手机和平板的导航开关 -->
+			<a class="blog-navicon" href="javascript:;"> <i
+				class="fa fa-navicon"></i>
+			</a>
+		</div>
+	</nav>
+	<!-- 主体（一般只改变这里的内容） -->
+	<div class="blog-body">
+		<div class="blog-container">
+			<blockquote class="layui-elem-quote sitemap layui-breadcrumb shadow">
+				<cite> <a th:href="@{/index/home}" title="网站首页">网站首页 </a></cite> <cite>
+					<a>关于本站</a>
+				</cite>
+			</blockquote>
+			<div class="blog-main">
+				<div class="layui-tab layui-tab-brief shadow" lay-filter="tabAbout">
+					<ul class="layui-tab-title">
+						<li lay-id="1">关于博客</li>
+						<li lay-id="2">关于作者</li>
+						<li lay-id="3">留言墙</li>
+					</ul>
+					<div class="layui-tab-content">
+						<div class="layui-tab-item">
+							<div class="aboutinfo">
+								<div class="aboutinfo-figure">
+									<img th:src="@{/images/Logo_100.png}" alt="jxnu-liguobin" />
+								</div>
+								<p class="aboutinfo-nickname">梦境迷离</p>
+								<p class="aboutinfo-introduce">一个Java程序员的个人博客，记录博主学习和成长之路，分享Java方面技术和源码</p>
+								<p class="aboutinfo-location">
+									<i class="fa fa-link"></i>&nbsp;&nbsp;<a target="_blank"
+										href="#">??</a>
+								</p>
+								<hr />
+								<div class="aboutinfo-contact">
+									<a target="_blank" title="网站首页" th:href="@{/index/home}"><i
+										class="fa fa-home fa-2x"
+										style="font-size:2.5em;position:relative;top:3px"></i></a> <a
+										target="_blank" title="文章专栏" th:href="@{/index/article}"><i
+										class="fa fa-file-text fa-2x"></i></a> <a target="_blank"
+										title="资源分享" th:href="@{/indexViews/resource.html}"><i
+										class="fa fa-tags fa-2x"></i></a> <a target="_blank" title="点点滴滴"
+										th:href="@{/indexViews/timeline.html}"><i
+										class="fa fa-hourglass-half fa-2x"></i></a>
+								</div>
 
-                                <fieldset class="layui-elem-field layui-field-title">
-                                    <legend>简介</legend>
-                                    <div class="layui-field-box aboutinfo-abstract">
-                                        <p style="text-align:center;">不落阁是一个由ASP.NET MVC开发的个人博客网站，诞生于2016年11月7日，起劲为止经历了一次大改，暂且称为不落阁2.0。</p>
-                                        <h1>第一个版本</h1>
-                                        <p>诞生的版本，采用ASP.NET MVC + Entity Framework作为后台框架，前端几乎自己手写，用了Bootstrap的栅格系统来布局！起初并没有注意美工，只打算完成基本的功能，故视觉体验是比较差的。</p>
-                                        <h1>第二个版本</h1>
-                                        <p>由于感觉EF查询数据的时候较慢（后来发现是自己搞错了），于是自己写了个ORM，其实也算不上ORM，就是将ADO.NET进行封装，再封装，再利用反射将数据库表与实体类一一对应，有了基本的增删改查、事务、自动建表等功能，同时为了配合这个ORM，将项目改成三层，前端方面加入了Animate.css的动画效果，同时自己手写了几个动画，并制作了浅色于深色两种主题的样式，视觉体验稍有提高。</p>
-                                        <h1>当前版本</h1>
-                                        <p>从公司的一个后台管理系统的前端发现了Layer弹窗插件，于是追根溯源，发现了Layui前端框架！Layui简洁的风格让我很是喜欢，于是决定再次将网站改版！此次改版从里到外几乎全部更新。后台增加了面向接口开发，使用了IOC框架，同时ORM回归到Entity Framework，前端则移除Bootstarp，引入Layui。视觉体验显著提高。</p>
-                                        <h1 style="text-align:center;">The End</h1>
-                                    </div>
-                                </fieldset>
-                            </div>
-                        </div><!--关于网站End-->
-                        <div class="layui-tab-item">
-                            <div class="aboutinfo">
-                                <div class="aboutinfo-figure">
-                                    <img src="../images/Absolutely.jpg" alt="Absolutely" />
-                                </div>
-                                <p class="aboutinfo-nickname">Absolutely</p>
-                                <p class="aboutinfo-introduce">一枚90后程序员，.NET开发工程师，主攻B/S架构，略懂Web前端</p>
-                                <p class="aboutinfo-location"><i class="fa fa-location-arrow"></i>&nbsp;四川 - 成都</p>
-                                <hr />
-                                <div class="aboutinfo-contact">
-                                    <a target="_blank" title="QQ交流" href="javascript:layer.msg('启动QQ会话窗口')"><i class="fa fa-qq fa-2x"></i></a>
-                                    <a target="_blank" title="给我写信" href="javascript:layer.msg('启动邮我窗口')"><i class="fa fa-envelope fa-2x"></i></a>
-                                    <a target="_blank" title="新浪微博" href="javascript:layer.msg('转到你的微博主页')"><i class="fa fa-weibo fa-2x"></i></a>
-                                    <a target="_blank" title="码云" href="javascript:layer.msg('转到你的github主页')"><i class="fa fa-git fa-2x"></i></a>
-                                </div>
-                                <fieldset class="layui-elem-field layui-field-title">
-                                    <legend>简介</legend>
-                                    <div class="layui-field-box aboutinfo-abstract abstract-bloger">
-                                        <p style="text-align:center;">Absolutely，不落阁创始人，诞生于1996年2月14日，目前是一个码农，从事.NET开发。</p>
-                                        <h1>个人信息</h1>
-                                        <p>暂无</p>
-                                        <h1>个人介绍</h1>
-                                        <p>一个没有故事的男同学，没什么介绍......</p>
-                                        <h1 style="text-align:center;">The End</h1>
-                                    </div>
-                                </fieldset>
-                            </div>
-                        </div><!--关于作者End-->
-                        <div class="layui-tab-item">
-                            <div class="aboutinfo">
-                                <div class="aboutinfo-figure">
-                                    <img src="../images/handshake.png" alt="友情链接" />
-                                </div>
-                                <p class="aboutinfo-nickname">友情链接</p>
-                                <p class="aboutinfo-introduce">Name：不落阁&nbsp;&nbsp;&nbsp;&nbsp;Site：www.lyblogs.cn</p>
-                                <p class="aboutinfo-location">
-                                    <i class="fa fa-close"></i>经常宕机&nbsp;
-                                    <i class="fa fa-close"></i>不合法规&nbsp;
-                                    <i class="fa fa-close"></i>插边球站&nbsp;
-                                    <i class="fa fa-close"></i>红标报毒&nbsp;
-                                    <i class="fa fa-check"></i>原创优先&nbsp;
-                                    <i class="fa fa-check"></i>技术优先
-                                </p>
-                                <hr />
-                                <div class="aboutinfo-contact">
-                                    <p style="font-size:2em;">互换友链，携手并进！</p>
-                                </div>
-                                <fieldset class="layui-elem-field layui-field-title">
-                                    <legend>Friend Link</legend>
-                                    <div class="layui-field-box">
-                                        <ul class="friendlink">
-                                            <li>
-                                                <a target="_blank" href="http://www.layui.com/" title="Layui" class="friendlink-item">
-                                                    <p class="friendlink-item-pic"><img src="http://www.layui.com/favicon.ico" alt="Layui" /></p>
-                                                    <p class="friendlink-item-title">Layui</p>
-                                                    <p class="friendlink-item-domain">layui.com</p>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a target="_blank" href="http://www.pagemark.cn/" title="页签" class="friendlink-item">
-                                                    <p class="friendlink-item-pic"><img src="http://pm.lyblogs.cn/Images/logo-png.png" alt="页签" /></p>
-                                                    <p class="friendlink-item-title">页签</p>
-                                                    <p class="friendlink-item-domain">pagemark.cn</p>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </fieldset>
-                            </div>
-                        </div><!--友情链接End-->
-                        <div class="layui-tab-item">
-                            <div class="aboutinfo">
-                                <div class="aboutinfo-figure">
-                                    <img src="../images/messagewall.png" alt="留言墙" />
-                                </div>
-                                <p class="aboutinfo-nickname">留言墙</p>
-                                <p class="aboutinfo-introduce">本页面可留言、吐槽、提问。欢迎灌水，杜绝广告！</p>
-                                <p class="aboutinfo-location">
-                                    <i class="fa fa-clock-o"></i>&nbsp;<span id="time"></span>
-                                </p>
-                                <hr />
-                                <div class="aboutinfo-contact">
-                                    <p style="font-size:2em;">沟通交流，拉近你我！</p>
-                                </div>
-                                <fieldset class="layui-elem-field layui-field-title">
-                                    <legend>Leave a message</legend>
-                                    <div class="layui-field-box">
+								<fieldset class="layui-elem-field layui-field-title">
+									<legend>简介</legend>
+									<div class="layui-field-box aboutinfo-abstract">
+										<p style="text-align:center;">梦境迷离是一个由java开源框架SpringBoot开发的个人博客网站，诞生于2017年11月7日，暂且称为V1.0。</p>
+										<h1>第一个版本</h1>
+										<p>诞生的版本，采用SpringBoot+Mybatis作为后台框架（除了登陆，均是用国产框架Layui布局），前端使用“不落阁”前台模板。在此感谢分享！</p>
+										<h1 style="text-align:center;">The End</h1>
+									</div>
+								</fieldset>
+							</div>
+						</div>
+						<!--关于网站End-->
+						<!-- 关于博主 -->
+						<div class="layui-tab-item">
+							<div class="aboutinfo">
+								<div class="aboutinfo-figure">
+									<img alt="头像" id="imageName"
+										style="width: 100px;height: 100px;" />
+								</div>
+								<p class="aboutinfo-nickname">
+									<span th:text="${application.blogger.nickName}"></span>
+								</p>
+								<p class="aboutinfo-introduce">
+									<span th:text="${application.blogger.sign}"> </span>
+								</p>
+								<p class="aboutinfo-location">
+									<i class="fa fa-location-arrow"></i>&nbsp;江西 - 南昌
+								</p>
+								<hr />
+								<div class="blogerinfo-contact">
+									<a style="margin-left: 20px;" target="_blank" title="QQ交流"
+										th:href="@{http://wpa.qq.com/msgrd?v=3&uin=568845948&site=qq&menu=yes}"><i
+										class="fa fa-qq fa-2x"></i></a> <a style="margin-left: 20px;"
+										target="_blank" title="给我写信"
+										th:href="@{mailto:568845948@qq.com?subject=blogQuestions}"><i
+										class="fa fa-envelope fa-2x"></i></a> <a
+										style="margin-left: 20px;" target="_blank" title="新浪微博"
+										th:href="@{https://weibo.com/p/1005053803958567/home?from=page_100505&mod=TAB&is_all=1#place}"><i
+										class="fa fa-weibo fa-2x"></i></a> <a style="margin-left: 20px;"
+										target="_blank" title="码云"
+										th:href="@{https://github.com/jxnu-liguobin}"><i
+										class="fa fa-git fa-2x"></i></a>
+								</div>
+								<fieldset class="layui-elem-field layui-field-title">
+									<legend>简介</legend>
+									<div class="layui-field-box aboutinfo-abstract abstract-bloger">
+										<p style="text-align:center;">jxnu在校大三生。</p>
+										<h1  id="p" >个人介绍</h1>
+										<p  th:utext="${application.blogger.profile}"></p>
+										<h1 style="text-align:center;">The End</h1>
+									</div>
+								</fieldset>
+							</div>
+						</div>
+						<!--关于作者End-->
+						<div class="layui-tab-item">
+							<div class="aboutinfo">
+								<div class="aboutinfo-figure">
+									<img src="../images/messagewall.png" alt="留言墙" />
+								</div>
+								<p class="aboutinfo-nickname">留言墙</p>
+								<p class="aboutinfo-introduce">
+									本页面可留言、吐槽、提问。欢迎灌水，杜绝广告！<br> <span style="color: red;">注：因为一开始表就设计好了，本来是想做个人Blog就是匿名评论吧，但是不好区分访客，后来想到用ip或者UUID但是不想重构了，
+										后面就直接用留言添加邮箱的形式回复了！ ^0^ 可以选择是否发送邮箱，后台看到也会以邮件的形式回复！</span>
+								</p>
+								<p class="aboutinfo-location">
+									<i class="fa fa-clock-o"></i>&nbsp;<span id="time"></span>
+								</p>
+								<hr />
+								<div class="aboutinfo-contact">
+									<p style="font-size:2em;">沟通交流，拉近你我！</p>
+								</div>
+								<fieldset class="layui-elem-field layui-field-title">
+									<legend>Leave a message</legend>
+									<div class="layui-field-box">
+										<div class="leavemessage" style="text-align:initial">
+											<form class="layui-form blog-editor" action="">
+												<div class="layui-form-item">
+													<textarea name="content" lay-verify="content" id="content"
+														placeholder="请输入内容" class="layui-textarea layui-hide"></textarea>
+												</div>
+												<div class="layui-form-item">
+													<div class="" id="enableEmail">
+														<input type="text" name="email" placeholder="请选择是否输入邮箱"
+															autocomplete="off" class="layui-input" value=""
+															lay-verify="mail" id="email">
+													</div>
+												</div>
+												<div class="layui-form-item" >
+													<input type="text" name="code" lay-verify="required"
+														placeholder="请输入验证码" autocomplete="off"
+														class="layui-input" id="code" value=""> <a
+														class="layui-btn layui-btn-primary "
+														style="padding: 0 0 0 ;border: 0;margin-top: 16px;" data-type="refresh">
+														<img id="imgObj" alt="验证码" style="margin:0 0"
+														th:src="@{/blog/validateCode}" />
+													</a>
+
+												</div>
+												<div class="layui-form-item">
+													<span id="error" style="font-size: 12px; color: red;"></span>
+
+												</div><hr>
+												<div class="layui-form-item">
+													<a class="layui-btn  layui-btn-primary layui-btn-xs"
+														data-type="refresh"> 换一张</a>
+													<button class="layui-btn layui-btn-xs"
+														lay-submit="formLeaveMessage"
+														lay-filter="formLeaveMessage">提交</button>
+												</div>
+											</form>
+										</div>
+
+										<fieldset id="Lazy" class="layui-elem-field"
+											th:if="${not #lists.isEmpty(messageList)}">
+											<legend style="text-align: center;" th:text="访客评论"></legend>
+											<!-- <fieldset class="layui-elem-field layui-field-title"
+												th:each="message,messageStat: ${messageList}" th:if="${messageStat.count lt 6}">
+												<legend  style="font-size: 10px;text-align: left;"
+													th:text="${messageStat.index+1}+'楼 '+${message.address}"></legend>
+												<div class="layui-field-box">
+													&nbsp;&nbsp;<span
+														style="color: red;float:right ;font-size: 10px;"
+														th:text="${message.messageDateStr}"></span>
+													<div class="content" style="text-align: left;">
+														<p th:utext="${message.content}"></p>
+													</div>
+												</div>
+											</fieldset> -->
+										</fieldset>
+									</div>
+									<!--       <div class="layui-field-box">
                                         <div class="leavemessage" style="text-align:initial">
                                             <form class="layui-form blog-editor" action="">
                                                 <div class="layui-form-item">
@@ -222,7 +259,7 @@
                                                         </div>
                                                         <p class="info"><span class="time">2017-03-18 18:26</span></p>
                                                     </div>
-                                                    <!-- 回复表单默认隐藏 -->
+                                                  回复表单默认隐藏 不实现多级回复 
                                                     <div class="replycontainer layui-hide">
                                                         <form class="layui-form" action="">
                                                             <div class="layui-form-item">
@@ -236,58 +273,196 @@
                                                 </li>
                                             </ul>
                                         </div>
-                                    </div>
-                                </fieldset>
-                            </div>
-                        </div><!--留言墙End-->
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- 底部 -->
-    <footer class="blog-footer">
-        <p><span>Copyright</span><span>&copy;</span><span>2017</span><a href="http://www.lyblogs.cn">不落阁</a><span>Design By LY</span></p>
-        <p><a href="http://www.miibeian.gov.cn/" target="_blank">蜀ICP备16029915号-1</a></p>
-    </footer>
-    <!--侧边导航-->
-    <ul class="layui-nav layui-nav-tree layui-nav-side blog-nav-left layui-hide" lay-filter="nav">
-        <li class="layui-nav-item">
-            <a href="home.html"><i class="fa fa-home fa-fw"></i>&nbsp;网站首页</a>
-        </li>
-        <li class="layui-nav-item">
-            <a href="article.html"><i class="fa fa-file-text fa-fw"></i>&nbsp;文章专栏</a>
-        </li>
-        <li class="layui-nav-item">
-            <a href="resource.html"><i class="fa fa-tags fa-fw"></i>&nbsp;资源分享</a>
-        </li>
-        <li class="layui-nav-item">
-            <a href="timeline.html"><i class="fa fa-road fa-fw"></i>&nbsp;点点滴滴</a>
-        </li>
-        <li class="layui-nav-item layui-this">
-            <a href="about.html"><i class="fa fa-info fa-fw"></i>&nbsp;关于本站</a>
-        </li>
-    </ul>
-    <!--分享窗体-->
-    <div class="blog-share layui-hide">
-        <div class="blog-share-body">
-            <div style="width: 200px;height:100%;">
-                <div class="bdsharebuttonbox">
-                    <a class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
-                    <a class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
-                    <a class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
-                    <a class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!--遮罩-->
-    <div class="blog-mask animated layui-hide"></div>
-    <!-- layui.js -->
-    <script src="../plug/layui/layui.js"></script>
-    <!-- 全局脚本 -->
-    <script src="../js/global.js"></script>
-    <!-- 本页脚本 -->
-    <script src="../js/about.js"></script>
+                                    </div> -->
+								</fieldset>
+							</div>
+						</div>
+						<!--留言墙End-->
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- 底部 -->
+	<footer class="blog-footer">
+		<p>
+			<span>Copyright</span><span>&copy;</span><span>2017</span><a href="#">梦境迷离</a><span>Design
+				By jxnu-liguobin</span>
+		</p>
+		<p>
+			<a href="http://www.miibeian.gov.cn/" target="_blank">蜀ICP备16029915号-1</a>
+		</p>
+	</footer>
+	<!--侧边导航-->
+	<ul
+		class="layui-nav layui-nav-tree layui-nav-side blog-nav-left layui-hide"
+		lay-filter="nav">
+		<li class="layui-nav-item"><a th:href="@{/index/home}"><i
+				class="fa fa-home fa-fw"></i>&nbsp;网站首页</a></li>
+		<li class="layui-nav-item"><a th:href="@{/index/article}"><i
+				class="fa fa-file-text fa-fw"></i>&nbsp;文章专栏</a></li>
+		<li class="layui-nav-item"><a
+			th:href="@{/indexViews/resource.html}"><i
+				class="fa fa-tags fa-fw"></i>&nbsp;资源分享</a></li>
+		<li class="layui-nav-item"><a
+			th:href="@{/indexViews/timeline.html}"><i class="fa fa-road fa-fw"></i>&nbsp;点点滴滴</a></li>
+		<li class="layui-nav-item layui-this"><a th:href="@{/index/about}"><i
+				class="fa fa-info fa-fw"></i>&nbsp;关于本站</a></li>
+	</ul>
+	<!--分享窗体-->
+	<div class="blog-share layui-hide">
+		<div class="blog-share-body">
+			<div style="width: 200px;height:100%;">
+				<div class="bdsharebuttonbox">
+					<a class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a> <a
+						class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a> <a
+						class="bds_weixin" data-cmd="weixin" title="分享到微信"></a> <a
+						class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--遮罩-->
+	<div class="blog-mask animated layui-hide"></div>
+	<!-- layui.js -->
+	<script th:src="@{/layui/layui.js}"></script>
+	<!-- 全局脚本 -->
+	<script th:src="@{/js/global.js}"></script>
+	<script th:src="@{/js/about.js}"></script>
+	<!-- 本页脚本 -->
+	<script th:inline="javascript" type="text/javascript">
+	layui.use(['laypage', 'layer','jquery','form','element','layedit','flow'], function(){
+	  var laypage = layui.laypage,layer = layui.layer,$ = layui.jquery,form=layui.form,element=layui.element,layedit =layui.layedit ;
+	  	//评论和留言的编辑器
+		var editIndex = layedit.build('content', {
+			height : 150,
+			tool : ['strong','italic','link', ,'unlink','|','left', 'center', 'right', '|', 'face'],
+		});
+		//流加载
+		var flow = layui.flow;
+		flow.load({
+	    elem: '#Lazy' //指定列表容器
+	    ,done: function(page, next){ //到达临界点（默认滚动触发），触发下一页（也就相当于ajax中的sucess方法，回调作用）
+	      var lis = [];//空数组
+	      //以Ajax请求为例，请求下一页数据（注意：page是从2开始返回）
+	        $.ajax({
+				url:'/blog/messageLazy/list',
+				dataType:'json',
+				type:'post',
+				data:{
+					page:page,
+				},
+				success:function(res){
+						layui.each(res.data, function(index, item){			
+				      		lis.push('<fieldset class="layui-elem-field layui-field-title"><legend style="font-size: 9px;text-align: left;">'
+				      		+((index+1)+(res.currentPage-1)*10)+'楼  '
+				      		+item.address+'网友  '+
+				 			'</legend><div class="layui-field-box"><span style="color:red;font-size: 8px;float:right;">'+item.messageDateStr
+				 			+'</span><br><div class="content" style="text-align: left;"><p>'
+				      		+item.content+
+				      		'</p></div></div></fieldset>'); 
+				   }); 
+				next(lis.join(''), page < res.count);
+			}
+		});}
+		});
+		//评论和留言的编辑器的验证
+		form.verify({
+			content : function(value) {
+				value = $.trim(layedit.getText(editIndex));
+				if (value == "")
+					return "自少得有一个字吧";
+				layedit.sync(editIndex);
+			},mail :[
+				/(^(?:\w+\.?)*\w+@(?:\w+\.)+\w+$)|(^$)/,
+			'请输入正确格式的邮箱或者不输入'
+			]
+		});
+	  //自定义样式
+	  $("#imageName").attr('src','../uploads/'+[[${application.blogger.imageName}]]); //显示博主头像
+	  //缩放
+	  	form.on('submit(formLeaveMessage)', function(data) {
+		//获取留言内容 带标记
+		var content = layedit.getContent(editIndex);
+		var email = $("#email").val();
+		var code = $("#code").val();
+		$.ajax({
+			async : false,
+			url : '../blog/message/save',
+			data : {
+				'content' : content,
+				'email' : email,
+				'code' : code,
+			},
+			type : 'post',
+			success : function(result) {
+					var result = JSON.parse(result);
+					console.log(result)
+					if (result.success) {
+						layer.alert('留言成功，您的留言将在审核后显示！', {
+							title : '系统提示',
+							icon : 6,
+						}, function(index) {
+							layer.close(index); //关闭
+							location.reload();
+							//$('#LAY_layedit_1').contents().find('body').html('');//清空
+						});
+					} if (!result.success) {
+							var error = result.errorInfo
+							console.log(error);
+							$('#error').text(error); //设置span标签的值
+							return false;
+					}
+			}
+	});
+	return false;
+});
+//注册自定义函数
+var $ = layui.$,
+   active = {
+       /**
+	 *定义函数绑定到按钮的data-type上 delBlogType
+	 */
+       refresh: function() {
+      	var imgSrc = $("#imgObj");  
+        var src = '/blog/validateCode';
+        var url = src;
+        var timestamp = (new Date()).valueOf();  
+        var index = url.indexOf("?",url);  
+        if (index > 0) {  
+            url = url.substring(0, url.indexOf(url, "?"));  
+        }  
+        if ((url.indexOf("&") >= 0)) {  
+            url = url + "×tamp=" + timestamp;  
+        } else {  
+            url = url + "?timestamp=" + timestamp;  
+        } 
+        imgSrc.attr("src", url);  
+       },
+      }
+ $('.layui-form-item .layui-btn-primary').on('click',
+    function() {
+        var type = $(this).data('type');
+        active[type] ? active[type].call(this) : '';
+    });
+ $('.layui-form-item .layui-btn-xs').on('click',
+    function() {
+        var type = $(this).data('type');
+        active[type] ? active[type].call(this) : '';
+    });
+  $('.layui-form-item .close').on('click',
+    function() {
+        var type = $(this).data('type');
+        active[type] ? active[type].call(this) : '';
+    });
+   form.on('switch(email)', function(data){
+	  console.log(data.elem.checked); //开关是否开启，true或者false
+		  $('#enableEmail input').prop('disabled', !data.elem.checked);
+	});  
+    
+});
+
+
+</script>
 </body>
 </html>

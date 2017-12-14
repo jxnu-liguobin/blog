@@ -26,7 +26,7 @@
 
     //子栏目导航点击事件
     $('.child-nav span').click(function () {
-        layer.msg('切换到相应栏目');
+       // layer.msg('切换到相应栏目');
         $(this).addClass('child-nav-btn-this').siblings().removeClass('child-nav-btn-this');
     });
 

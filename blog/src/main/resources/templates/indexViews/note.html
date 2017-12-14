@@ -1,0 +1,136 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; Charset=utf-8">
+    <meta http-equiv="Content-Language" content="zh-CN">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <title>梦境迷离 - 点点滴滴 - 笔记墙</title>
+    <link rel="shortcut icon" th:href="@{/images/Logo_40.png}" type="image/x-icon">
+    <!--Layui-->
+    <link th:href="@{/layui/css/layui.css}" rel="stylesheet" />
+    <!--font-awesome-->
+    <link th:href="@{/plug/font-awesome/css/font-awesome.min.css}" rel="stylesheet" />
+    <!-- animate.css -->
+    <link th:href="@{/css/animate.min.css}" rel="stylesheet" />
+    <!--全局样式表-->
+    <link th:href="@{/css/global.css}" rel="stylesheet" />
+    <!-- 本页样式表 -->
+    <link th:href="@{/css/timeline.css}" rel="stylesheet" />
+</head>
+<body>
+    <!-- 导航 -->
+    <nav class="blog-nav layui-header">
+        <div class="blog-container">
+            <!-- QQ互联登陆 -->
+            <a target="_blank" href="javascript:;" class="blog-user">
+                <i class="fa fa-qq"></i>
+            </a>
+            <a href="javascript:;" class="blog-user layui-hide">
+                <img th:src="@{/images/Absolutely.jpg}" alt="jxnu-liguobin" title="jxnu-liguobin" />
+            </a>
+           <a class="blog-logo" th:href="@{/index/home}">梦境迷离</a>
+            <ul class="layui-nav" lay-filter="nav">
+				<li class="layui-nav-item"><a
+					th:href="@{/index/home}"><i class="fa fa-home fa-fw"></i>&nbsp;网站首页</a>
+				</li>
+				<li class="layui-nav-item"><a
+					th:href="@{/index/article}"><i
+						class="fa fa-file-text fa-fw"></i>&nbsp;文章专栏</a></li>
+				<li class="layui-nav-item"><a
+					th:href="@{/indexViews/resource.html}"><i
+						class="fa fa-tags fa-fw"></i>&nbsp;资源分享</a></li>
+				<li class="layui-nav-item"><a
+					th:href="@{/indexViews/timeline.html}"><i
+						class="fa fa-hourglass-half fa-fw layui-this"></i>&nbsp;点点滴滴</a></li>
+				<li class="layui-nav-item"><a
+					th:href="@{/index/about}"><i class="fa fa-info fa-fw"></i>&nbsp;关于本站</a>
+				</li>
+			</ul>
+            <!-- 手机和平板的导航开关 -->
+            <a class="blog-navicon" href="javascript:;">
+                <i class="fa fa-navicon"></i>
+            </a>
+        </div>
+    </nav>
+    <!-- 主体（一般只改变这里的内容） -->
+    <div class="blog-body">
+        <div class="blog-container">
+            <blockquote class="layui-elem-quote sitemap layui-breadcrumb shadow">
+                <a href="home.html" title="网站首页">网站首页</a>
+                <a href="timeline.html" title="点点滴滴">点点滴滴</a>
+                <a><cite>笔记墙</cite></a>
+            </blockquote>
+            <div class="blog-main">
+                <div class="child-nav shadow">
+                    <span class="child-nav-btn "><a th:href="@{/indexViews/timeline.html}">时光轴</a></span>
+                   <span class="child-nav-btn child-nav-btn-this"><a th:href="@{/indexViews/timeline.html}">笔记墙</a></span>
+                </div>
+                <div class="timeline-box shadow">
+                   <h2>笔记墙内容，暂没有实现。</h2>
+                    <div class="timeline-main">
+                            </div>
+                          <h1 style="padding-top:4px;padding-bottom:2px;margin-top:40px;"><i class="fa fa-hourglass-end"></i>THE END</h1>
+                        </div>
+                    </div></div></div>
+    <!-- 底部 -->
+ 	<footer class="blog-footer">
+		<p>
+			<span>Copyright</span><span>&copy;</span><span>2017</span><a>梦境迷离</a><span>Design By jxnu-liguobin</span>
+		</p>
+		<p>
+			<a  target="_blank">??</a>
+		</p>
+	</footer>
+    <!--侧边导航-->
+	<ul
+		class="layui-nav layui-nav-tree layui-nav-side blog-nav-left layui-hide"
+		lay-filter="nav">
+		<li class="layui-nav-item"><a th:href="@{/index/home}"><i
+				class="fa fa-home fa-fw"></i>&nbsp;网站首页</a></li>
+		<li class="layui-nav-item"><a th:href="@{/index/article}"><i
+				class="fa fa-file-text fa-fw"></i>&nbsp;文章专栏</a></li>
+		<li class="layui-nav-item"><a th:href="@{/indexViews/resource.html}"><i
+				class="fa fa-tags fa-fw"></i>&nbsp;资源分享</a></li>
+		<li class="layui-nav-item layui-this"><a th:href="@{/indexViews/timeline.html}"><i
+				class="fa fa-road fa-fw"></i>&nbsp;点点滴滴</a></li>
+		<li class="layui-nav-item"><a th:href="@{/index/about}"><i
+				class="fa fa-info fa-fw"></i>&nbsp;关于本站</a></li>
+	</ul>
+    <!--分享窗体-->
+    <div class="blog-share layui-hide">
+        <div class="blog-share-body">
+            <div style="width: 200px;height:100%;">
+                <div class="bdsharebuttonbox">
+                    <a class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
+                    <a class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+                    <a class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+                    <a class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--遮罩-->
+    <div class="blog-mask animated layui-hide"></div>
+    <!-- layui.js -->
+    <script th:src="@{/layui/layui.js}"></script>
+    <!-- 全局脚本 -->
+    <script th:src="@{/js/global.js}"></script>
+    <!-- 本页脚本 -->
+    <script th:inline="javascript" type="text/javascript">
+        layui.use('jquery', function () {
+            var $ = layui.jquery;
+
+            $(function () {
+                $('.monthToggle').click(function () {
+                    $(this).parent('h3').siblings('ul').slideToggle('slow');
+                    $(this).siblings('i').toggleClass('fa-caret-down fa-caret-right');
+                });
+                $('.yearToggle').click(function () {
+                    $(this).parent('h2').siblings('.timeline-month').slideToggle('slow');
+                    $(this).siblings('i').toggleClass('fa-caret-down fa-caret-right');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
