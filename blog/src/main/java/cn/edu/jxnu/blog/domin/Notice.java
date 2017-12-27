@@ -1,5 +1,6 @@
 package cn.edu.jxnu.blog.domin;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -10,7 +11,11 @@ import java.util.Date;
  * @version： V1.0
  * 
  */
-public class Notice {
+public class Notice implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Integer id; // 公告ID
 	private String content; // 公告
 	private String noticePublisher; // 发布人

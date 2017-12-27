@@ -42,13 +42,13 @@
 		<nav class="blog-nav layui-header">
 			<div class="blog-container">
 				<!-- QQ互联登陆 -->
-				<a target="_blank"
-					th:href="@{http://wpa.qq.com/msgrd?v=3&uin=568845948&site=qq&menu=yes}"
-					class="blog-user"> <i class="fa fa-qq"></i>
-				</a> <a href="javascript:;" class="blog-user layui-hide"> <img
+				<a target="_blank" th:href="@{/login}"
+			 class="blog-user"><span style="color: white;text-align: right;font-size: 15px;">
+			 <i class="layui-icon" style="font-size: 15px;">&#xe614;</i> </span>
+			</a> <!-- <a href="javascript:;" class="blog-user layui-hide"> <img
 					th:src="@{/images/Absolutely.png}" alt="jxnu-liguobin"
 					title="jxnu-liguobin" />
-				</a> <a class="blog-logo" th:href="@{/index/home}">梦境迷离</a>
+				</a> --> <a class="blog-logo" th:href="@{/index/home}">梦境迷离</a>
 				<!-- 导航菜单 -->
 				<ul class="layui-nav" lay-filter="nav">
 					<li class="layui-nav-item"><a th:href="@{/index/home}"><i
@@ -101,7 +101,7 @@
 						</div>
 						<!-- 文章摘要 -->
 						<div class="article-abstract">
-							<span th:text="${blog.summary}">摘要</span>
+							<p style="overflow:hidden"  th:text="${blog.summary}">摘要</p>
 						</div>
 					</div>
 					<div class="clear"></div>
@@ -127,7 +127,7 @@
 			</div>
 			<!-- 显示搜索信息 -->
 			<div class="blog-main-left" th:if="${session.searchCount gt 0}" >
-				<div class="article shadow" 
+				<div class="article shadow" id="imageForArticle"
 					 th:each="blog : ${session.blogIndexList}" >
 					<div class="article-left"
 						th:if="${not #lists.isEmpty(blog.imageList)}">
@@ -142,9 +142,8 @@
 							<a th:href="@{'/blog/articles/'+${blog.id}}"> <span
 								th:utext="${blog.title}">标题</span></a>
 						</div>
-						<!-- 文章摘要 -->
 						<div class="article-abstract">
-							<span th:utext="${blog.content}">摘要</span>
+							<p style="overflow:hidden" th:utext="${blog.content}">摘要</p>
 						</div>
 					</div>
 					<div class="clear"></div>
@@ -181,14 +180,13 @@
                     <div class="blog-module shadow">
 							<div class="blog-module-title">搜索排行</div>
 							<ul class="fa-ul blog-module-ul" th:each="key,value : ${application.keyList}"
-							th:if="${not #lists.isEmpty(application.keyList)}" th:if="${value.count lt 21}">	
+							th:if="${value.count lt 21}">	
 							
-                            <li><i class="fa-li fa fa-hand-o-right"></i><span th:text="${value.count}"></span>)<span style=" padding-right: 0px;"> <a
-							th:href="@{'/blog/search?key='+${value.current.key}}"> <span style="font-size: 15px;font-style: normal; "
+                            <li><i class="fa-li fa fa-fire"></i><span style=" padding-right: 0px;"> <a
+							th:href="@{'/blog/search?key='+${#uris.escapePath(value.current.key)}}"> <span style="font-size: 15px;font-style: normal; "
 							th:text="${value.current.key}"></span>&nbsp;&nbsp;&nbsp;<span style="color: gray" th:text="'('+${value.current.value}+')'"></span></a>
 						</span>
 						</li>
-						
                         </ul>
 						<div class="clear"></div>
 							<div th:if="${#lists.isEmpty(application.keyList)}">
@@ -198,7 +196,7 @@
                     <div class="blog-module shadow">
                         <div class="blog-module-title">阅读排行</div>
                         <ul class="fa-ul blog-module-ul" th:each="blog,blogStat : ${application.bloglist}"
-							th:if="${not #lists.isEmpty(application.bloglist)}" th:if="${blogStat.count lt 21}">
+							th:if="${blogStat.count lt 21}">
                             <li><i class="fa-li fa fa-hand-o-right"></i><span style=" padding-right: 0px;"> <a
 							th:href="@{'/blog/articles/'+${blog.id}}"> <span
 								style="font-size: 15px;font-style: normal; "
@@ -219,11 +217,11 @@
 	<!-- 底部 -->
 	<footer class="blog-footer">
 		<p>
-			<span>Copyright</span><span>&copy;</span><span>2017</span><a
-				th:href="@{http://www.lyblogs.cn}">梦境迷离</a><span>Design By jxnu-liguobin</span>
+			<span>Copyright</span><span>&copy;</span><span>2017</span><a href="https://www.dreamylost.cn">梦境迷离</a><span>Design
+				By jxnu-liguobin</span>
 		</p>
 		<p>
-			<a th:href="@{http://www.miibeian.gov.cn}" target="_blank">蜀ICP备16029915号-1</a>
+			<a href="http://www.miitbeian.gov.cn" target="_blank">赣ICP备17017283号-1</a>
 		</p>
 	</footer>
 		<ul
@@ -253,6 +251,37 @@
 			</div>
 		</div>
 	</div>
+	 <!-- 音乐播放器 -->
+    <div id="QPlayer">
+	<ol id="playlist"></ol>
+	<div id="pContent">
+		<div id="player">
+			<span class="cover"></span>
+			<div class="ctrl">
+				<div class="musicTag marquee">
+					<strong>Title</strong>
+					 <span> - </span>
+					<span class="artist">Artist</span>
+				</div>
+				<div class="progress">
+					<div class="timer left">0:00</div>
+					<div class="contr">
+						<div class="rewind icon"></div>
+						<div class="playback icon"></div>
+						<div class="fastforward icon"></div>
+					</div>
+					<div class="right">
+						<div class="liebiao icon"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="ssBtn">
+		        <div class="adf"></div>
+	    </div>
+	</div>
+	</div>
+    
 	<!--遮罩-->
 	<div class="blog-mask animated layui-hide"></div>
 	<!-- layui.js -->
@@ -260,6 +289,9 @@
 	<!-- 全局脚本 -->
 	<script th:src="@{/js/global.js}"></script>
 	<!-- 本页脚本 -->
+	<script th:src="@{/js/jquery.min.js}"></script>
+    <script th:src="@{/js/jquery.marquee.min.js}"></script>
+	<script th:src="@{/js/player.js}"></script>
 	<script th:src="@{/js/home.js}"></script>
 	<!-- jquery cookies -->
 	<script th:inline="javascript" type="text/javascript">
@@ -268,7 +300,7 @@
 	  //图片缩放
 	  
 	  window.onload = function() {  
-      var w = $('#imageForArticle').width()-$('.article-title').width();//设置最大宽度,也可根据img的外部容器 而动态获得,比如：$("#demo").width();
+      var w = $('#imageForArticle').width()-$('.article-title').width()-15;//设置最大宽度,也可根据img的外部容器 而动态获得,比如：$("#demo").width();
       console.info("当前宽："+w);
       $("img").each(function() {//如果有很多图片,使用each()遍历   
             var img_w = $(this).width();//图片宽度   
@@ -293,14 +325,14 @@
 	  }
      // var pcount = [[${application.pageBean.total}]];// 总记录数
       if(pcount==0) {
-      	layer.alert('暂无分类，确认并返回主页！', {
+      	  	layer.msg('暂无内容！', {
                         title: '系统提示',
                         icon: 5,
                     },
                     function(index) {
                         layer.close(index); //关闭
-                         window.location.href="/index/article?page=1";
-                    });
+                         //window.location.href="/index/home?page=1";
+                   });
       }
 	  laypage.render({
 	    elem: 'demo2'
@@ -319,7 +351,8 @@
 	  }
 	 });
 	 
-	 var pindex=null;// 当前页
+	 var pindex=[[${session.currentPage}]];// 当前页
+	 //var key = [[${session.key}]];//得到key,每次分页都需要传递
 	  laypage.render({
 	    elem: 'demo3'
 	    ,count: [[${session.searchCount}]] //总记录数
@@ -332,7 +365,7 @@
 	    console.log(obj.limit); //得到每页显示的条数
 	    console.log(obj.count); //得到每页显示的条数
 	      if(!first){
-            window.location.href="../blog/search?page="+obj.curr
+            window.location.href="../blog/search?page="+obj.curr;
        }
 	  }
 	 });
@@ -348,10 +381,9 @@
 		},
 		type : 'post',
 		success : function(result) {
-				if ([[result.success]]) {
 					location.reload();
+					console.info("检索成功");
 				} 
-		}
 	});
 	return false;
 });

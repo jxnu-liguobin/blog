@@ -12,6 +12,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.slf4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -33,7 +34,9 @@ import cn.edu.jxnu.blog.service.LinkService;
 @Controller
 @RequestMapping("/index")
 public class ArticleController {
-
+	
+	private static final Logger log = org.slf4j.LoggerFactory
+			.getLogger(ArticleController.class);
 	@Resource
 	private BlogService blogService;
 	@Resource
@@ -62,6 +65,7 @@ public class ArticleController {
 		map.put("end", pageBean.getEnd());
 		map.put("typeId", typeId);
 		map.put("releaseDateStr", releaseDateStr);
+		map.put("orderBy", "releaseDate");
 		// 获取博客信息
 		List<Blog> blogList = blogService.listBlog(map);
 		if (releaseDateStr != null) {
@@ -92,19 +96,20 @@ public class ArticleController {
 					break; // 只存三张图片信息
 			}
 		}
+		log.info("当前请求的是文章专栏 ip:" + request.getRemoteAddr());
 		// 分页
 		List<Link> linkList = linkService.getTotalData();
 		Blogger blogger = bloggerService.getBloggerData();
 		ServletContext application = RequestContextUtils
 				.findWebApplicationContext(request).getServletContext();
-		List<Blog> bloglist = blogService
-				.listBlog(new HashMap<String, Object>());
+		Map<String, Object> readMap = new HashMap<>();
+		readMap.put("orderBy", "clickHit"); // 设置排序方式 设置方法=${}
+		List<Blog> bloglist = blogService.listBlog(readMap);
 		List<Blog> blogCountList = blogService.countList();
-			application.setAttribute("bloglist", bloglist); //阅读排行
-			application.setAttribute("blogger", blogger); //博主信息
-			application.setAttribute("linkList", linkList); //友情链接
-			application.setAttribute("blogCountList", blogCountList); // 日期分档博客信息
-
+		application.setAttribute("bloglist", bloglist); // 阅读排行
+		application.setAttribute("blogger", blogger); // 博主信息
+		application.setAttribute("linkList", linkList); // 友情链接
+		application.setAttribute("blogCountList", blogCountList); // 日期分档博客信息
 		application.setAttribute("pageBean", pageBean);
 		return "indexViews/article";
 

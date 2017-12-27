@@ -54,6 +54,7 @@ public class MessageServiceImpl implements MessageService {
 		return messageDao.deleteMessage(id);
 	}
 
+	@Deprecated
 	@Override
 	public List<Message> getMessageData(Map<String, Object> map) {
 		return messageDao.listByPage(map);
@@ -63,6 +64,11 @@ public class MessageServiceImpl implements MessageService {
 	@Override
 	public Integer updateMessage(Message message) {
 		return messageDao.updateMessage(message);
+	}
+
+	@Override
+	public List<Message> listByMessages(Map<String, Object> map) {
+		return messageDao.listByPage(map);
 	}
 
 }

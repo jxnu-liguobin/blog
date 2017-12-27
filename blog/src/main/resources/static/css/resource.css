@@ -23,7 +23,7 @@
 
 .resource-cover {
     width: 100%;
-    height: 92px;
+    height: 67%;
     text-align: center;
 }
 
@@ -54,12 +54,12 @@
 .resource-title {
     text-align: center;
     padding: 5px 0;
-    margin-top: 7px;
+    margin-top: 0px;
     margin-bottom: 5px;
 }
 
     .resource-title > a {
-        font-size: 16px;
+        font-size: 10px;
         font-weight: bold;
         line-height: 18px;
         color: #01AAED;
@@ -125,9 +125,8 @@
         width: 32%;
         margin: 0 1%;
         margin-bottom: 10px;
-        height: 320px;
+        height: 270px;
     }
-
     .resource-main .resource:nth-child(odd) {
         margin-left: 1%;
     }
@@ -158,7 +157,7 @@
 /* 中等屏幕（桌面显示器，大于等于 992px） */
 @media (min-width: 992px) {
     .resource {
-        width: 23.5%;
+        width: 24%;
         margin: 0 1%;
         margin-bottom: 10px;
     }

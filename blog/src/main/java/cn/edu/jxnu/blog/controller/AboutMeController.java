@@ -6,8 +6,10 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.shiro.SecurityUtils;
+import org.slf4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -32,6 +34,9 @@ import cn.edu.jxnu.blog.service.MessageService;
 @RequestMapping("/index")
 public class AboutMeController {
 
+	private static final Logger log = org.slf4j.LoggerFactory
+			.getLogger(AboutMeController.class);
+
 	@Resource
 	private BlogService blogService;
 	@Resource
@@ -49,7 +54,8 @@ public class AboutMeController {
 	 * @return
 	 */
 	@RequestMapping("/about")
-	public ModelAndView index(HttpServletRequest request) throws Exception {
+	public Object index(HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 		/**
 		 * 携带留言信息到留言板。
 		 * 
@@ -61,12 +67,16 @@ public class AboutMeController {
 		for (Message message : messageList) {
 			message.setAddress(message.getAddress() + "网友");
 		}
+		log.info("当前请求关于本站页面：");
 		ModelAndView modelAndView = new ModelAndView();
 		Blogger blogger = (Blogger) SecurityUtils.getSubject().getSession()
 				.getAttribute("blogger");
 		if (blogger == null) {
-			modelAndView.setViewName("indexViews/home");
-			return modelAndView;
+			
+			 //modelAndView.setViewName("indexViews/home");
+			 response.sendRedirect("/index/home");  //重定向去主页
+			 return null;  //OK
+			// request.getRequestDispatcher("/index/home").forward(request,response)
 		} else {
 			modelAndView.addObject("messageList", messageList);
 			modelAndView.setViewName("indexViews/about");

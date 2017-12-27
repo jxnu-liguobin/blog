@@ -99,4 +99,5 @@
 		ORDER BY
 		t2.order_num
 	</select>
+	<cache flushInterval="600000"></cache>
 </mapper>

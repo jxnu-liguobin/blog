@@ -7,6 +7,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
+import org.slf4j.Logger;
 import org.springframework.stereotype.Component;
 
 /**
@@ -17,6 +18,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class MyListener implements ServletContextListener {
 
+
+	private static final Logger log = org.slf4j.LoggerFactory
+			.getLogger(MyListener.class);
 	@Override
 	public void contextInitialized(ServletContextEvent sce) {
 		ServletContext context = sce.getServletContext();
@@ -26,6 +30,10 @@ public class MyListener implements ServletContextListener {
 		// 限制IP存储器：存储被限制的IP信息
 		Map<String, Long> limitedIpMap = new HashMap<String, Long>();
 		context.setAttribute("limitedIpMap", limitedIpMap);
+
+		Map<String, Map<Integer, Long>> userMap = new HashMap<String, Map<Integer, Long>>();
+		context.setAttribute("userMap", userMap);
+		log.info("完成初始化ip拦截和浏览量拦截所需要的map");
 	}
 
 	@Override

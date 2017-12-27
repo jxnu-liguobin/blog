@@ -8,6 +8,8 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.support.RequestContextUtils;
@@ -16,12 +18,16 @@ import org.springframework.web.servlet.support.RequestContextUtils;
  * 
  * @Description 自定义过滤器，用来判断IP访问次数是否超限。<br>
  *              如果前台用户访问网站的频率过快，则判定该IP为恶意刷新操作，限制该ip访问<br>
- *              默认限制访问时间为1小时，一小时后自定解除限制 20次/5秒将直接拦截。
+ *              默认限制访问时间为1小时，一小时后自定解除限制 50次/5秒将直接拦截。
  * 
  * @author liguobin
  */
 
+@Component
 public class IPFilter implements HandlerInterceptor {
+
+	private static final Logger log = org.slf4j.LoggerFactory
+			.getLogger(IPFilter.class);
 
 	/**
 	 * 默认限制时间（单位：ms）
@@ -31,7 +37,7 @@ public class IPFilter implements HandlerInterceptor {
 	/**
 	 * 用户连续访问最高阀值，超过该值则认定为恶意操作的IP，进行限制
 	 */
-	private static final int LIMIT_NUMBER = 19;
+	private static final int LIMIT_NUMBER = 49;
 
 	/**
 	 * 用户访问最小安全时间，在该时间内如果访问次数大于阀值，则记录为恶意IP，否则视为正常访问
@@ -126,10 +132,8 @@ public class IPFilter implements HandlerInterceptor {
 			long limitedTime = limitedIpMap.get(ip)
 					- System.currentTimeMillis();
 			// 剩余限制时间(从毫秒到秒转化的一定会存在些许误差，但基本可以忽略不计)
-			System.out
-					.println("剩余限制时间："
-							+ ((limitedTime / 1000) + (limitedTime % 1000 > 0 ? 1
-									: 0)));
+			log.info("剩余限制时间："
+					+ ((limitedTime / 1000) + (limitedTime % 1000 > 0 ? 1 : 0)));
 			request.setAttribute("remainingTime",
 					((limitedTime / 1000) + (limitedTime % 1000 > 0 ? 1 : 0)));
 			modelAndView.setViewName("errors/406");
@@ -148,7 +152,7 @@ public class IPFilter implements HandlerInterceptor {
 		if (ipMap.containsKey(ip)) {
 			Long[] ipInfo = ipMap.get(ip);
 			ipInfo[0] = ipInfo[0] + 1;
-			System.out.println("当前第[" + (ipInfo[0]) + "]次访问");
+			log.info("当前第[" + (ipInfo[0]) + "]次访问");
 			// 访问次数限制
 			if (ipInfo[0] > LIMIT_NUMBER) {
 				Long ipAccessTime = ipInfo[1];// 第一次访问的时间。
@@ -168,7 +172,7 @@ public class IPFilter implements HandlerInterceptor {
 			}
 		} else {
 			initIpVisitsNumber(ipMap, ip);
-			System.out.println("您首次访问该网站");
+			log.info("您首次访问该网站---->注这里的首次不是点击一次，而是一次请求");
 		}
 		context.setAttribute("ipMap", ipMap);
 		context.setAttribute("limitedIpMap", limitedIpMap);

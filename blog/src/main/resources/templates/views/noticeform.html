@@ -9,7 +9,7 @@
 	content="width=device-width, initial-scale=1, maximum-scale=1">
 <link rel="stylesheet" th:href="@{/layui/css/layui.css}" media="all">
 <script th:src="@{/layui/layui.js}"></script>
-<script type="text/javascript" th:inline="javascript">
+<script type="text/javascript">
 
 layui.use(['form', 'layedit', 'laydate', 'jquery'],
 function() {
@@ -18,9 +18,9 @@ function() {
     var layer = layui.layer;
     var layedit = layui.layedit;
     var laydate = layui.laydate;
-    var id = [[${#httpServletRequest.getParameter('id')}]]; //获取传过来的id值
-    var content = [[${#httpServletRequest.getParameter('content')}]]; //获取传过来的类型名称值
-    var level = [[${#httpServletRequest.getParameter('level')}]]; //获取传过来的序列值
+    var id = '[[${#httpServletRequest.getParameter('id')}]]'; //获取传过来的id值
+    var content = '[[${#httpServletRequest.getParameter('content')}]]'; //获取传过来的类型名称值
+    var level = '[[${#httpServletRequest.getParameter('level')}]]'; //获取传过来的序列值
     if(id!=null) {
     	$("#idd").val(id);
     }
@@ -53,24 +53,28 @@ function() {
             },
             type: 'post',
             success: function(result) {
-            var result=JSON.parse(result)
+	           if(typeof result === 'string') {
+					 result = JSON.parse(result)
+				}
                 if (result.success) {
                     layer.alert('操作成功！', {
                         title: '系统提示',
                         icon: 6,
+                        closeBtn: 0,
                     },
                     function(index) {
-						parent.location.reload(); // 父页面刷新                   
                         layer.close(index); //关闭
+                        parent.location.reload(); // 父页面刷新                 
                     });
                 } else {
                     layer.alert('操作失败。。。', {
                         title: '系统提示',
                         icon: 5,
+                        closeBtn: 0,
                     },
                     function(index) {
-                   		parent.location.reload(); // 父页面刷新                
                         layer.close(index); //关闭
+                        parent.location.reload(); // 父页面刷新                
                     });
                 }
             } // end success

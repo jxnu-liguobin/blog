@@ -40,7 +40,7 @@
 	        elem: '#LAY_table_user' //指定原始表格元素选择器（推荐id选择器）
 	        ,
 	        url: '/admin/link/list',
-	        cols: [[{
+	        cols: [ [{
 	            checkbox: true,
 	            fixed: true
 	        },
@@ -78,7 +78,7 @@
 	            align: 'center',
 	            toolbar: '#barDemo',
 	            align: 'center',
-	        }]],
+	        }] ],
 	        id: 'tableId',
 	        page: true,
 	        height: 'auto',
@@ -149,7 +149,10 @@
                     type: "post",
                     dataType: 'json',
                     success: function(data) {
-                        if ([[data.success]]) {
+	                   if(typeof data === 'string') {
+							 data = JSON.parse(data)
+						}
+                        if (data.success) {
                             layer.msg("删除成功！");
                             table.reload('tableId');
                         }else{

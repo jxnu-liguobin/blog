@@ -50,7 +50,6 @@
 	<script th:src="@{/layui/layui.js}" charset="utf-8"></script>
 	<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
 	<script th:inline="javascript" type="text/javascript">
-	/*<![CDATA[*/
 		layui.use('table',
 function() {
     var table = layui.table;
@@ -62,7 +61,7 @@ function() {
         elem: '#LAY_table_user' //指定原始表格元素选择器（推荐id选择器）
         ,
         url: '/admin/blog/listBlog',
-        cols: [[{
+        cols: [([[)]{
             checkbox: true,
             fixed: true
         },
@@ -134,7 +133,7 @@ function() {
             toolbar: '#barDemo',
             align: 'center',
              width:'20%'
-        }]],
+        }[(]])],
         id: 'tableId',
         page: true,
         height: 'auto',
@@ -151,7 +150,7 @@ function() {
         var data = obj.data;
         //查看是跳转到前台的暂时不写
         if (obj.event === 'detail') {
-            layer.msg('ID：' + data.id + ' 的查看操作');
+            window.open('../blog/articles/'+data.id,'_black');
         } else if (obj.event === 'del') {
             layer.confirm('确认删除ID:' + data.id + '这条博客吗？',
             function(index) {
@@ -165,8 +164,11 @@ function() {
                     },
                     type: "post",
                     dataType: 'json',
-                    success: function(data) {
-                        if ([[data.success]]) {
+                    success: function(result) {
+                      if(typeof result === 'string') {
+					       result = JSON.parse(result)
+					    }
+                        if (result.success) {
                             //location.reload();
                             //表格重载
                             layer.msg("删除成功！");
@@ -198,9 +200,9 @@ function() {
                 }
             });
         },
-        /**
-							  		*定义函数绑定到按钮的data-type上 delAll
-							    	*/
+  		/**
+  		*定义函数绑定到按钮的data-type上 delAll
+    	*/
         delAll: function() {
 
             var checkStatus = table.checkStatus('tableId');
@@ -233,7 +235,10 @@ function() {
                     type: "post",
                     dataType: 'json',
                     success: function(data) {
-                        if ([[data.success]]) {
+                    	if(typeof data === 'string') {
+					       data = JSON.parse(data)
+					    }
+                        if (data.success) {
                             //location.reload();
                             //表格重载
                             layer.msg("删除成功！");
@@ -254,7 +259,6 @@ function() {
     });
 
 });
-	/*]]>*/
 	</script>
 
 </body>

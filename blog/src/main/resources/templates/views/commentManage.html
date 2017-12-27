@@ -150,7 +150,10 @@
 							type : "post",
 							dataType : 'json',
 							success : function(data) {
-								if ([ [ data.success ] ]) {
+								if(typeof data === 'string') {
+					      			 data = JSON.parse(data)
+					   			 }
+								if (data.success) {
 									//location.reload();
 									//表格重载
 									layer.msg("删除成功！");
@@ -168,7 +171,6 @@
 			var $ = layui.$, active = {
 			    refresh: function(){
 					      table.reload('commentTableId');
-					      location.reload();
 					    },
 				delAll : function() {
 					var checkStatus = table.checkStatus('commentTableId');
@@ -201,7 +203,10 @@
 									type : "post",
 									dataType : 'json',
 									success : function(data) {
-										if ([ [ data.success ] ]) {
+										if(typeof data === 'string') {
+					       					data = JSON.parse(data)
+					  					  }
+										if (data.success) {
 											//location.reload();
 											//表格重载
 											layer.msg("删除成功！");

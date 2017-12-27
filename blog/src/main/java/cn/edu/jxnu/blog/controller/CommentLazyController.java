@@ -1,7 +1,12 @@
 package cn.edu.jxnu.blog.controller;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -28,16 +33,27 @@ import com.alibaba.fastjson.serializer.SerializerFeature;
 @RequestMapping(value = "/blog/commentLazy")
 public class CommentLazyController {
 
+	private static final Logger log = org.slf4j.LoggerFactory
+			.getLogger(CommentLazyController.class);
 	@Autowired
 	private CommentService commentService;
 
 	@RequestMapping(value = "/list")
 	public String listMessage(
 			@RequestParam(value = "page", required = false) String page,
+			@RequestParam(value = "blogId", required = false )
+			String blogId,
 			HttpServletRequest httpServletRequest) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("blogId", blogId);
+		map.put("state", 1); //只需已经审核的
 		PageBean<Comment> pageBean = new PageBean<>(Integer.parseInt(page), 10);
-		pageBean = commentService.listByPage(pageBean);
-		System.out.println(pageBean.getStart() + pageBean.getEnd());
+		map.put("start", pageBean.getStart());
+		map.put("end", pageBean.getEnd());
+		log.info("当前请求懒加载分页....");
+		//分页
+		List<Comment>  comments= commentService.listComment(map);
+		pageBean.setResult(comments);
 		JSONObject result = new JSONObject();
 		JSON.DEFFAULT_DATE_FORMAT = "yyyy-MM-dd";
 		String jsonStr = JSONObject.toJSONString(pageBean.getResult(),

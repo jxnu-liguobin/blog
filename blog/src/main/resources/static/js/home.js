@@ -1,4 +1,4 @@
-﻿layui.use('jquery', function () {
+﻿layui.use(['jquery'], function () {
     var $ = layui.jquery;
     $(function () {
         //播放公告

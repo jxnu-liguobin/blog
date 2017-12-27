@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta http-equiv="Content-Type" content="text/html; Charset=utf-8">
@@ -35,13 +35,13 @@ pre {
 	<nav class="blog-nav layui-header">
 		<div class="blog-container">
 			<!-- QQ互联登陆 -->
-			<a target="_blank"
-				th:href="@{http://wpa.qq.com/msgrd?v=3&uin=568845948&site=qq&menu=yes}"
-				class="blog-user"> <i class="fa fa-qq"></i>
-			</a> <a href="javascript:;" class="blog-user layui-hide"> <img
+			<a target="_blank" th:href="@{/login}"
+			 class="blog-user"><span style="color: white;text-align: right;font-size: 15px;">
+			 <i class="layui-icon" style="font-size: 15px;">&#xe614;</i></span>
+			</a> <!-- <a href="javascript:;" class="blog-user layui-hide"> <img
 				th:src="@{/images/Absolutely.jpg}" alt="jxnu-liguobin"
 				title="jxnu-liguobin" />
-			</a> <a class="blog-logo" th:href="@{/index/home}">梦境迷离</a>
+			</a> --> <a class="blog-logo" th:href="@{/index/home}">梦境迷离</a>
 			<!-- 导航菜单 layui2.2 更新，导致i失效 -->
 			<ul class="layui-nav" lay-filter="nav">
 				<li class="layui-nav-item"><a
@@ -88,9 +88,8 @@ pre {
 								class="layui-badge-rim layui-bg-gray" th:text="${key}"></span></span>
 						</div>
 						<div class="article-detail-content">
-							<pre>
-								<span  th:utext="${blog.content}"></span>
-							</pre>
+								<pre><p class="layui-text layui-elip" th:utext="${blog.content}"></p>
+								</pre>
 						</div>
 						<hr>
 					</div>
@@ -99,7 +98,7 @@ pre {
 						style="box-shadow: 0 1px 8px #a6a6a6;">
 						<div class="aboutinfo-figure">
 							<fieldset class="layui-elem-field layui-field-title">
-								<legend>Leave a message</legend>
+								<legend>评论</legend>
 								<div class="layui-field-box">
 									<div class="leavemessage" style="text-align:initial">
 										<form class="layui-form blog-editor" action="">
@@ -115,7 +114,7 @@ pre {
 													class="layui-btn layui-btn-primary "
 													style="padding: 0 0 0 ;border: 0" data-type="refresh">
 													<img id="imgObj" alt="验证码" style="margin-top: 16px;"
-													th:src="@{/blog/validateCode}" />
+													th:src="@{/blog/redisValidateCode}" />
 												</a>
 											</div>
 											<div class="layui-form-item">
@@ -130,11 +129,11 @@ pre {
 											</div>
 										</form>
 									</div>
-
 									<fieldset id="Lazy" class="layui-elem-field"
 										th:if="${not #lists.isEmpty(commentList)}">
-										<legend style="text-align: center;" th:text="网友评论"></legend>
-										<!-- <fieldset class="layui-elem-field layui-field-title"
+										<legend style="text-align: center;font-size: 1em;" th:text="评论区"></legend>
+										
+									<!-- 	<fieldset class="layui-elem-field layui-field-title"
 											th:each="comment,commentStat: ${commentList}">
 											<legend style="font-size: 10px;"
 												th:text="${commentStat.index+1}+'楼                           '+${comment.address}"></legend>
@@ -180,7 +179,7 @@ pre {
 						<!-- 点击分类后的页面和artile.html页面一样，只是数据是某一类别的 -->
 						<i> <span
 							th:each="key,keyStat : ${keysMap}"
-							th:if="${not #lists.isEmpty(keysMap)}" th:if="${keyStat.count lt 21}"> <a
+							 th:if="${keyStat.count lt 21}"> <a
 								th:href="@{'/blog/articles/'+${keyStat.current.value}}"> <span
 									style="font-size: 15px;font-style: normal;"
 									th:text="${keyStat.current.key}"></span></a>
@@ -194,7 +193,7 @@ pre {
 						<div class="blog-module-title">评论排行</div>
 						<ul class="fa-ul blog-module-ul" th:each="blog :${blogList}"
 							th:if="${not #lists.isEmpty(blogList)}">
-							<li><i class="fa-li fa fa-hand-o-right"></i><a
+							<li><i class="fa-li fa  fa-comment-o"></i><a
 								th:href="@{'/blog/articles/'+${blog.id}}"><span
 									th:text="${blog.title}">文章标题</span>&nbsp;&nbsp;&nbsp;<span
 									style="color: gray" th:text="'('+${blog.replyHit}+')'"></span></a></li>
@@ -211,11 +210,11 @@ pre {
 	<!-- 底部 -->
 	<footer class="blog-footer">
 		<p>
-			<span>Copyright</span><span>&copy;</span><span>2017</span><a
-				th:href="@{http://www.lyblogs.cn}">梦境迷离</a><span>Design By jxnu-liguobin</span>
+			<span>Copyright</span><span>&copy;</span><span>2017</span><a href="https://www.dreamylost.cn">梦境迷离</a><span>Design
+				By jxnu-liguobin</span>
 		</p>
 		<p>
-			<a th:href="@{http://www.miibeian.gov.cn}" target="_blank">蜀ICP备16029915号-1</a>
+			<a href="http://www.miitbeian.gov.cn" target="_blank">赣ICP备17017283号-1</a>
 		</p>
 	</footer>
 	<!--侧边导航-->
@@ -249,6 +248,37 @@ pre {
 		</div>
 	</div>
 	<!--遮罩-->
+	 <!-- 音乐播放器 -->
+    <div id="QPlayer">
+	<ol id="playlist"></ol>
+	<div id="pContent">
+		<div id="player">
+			<span class="cover"></span>
+			<div class="ctrl">
+				<div class="musicTag marquee">
+					<strong>Title</strong>
+					 <span> - </span>
+					<span class="artist">Artist</span>
+				</div>
+				<div class="progress">
+					<div class="timer left">0:00</div>
+					<div class="contr">
+						<div class="rewind icon"></div>
+						<div class="playback icon"></div>
+						<div class="fastforward icon"></div>
+					</div>
+					<div class="right">
+						<div class="liebiao icon"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="ssBtn">
+		        <div class="adf"></div>
+	    </div>
+	</div>
+	</div>
+    
 	<div class="blog-mask animated layui-hide"></div>
 	<!-- layui.js -->
 	<script th:src="@{/layui/layui.js}"></script>
@@ -257,16 +287,20 @@ pre {
 	<!-- 比较好用的代码着色插件 -->
 	<script th:src="@{/js/prettify.js}"></script>
 	<!-- 本页脚本 -->
+	<script th:src="@{/js/jquery.min.js}"></script>
+    <script th:src="@{/js/jquery.marquee.min.js}"></script>
+	<script th:src="@{/js/player.js}"></script>
 	<script type="text/javascript" th:inline="javascript">
     
-  layui.use([ 'form', 'layedit','jquery','flow' ], function() {
+  layui.use([ 'form', 'layedit','jquery','flow','element' ], function() {
 	var form = layui.form;
 	var flow = layui.flow;
 	var $ = layui.jquery;
+	var element = layui.element;
 	var layedit = layui.layedit;
 	//图片缩放
 	window.onload = function() {  
-      var w = $('pre').width()*4/5;//设置最大宽度,也可根据img的外部容器 而动态获得,比如：$("#demo").width();  
+      var w = $('.article-detail-content').width()-100;//设置最大宽度,也可根据img的外部容器 而动态获得,比如：$("#demo").width();  
       $("img").each(function() {//如果有很多图片,使用each()遍历   
             var img_w = $(this).width();//图片宽度   
             var img_h = $(this).height();//图片高度   
@@ -279,12 +313,23 @@ pre {
         });  
   
     } 
-	//评论和留言的编辑器
+	 //评论和留言的编辑器
 	var editIndex = layedit.build('content', {
 		height : 150,
 		tool : ['strong','italic','link','unlink','|','left', 'center', 'right', '|', 'face'],
+	}); 
+	//评论和留言的编辑器的验证
+	 form.verify({
+		content : function(value) {
+			value = $.trim(layedit.getText(editIndex));
+			if (value == "")
+				return "至少得有一个字吧";
+			layedit.sync(editIndex);
+		}
 	});
 	//流加载
+	//获得该文章的id
+	 	var blogId = [[${blog.id}]]
 		var flow = layui.flow;
 		flow.load({
 	    elem: '#Lazy' //指定列表容器
@@ -292,7 +337,7 @@ pre {
 	      var lis = [];//空数组
 	      //以Ajax请求为例，请求下一页数据（注意：page是从2开始返回）
 	        $.ajax({
-				url:'/blog/commentLazy/list',
+				url:'/blog/commentLazy/list?blogId='+blogId,
 				dataType:'json',
 				type:'post',
 				data:{
@@ -300,10 +345,10 @@ pre {
 				},
 				success:function(res){
 						layui.each(res.data, function(index, item){			
-				      		lis.push('<fieldset class="layui-elem-field layui-field-title"><legend style="font-size: 9px;text-align: left;">'
-				      		+((index+1)+(res.currentPage-1)*10)+'楼  '
-				      		+item.address+'网友  '+
-				 			'</legend><div class="layui-field-box"><span style="color:red;font-size: 8px;float:right;">'+item.commentDateStr
+				      		lis.push('<fieldset class="layui-elem-field layui-field-title"><legend style="font-size: 0.8em;text-align: left;">'
+				      		+item.address+'网友  '
+				 			+'</legend><div class="layui-field-box"><span style="color:red;font-size: 0.75em;float:right;"><span style="color:#808080">'+((index+1)+(res.currentPage-1)*10)+'楼</span>&nbsp;'
+				 			+item.commentDateStr
 				 			+'</span><br><div class="content" style="text-align: left;"><p>'
 				      		+item.content+
 				      		'</p></div></div></fieldset>'); 
@@ -311,16 +356,7 @@ pre {
 				next(lis.join(''), page < res.count);
 			}
 		});}
-		});
-	//评论和留言的编辑器的验证
-	form.verify({
-		content : function(value) {
-			value = $.trim(layedit.getText(editIndex));
-			if (value == "")
-				return "自少得有一个字吧";
-			layedit.sync(editIndex);
-		}
-	});
+		}); 
 	form.on('submit(formLeaveMessage)', function(data) {
 		//获取评论内容 带标记
 		var content = layedit.getContent(editIndex);
@@ -336,16 +372,20 @@ pre {
 			},
 			type : 'post',
 			success : function(result) {
-					var result = JSON.parse(result);
+					if(typeof result ==='string'){
+						result = JSON.parse(result);
+					}
 					console.log(result)
 					if (result.success) {
 						layer.alert('评论成功，您的评论将在审核后显示！', {
 							title : '系统提示',
 							icon : 6,
+							closeBtn: 0,//隐藏关闭按钮
 						}, function(index) {
-							layer.close(index); //关闭
+							layer.close(index); //关闭'
 							location.reload();
-							//$('#LAY_layedit_1').contents().find('body').html('');//清空
+							$('#code').val("");
+							$('#LAY_layedit_1').contents().find('body').html('');//清空
 						});
 					} if (!result.success) {
 							var error = result.errorInfo
@@ -356,7 +396,8 @@ pre {
 			}
 		});
 		return false;
-	});
+	}); 
+	
 	//注册自定义函数
 	var $ = layui.$,
     active = {
@@ -365,7 +406,7 @@ pre {
 		 */
         refresh: function() {
        	    var imgSrc = $("#imgObj");  
-	        var src = '/blog/validateCode';
+	        var src = '/blog/redisValidateCode';
 	        var url = src;
 	        var timestamp = (new Date()).valueOf();  
 	        var index = url.indexOf("?",url);  
@@ -393,7 +434,6 @@ pre {
 	    });
 	
 });
-    
 </script>
 	<script th:src="@{/js/jquery.min.js}"></script>
 	<script th:inline="javascript" type="text/javascript">

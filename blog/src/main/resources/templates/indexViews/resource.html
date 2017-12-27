@@ -2,133 +2,302 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta http-equiv="Content-Type" content="text/html; Charset=utf-8">
-    <meta http-equiv="Content-Language" content="zh-CN">
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-    <title>梦境迷离 - 资源分享</title>
-    <link rel="shortcut icon" th:href="@{../images/Logo_40.png}" type="image/x-icon">
-    <!--Layui-->
-    <link th:href="@{/layui/css/layui.css}" rel="stylesheet" />
-    <!--font-awesome-->
-    <link th:href="@{/plug/font-awesome/css/font-awesome.min.css}" rel="stylesheet" />
-    <!--全局样式表-->
-    <link th:href="@{/css/global.css}" rel="stylesheet" />
-    <!-- 本页样式表 -->
-    <link th:href="@{/css/resource.css}" rel="stylesheet" />
+<meta http-equiv="Content-Language" content="zh-CN">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, user-scalable=no" />
+<title>梦境迷离 - 资源分享</title>
+<link rel="shortcut icon" th:href="@{../images/Logo_40.png}"
+	type="image/x-icon">
+<!--Layui-->
+<link th:href="@{/layui/css/layui.css}" rel="stylesheet" />
+<!--font-awesome-->
+<link th:href="@{/plug/font-awesome/css/font-awesome.min.css}"
+	rel="stylesheet" />
+<!--全局样式表-->
+<link th:href="@{/css/global.css}" rel="stylesheet" />
+<!-- 本页样式表 -->
+<link th:href="@{/css/resource.css}" rel="stylesheet" />
+<style>
+#tooltip{
+	position:absolute;
+	border:0px solid #ccc;
+	background:#333;
+	padding:2px;
+	display:none;
+	color:#fff;
+}
+</style>
 </head>
 <body>
-    <!-- 导航 -->
-    <nav class="blog-nav layui-header">
-        <div class="blog-container">
-            <!-- QQ互联登陆 -->
-           <a target="_blank" th:href="@{http://wpa.qq.com/msgrd?v=3&uin=568845948&site=qq&menu=yes}"
-			 class="blog-user"> <i class="fa fa-qq"></i>
+	<!-- 导航 -->
+	<nav class="blog-nav layui-header">
+		<div class="blog-container">
+			<!-- QQ互联登陆 -->
+			<a target="_blank" th:href="@{/login}"
+			 class="blog-user"><span style="color: white;text-align: right;font-size: 15px;">
+			 <i class="layui-icon" style="font-size: 15px;">&#xe614;</i></span>
+			</a> <!-- <a href="javascript:;" class="blog-user layui-hide"> <img
+				th:src="@{/images/Absolutely.png}" alt="jxnu-liguobin"
+				title="jxnu-liguobin" />
+			</a>  --><a class="blog-logo" th:href="@{/index/home}">梦境迷离</a>
+			<!-- 导航菜单 -->
+			<ul class="layui-nav" lay-filter="nav">
+				<li class="layui-nav-item"><a th:href="@{/index/home}"><i
+						class="fa fa-home fa-fw"></i>&nbsp;网站首页</a></li>
+				<li class="layui-nav-item"><a th:href="@{/index/article}"><i
+						class="fa fa-file-text fa-fw"></i>&nbsp;文章专栏</a></li>
+				<li class="layui-nav-item layui-this"><a
+					th:href="@{/indexViews/resource.html}"><i
+						class="fa fa-tags fa-fw"></i>&nbsp;资源分享</a></li>
+				<li class="layui-nav-item"><a
+					th:href="@{/indexViews/timeline.html}"><i
+						class="fa fa-hourglass-half fa-fw"></i>&nbsp;点点滴滴</a></li>
+				<li class="layui-nav-item"><a th:href="@{/index/about}"><i
+						class="fa fa-info fa-fw"></i>&nbsp;关于本站</a></li>
+			</ul>
+			<!-- 手机和平板的导航开关 -->
+			<a class="blog-navicon" href="javascript:;"> <i
+				class="fa fa-navicon"></i>
 			</a>
-            <a href="javascript:;" class="blog-user layui-hide">
-                <img th:src="@{/images/Absolutely.jpg}" alt="jxnu-liguobin" title="jxnu-liguobin" />
-            </a>
-            <a class="blog-logo" th:href="@{/index/home}">梦境迷离</a>
-            <!-- 导航菜单 -->
-            <ul class="layui-nav" lay-filter="nav">
-                <li class="layui-nav-item">
-                    <a th:href="@{/index/home}"><i class="fa fa-home fa-fw"></i>&nbsp;网站首页</a>
-                </li>
-                <li class="layui-nav-item">
-                    <a th:href="@{/index/article}"><i class="fa fa-file-text fa-fw"></i>&nbsp;文章专栏</a>
-                </li>
-                <li class="layui-nav-item layui-this">
-                    <a th:href="@{/indexViews/resource.html}"><i class="fa fa-tags fa-fw"></i>&nbsp;资源分享</a>
-                </li>
-                <li class="layui-nav-item">
-                    <a th:href="@{/indexViews/timeline.html}"><i class="fa fa-hourglass-half fa-fw"></i>&nbsp;点点滴滴</a>
-                </li>
-                <li class="layui-nav-item">
-					<a th:href="@{/index/about}"><i class="fa fa-info fa-fw"></i>&nbsp;关于本站</a>           
-			</li>
-            </ul>
-            <!-- 手机和平板的导航开关 -->
-            <a class="blog-navicon" href="javascript:;">
-                <i class="fa fa-navicon"></i>
-            </a>
-        </div>
-    </nav>
-    <!-- 主体（一般只改变这里的内容） -->
-    <div class="blog-body">
-        <div class="blog-container">
-        <blockquote class="layui-elem-quote sitemap layui-breadcrumb shadow">
-          <cite><a th:href="@{/index/home}" title="网站首页">网站首页&nbsp;</a> </cite>
-          <cite><a>资源分享&nbsp;</a></cite>
-        </blockquote>
-            <div class="blog-main">
-                <div class="blog-main">
-                    <div class="child-nav shadow">
-                        <span class="child-nav-btn child-nav-btn-this">源码</span>
-                        <span class="child-nav-btn">相册</span>
-                        <span class="child-nav-btn">书籍</span>
-                    </div>
-                    <div class="resource-main">
-                        <div class="resource shadow">
-                            <div class="resource-cover">
-                                <a href="javascript:layer.msg(&#39;这里填演示地址&#39;)" target="_blank">
-                                    <img th:src="@{/images/cover/201703181909057125.jpg}" alt="时光轴" />
-                                </a>
-                            </div>
-                            <h1 class="resource-title"><a href="javascript:layer.msg(&#39;这里填演示地址&#39;)" target="_blank">Blog</a></h1>
-                            <p class="resource-abstract">本博客的源码！暂未实现资源分享和点点滴滴模块</p>
-                            <div class="resource-info">
-                                <span class="category"><a th:href="@{https://github.com/jxnu-liguobin/blog.git}"><i class="fa fa-tags fa-fw"></i>&nbsp;源码</a></span>
-                                <span class="author"><i class="fa fa-user fa-fw"></i>liguobin</span>
-                                <div class="clear"></div>
-                            </div>
-                            <div class="resource-footer">
-                                <a class="layui-btn layui-btn-small layui-btn-primary" href="javascript:layer.msg(&#39;这里填演示地址&#39;)" target="_blank"><i class="fa fa-eye fa-fw"></i>演示</a>
-                                <a class="layui-btn layui-btn-small layui-btn-primary" href="javascript:layer.msg(&#39;这里填下载地址&#39;)" target="_blank"><i class="fa fa-download fa-fw"></i>下载</a>
-                            </div>
-                        </div>
-                        <!-- 清除浮动 -->
-                        <div class="clear"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- 底部 -->
-    <footer class="blog-footer">
-        <p><span>Copyright</span><span>&copy;</span><span>2017</span><a href="http://www.lyblogs.cn">梦境迷离</a><span>Design By jxnu-liguobin</span></p>
-        <p><a href="http://www.miibeian.gov.cn/" target="_blank">蜀ICP备16029915号-1</a></p>
-    </footer>
-    <!--侧边导航-->
- 	<ul
+		</div>
+	</nav>
+	<!-- 主体（一般只改变这里的内容） -->
+	<div class="blog-body" onload="toSmall();">
+		<div class="blog-container">
+			<blockquote class="layui-elem-quote sitemap layui-breadcrumb shadow">
+				<cite><a th:href="@{/index/home}" title="网站首页">网站首页&nbsp;</a>
+				</cite> <cite><a>资源分享&nbsp;</a></cite>
+			</blockquote>
+			<div class="blog-main site-demo-flow" id="LAY_demo3" style="overflow:auto;">
+				<div class="child-nav shadow" id="forFirstload">
+						<a th:href="@{/indexViews/resource.html}"><span  class="child-nav-btn child-nav-btn-this">相册</span></a>
+					<a th:href="@{/indexViews/resource2.html}"><span  class="child-nav-btn">源码</span></a>
+				</div>
+				<div class="clear"></div>
+				</div>
+			</div>
+		</div>
+
+	<!-- 底部 -->
+	<footer class="blog-footer">
+		<p>
+			<span>Copyright</span><span>&copy;</span><span>2017</span><a href="https://www.dreamylost.cn">梦境迷离</a><span>Design
+				By jxnu-liguobin</span>
+		</p>
+		<p>
+			<a href="http://www.miitbeian.gov.cn" target="_blank">赣ICP备17017283号-1</a>
+		</p>
+	</footer>
+	<!--侧边导航-->
+	<ul
 		class="layui-nav layui-nav-tree layui-nav-side blog-nav-left layui-hide"
 		lay-filter="nav">
 		<li class="layui-nav-item"><a th:href="@{/index/home}"><i
 				class="fa fa-home fa-fw"></i>&nbsp;网站首页</a></li>
 		<li class="layui-nav-item"><a th:href="@{/index/article}"><i
 				class="fa fa-file-text fa-fw"></i>&nbsp;文章专栏</a></li>
-		<li class="layui-nav-item layui-this"><a th:href="@{/indexViews/resource.html}"><i
+		<li class="layui-nav-item layui-this"><a
+			th:href="@{/indexViews/resource.html}"><i
 				class="fa fa-tags fa-fw"></i>&nbsp;资源分享</a></li>
-		<li class="layui-nav-item"><a th:href="@{/indexViews/timeline.html}"><i
+		<li class="layui-nav-item"><a
+			th:href="@{/indexViews/timeline.html}"><i
 				class="fa fa-road fa-fw"></i>&nbsp;点点滴滴</a></li>
 		<li class="layui-nav-item"><a th:href="@{/index/about}"><i
 				class="fa fa-info fa-fw"></i>&nbsp;关于本站</a></li>
 	</ul>
-    <!--分享窗体-->
-    <div class="blog-share layui-hide">
-        <div class="blog-share-body">
-            <div style="width: 200px;height:100%;">
-                <div class="bdsharebuttonbox">
-                    <a class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
-                    <a class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
-                    <a class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
-                    <a class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!--遮罩-->
-    <div class="blog-mask animated layui-hide"></div>
-    <!-- layui.js -->
-    <script th:src="@{/layui/layui.js}"></script>
-    <!-- 全局脚本 -->
-    <script th:src="@{/js/global.js}"></script>
+	<!--分享窗体-->
+	<div class="blog-share layui-hide">
+		<div class="blog-share-body">
+			<div style="width: 200px;height:100%;">
+				<div class="bdsharebuttonbox">
+					<a class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a> <a
+						class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a> <a
+						class="bds_weixin" data-cmd="weixin" title="分享到微信"></a> <a
+						class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+				</div>
+			</div>
+		</div>
+		
+	</div>
+	 <!-- 音乐播放器 -->
+    <div id="QPlayer">
+	<ol id="playlist"></ol>
+	<div id="pContent">
+		<div id="player">
+			<span class="cover"></span>
+			<div class="ctrl">
+				<div class="musicTag marquee">
+					<strong>Title</strong>
+					 <span> - </span>
+					<span class="artist">Artist</span>
+				</div>
+				<div class="progress">
+					<div class="timer left">0:00</div>
+					<div class="contr">
+						<div class="rewind icon"></div>
+						<div class="playback icon"></div>
+						<div class="fastforward icon"></div>
+					</div>
+					<div class="right">
+						<div class="liebiao icon"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="ssBtn">
+		        <div class="adf"></div>
+	    </div>
+	</div>
+	</div>
+    
+	<!--遮罩-->
+	<!-- 音乐 -->
+	<script th:src="@{/js/jquery.min.js}"></script>
+	<script th:src="@{/js/player.js}"></script>
+	<div class="blog-mask animated layui-hide"></div>
+	<!-- layui.js -->
+	<script th:src="@{/layui/layui.js}"></script>
+	<!-- 全局脚本 -->
+	<script th:src="@{/js/global.js}"></script>
+	<script th:src="@{/js/jquery.min.js}"></script>
+	<script th:src="@{/layui/lay/modules/layer.js}"></script>  <!-- 提供自定义js调用  -->
+<script th:inline="javascript" type="text/javascript">
+layui.use(
+[ 'flow', 'jquery' ],
+	function() {
+	var $ = layui.jquery;
+	var flow = layui.flow;
+		//图片缩放
+	var w ;
+	var height;
+	/* window.onload=function(){
+	w = $('#picture').width()*4/5;//设置最大宽度,也可根据img的外部容器 而动态获得,比如：$("#demo").width();  
+	$("img").each(function() {//如果有很多图片,使用each()遍历   
+		var img_w = $(this).width();//图片宽度   
+		var img_h = $(this).height();//图片高度   
+		if (img_w > w) {//如果图片宽度超出指定最大宽度   
+			height = (w * img_h) / img_w; //高度等比缩放   
+			$(this).css({
+				"width" : w,
+				"height" : height
+			});//设置缩放后的宽度和高度   
+		}
+	});
+	start();
+	} */
+	flow.load({
+	elem : '#LAY_demo3' //流加载容器
+	,
+	scrollElem : '#LAY_demo3' //滚动条所在元素，一般不用填，此处只是演示需要。
+	,
+	isAuto : false,
+	isLazyimg : true,
+	end: '<div style="float :right;">没有更多的图片了~QAQ</div>',
+	done : function(page, next) { //加载下一页
+			var lis = [];
+			$.ajax({
+				url:'../resource/list',
+				dataType:'json',
+				type:'post',
+				data:{
+					page:page,
+				},
+				success:function(res){
+							layui.each(res.data, function(index, item){	
+							//w=$("#forFirstload").width()*(2.65/12) ;
+							//使用兄弟容器的宽和高
+							lis.push('<div class="resource-main"><div class="resource shadow" id="picture"><div class="resource-cover"><a class="tooltip" href="'+
+							item.url+'"><img title='+
+							item.name+' lay-src='
+							+item.url+
+							'/></a></div><span style="font-size: small;color: #8B8B8C;">名&nbsp;&nbsp;&nbsp;&nbsp;称：'
+							+item.name+
+							'</span></br><span style="font-size: small;color: #8B8B8C;" >上传人：'
+							+item.publisher+'</span></br><span style="font-size: small;color: #8B8B8C;">日期：'+item.dateStr+'</span></br><span id="'
+							+item.id+'key" style="font-size: small;color: #8B8B8C;">已赞：'
+							+item.click+
+							'</span><a href="javascript: click('+item.id+');" id="'
+							+item.id+'" class="like_btn">&nbsp;<i class="layui-icon" style="font-size: 20px;">&#xe6c6;</i></a></div></div>');
+						});
+					next(lis.join(''), page < res.count);
+						start();
+					}
+				});
+			}
+		});
+	//按屏加载图片
+	flow.lazyimg({
+		elem : '#LAY_demo3 img',
+		});
+});
+function start(){
+	var x = -350;
+	var y = 10;
+	$("a.tooltip").mouseover(function(e){
+		this.myTitle = this.title;
+		this.title = "";	
+		var imgTitle = this.myTitle? "<br/>" + this.myTitle : "";
+		var tooltip = "<div id='tooltip'><img style='width:600px;height:400px;' src='"+ this.href +"' alt='预览图'/>"+imgTitle+"<\/div>"; //创建 div 元素
+		$("body").append(tooltip);	//把它追加到文档中						 
+		$("#tooltip")
+			.css({
+				"top": (e.pageY+y) + "px",
+				"left":  (e.pageX+x)  + "px"
+			}).show("fast");	  //设置x坐标和y坐标，并且显示
+    }).mouseout(function(){
+		this.title = this.myTitle;	
+		$("#tooltip").remove();	 //移除 
+    }).mousemove(function(e){
+		$("#tooltip")
+			.css({
+				"top": (e.pageY+y) + "px",
+				"left":  (e.pageX+x)  + "px"
+			});
+		});
+}
+</script>
+<script type="text/javascript" th:inline="javascript">
+function lookBig() {
+console.info("点击了")
+	/* //调用示例
+	layer.photos({
+	  photos: '#LAY_demo3'
+	  ,anim: 5 //0-6的选择，指定弹出图片动画类型，默认随机（请注意，3.0之前的版本用shift参数）
+	});  */
+}
+function click(id){
+	console.info("点击了"+id);
+		$.ajax({
+			async : false,
+			url : '../resource/isClick',
+			data : {
+				'userIp' : [[${application.ipAddress}]],
+				'imageId':id,
+			},
+			type : 'post',
+			success : function(result) {
+					var result = JSON.parse(result)
+					var idd = result.data.idUrl;
+					var iddd = result.data.idClick;
+					if (result.success) {
+						console.info("点赞成功")
+						$('#'+id).html('&nbsp;<i class="layui-icon" style="font-size: 20px;color:red;">&#xe6c6;</i>');
+						$('#'+idd).text('已赞：'+iddd);
+						layer.tips('+1', '#'+id,{
+							 tips: [1,'red'],anim: 0
+						});
+					} else{
+						console.info("取消成功")
+						$('#'+id).html('&nbsp;<i class="layui-icon" style="font-size: 20px;">&#xe6c6;</i>');
+						$('#'+idd).text('已赞：'+iddd);
+						layer.tips('-1', '#'+id,{
+							 tips:[ 1,'#c2c2c2'],anim: 0
+						});
+					}
+			}
+	});
+}
+
+</script>
 </body>
 </html>

@@ -306,27 +306,23 @@ public class AddressUtils {
 	}
 
 	public static String getRealIp(HttpServletRequest request) {
-		String ip = request.getHeader("X-Real-IP");
+		String ip = request.getHeader("x-forwarded-for");
+		System.out.println("come from x-forwarded-for " + ip );
 		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
 			if (ip == null || ip.length() == 0
 					|| "unknown".equalsIgnoreCase(ip)) {
-				ip = request.getHeader("Proxy-Client-IP");
-			}
-			if (ip == null || ip.length() == 0
-					|| "unknown".equalsIgnoreCase(ip)) {
-				ip = request.getHeader("WL-Proxy-Client-IP");
-			}
-			if (ip == null || ip.length() == 0
-					|| "unknown".equalsIgnoreCase(ip)) {
 				ip = request.getHeader("HTTP_CLIENT_IP");
+				System.out.println("ip HTTP_CLIENT_IP "+ ip);
 			}
 			if (ip == null || ip.length() == 0
 					|| "unknown".equalsIgnoreCase(ip)) {
-				ip = request.getHeader("HTTP_X_FORWARDED_FOR");
+				ip = request.getHeader("X-Real-IP");
+				System.out.println("ip from real "+ ip);
 			}
 			if (ip == null || ip.length() == 0
 					|| "unknown".equalsIgnoreCase(ip)) {
 				ip = request.getRemoteAddr();
+				System.out.println("ip from addr "+ip);
 			}
 		} else if (ip.length() > 15) {
 			String[] ips = ip.split(",");
@@ -334,6 +330,7 @@ public class AddressUtils {
 				String strIp = (String) ips[index];
 				if (!("unknown".equalsIgnoreCase(strIp))) {
 					ip = strIp;
+					System.out.println("ip come come from x-forwarded-fors  " +ip);
 					break;
 				}
 			}

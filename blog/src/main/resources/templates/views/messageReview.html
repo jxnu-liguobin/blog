@@ -122,7 +122,6 @@
 			var $ = layui.$, active = {
 			    refresh: function(){
 					      table.reload('messageTableId');
-					      location.reload();
 					    },
 				review: function() {
 					var checkStatus = table.checkStatus('messageTableId');
@@ -156,7 +155,10 @@
 									type : "post",
 									dataType : 'json',
 									success : function(data) {
-										if ([[data.success]]) {
+										if(typeof data === 'string') {
+							 				data = JSON.parse(data)
+										}
+										if (data.success) {
 											//location.reload();
 											//表格重载
 											layer.msg("操作成功！");
@@ -200,7 +202,10 @@
 									type : "post",
 									dataType : 'json',
 									success : function(data) {
-										if ([[data.success]]) {
+										if(typeof data === 'string') {
+							 				data = JSON.parse(data)
+										}
+										if (data.success) {
 											//location.reload();
 											//表格重载
 											layer.msg("操作成功！");

@@ -13,6 +13,7 @@ import cn.edu.jxnu.blog.commons.VaildataCodeUtil;
  * @author liguobin
  *
  */
+@Deprecated
 @Controller
 @RequestMapping("/blog")
 public class ValidataImageController {

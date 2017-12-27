@@ -34,6 +34,7 @@ import org.apache.lucene.search.highlight.SimpleHTMLFormatter;
 import org.apache.lucene.search.highlight.SimpleSpanFragmenter;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
+import org.slf4j.Logger;
 import org.springframework.stereotype.Component;
 
 import cn.edu.jxnu.blog.commons.DateUtil;
@@ -48,15 +49,20 @@ import cn.edu.jxnu.blog.service.BlogService;
 @Component
 public class BlogIndex {
 
+	private static final Logger log = org.slf4j.LoggerFactory
+			.getLogger(BlogIndex.class);
+
 	public Directory directory;
 
 	@Resource
 	private BlogService blogService;
-	// 存放索引的物理位置  这里是服务器的地址
-	public String indexDir = PathUtil.getRootPath().subSequence(1,PathUtil.getRootPath().length())
+	// 存放索引的物理位置 这里是服务器的地址
+	public String indexDir = PathUtil.getRootPath().subSequence(1,
+			PathUtil.getRootPath().length())
 			+ "/blog/luceneIndex";
+
 	public void sys() {
-		System.out.println("根路径："+PathUtil.getRootPath());
+		log.info("根路径：" + PathUtil.getRootPath());
 	}
 
 	/**
@@ -74,6 +80,7 @@ public class BlogIndex {
 		IndexWriterConfig config = new IndexWriterConfig(analyzer);
 		// 实例化写索引对象
 		IndexWriter indexWriter = new IndexWriter(directory, config);
+		log.info("获得索引");
 		return indexWriter;
 	}
 
@@ -84,7 +91,7 @@ public class BlogIndex {
 	 * @throws IOException
 	 */
 	public void addIndex(Blog blog) throws IOException {
-		System.out.println("索引位置："+indexDir);
+		log.info("索引位置：" + indexDir);
 		// 获取写索引对象
 		IndexWriter indexWriter = getIndexWriter();
 		// 实例化索引文档
@@ -126,6 +133,7 @@ public class BlogIndex {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
+			log.info("删除索引");
 			indexWriter.close();
 		}
 
@@ -158,6 +166,7 @@ public class BlogIndex {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
+			log.info("更新索引");
 			// 关闭写索引
 			indexWriter.close();
 			indexWriter.getDirectory().close();
@@ -173,6 +182,7 @@ public class BlogIndex {
 	 */
 
 	public List<Blog> searchBlog(String q) throws Exception {
+		log.info("正在检索。。。");
 		// 实例化目录对象
 		directory = FSDirectory.open(Paths.get(indexDir));
 		// 获取读索引对象
@@ -203,7 +213,7 @@ public class BlogIndex {
 		Fragmenter fragmenter = new SimpleSpanFragmenter(queryScorer);
 		// 格式化得分高片段
 		SimpleHTMLFormatter formatter = new SimpleHTMLFormatter(
-				"<b><fontstyle='font-weight:bold;' color='red'>", "</font></b>");
+				"<b><font color='red'>", "</font></b>");
 		// 高亮显示
 		Highlighter highlighter = new Highlighter(formatter, queryScorer);
 		// 将得分高的片段设置进去
@@ -258,5 +268,13 @@ public class BlogIndex {
 		indexWriter.deleteAll();
 		indexWriter.commit();
 		indexWriter.close();
+	}
+
+	public BlogIndex() {
+		// TODO Auto-generated constructor stub
+	}
+//手动删除id  （主要是因为数据库的导入失败。但是索引还存在）
+	public static void main(String[] args) throws IOException {
+		new BlogIndex().deleteIndex(String.valueOf(71));
 	}
 }

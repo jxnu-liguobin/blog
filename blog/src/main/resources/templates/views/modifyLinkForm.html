@@ -9,7 +9,7 @@
 	content="width=device-width, initial-scale=1, maximum-scale=1">
 <link rel="stylesheet" th:href="@{/layui/css/layui.css}" media="all">
 <script th:src="@{/layui/layui.js}"></script>
-<script type="text/javascript" th:inline="javascript">
+<script type="text/javascript">
 
 layui.use(['form', 'layedit', 'laydate', 'jquery'],
 function() {
@@ -18,10 +18,10 @@ function() {
     var layer = layui.layer;
     var layedit = layui.layedit;
     var laydate = layui.laydate;
-    var id = [[${#httpServletRequest.getParameter('id')}]]; //获取传过来的id值
-    var linkName = [[${#httpServletRequest.getParameter('linkName')}]]; //获取传过来的类型名称值
-    var linkUrl = [[${#httpServletRequest.getParameter('linkUrl')}]]; //获取传过来的url
-    var orderNum = [[${#httpServletRequest.getParameter('orderNum')}]]; //获取传过来的序列
+    var id = '[[${#httpServletRequest.getParameter('id')}]]'; //获取传过来的id值
+    var linkName =' [[${#httpServletRequest.getParameter('linkName')}]]'; //获取传过来的类型名称值
+    var linkUrl = '[[${#httpServletRequest.getParameter('linkUrl')}]]'; //获取传过来的url
+    var orderNum = '[[${#httpServletRequest.getParameter('orderNum')}]]'; //获取传过来的序列
     if(id!=null) {
     	$("#idd").val(id);
 	    $("#linkName").val(linkName);
@@ -56,10 +56,14 @@ function() {
             },
             type: 'post',
             success: function(result) {
-                if ([[result.success]]) {
+            	if(typeof result === 'string') {
+						 result = JSON.parse(result)
+				}
+                if (result.success) {
                     layer.alert('操作成功！', {
                         title: '系统提示',
                         icon: 6,
+                        closeBtn: 0,
                     },
                     function(index) {
                         layer.close(index); //关闭
@@ -70,6 +74,7 @@ function() {
                     layer.alert('操作失败。。。', {
                         title: '系统提示',
                         icon: 5,
+                        closeBtn: 0,
                     },
                     function(index) {
                         layer.close(index); //关闭

@@ -43,7 +43,7 @@
 	        elem: '#LAY_table_user' //指定原始表格元素选择器（推荐id选择器）
 	        ,
 	        url: '/admin/blogType/list',
-	        cols: [[{
+	        cols: [([[)]{
 	            checkbox: true,
 	            fixed: true
 	        },
@@ -82,7 +82,7 @@
 	            align: 'center',
 	            toolbar: '#barDemo',
 	            align: 'center',
-	        }]],
+	        }[(]])],
 	        id: 'tableId',
 	        page: true,
 	        height: 'auto',
@@ -164,18 +164,23 @@
                     type: "post",
                     dataType: 'json',
                     success: function(data) {
-                        if (data.success && !data.exist) {
+                    	if(typeof data === 'string') {
+					        data = JSON.parse(data)
+					    }
+                        if (data.success==0) {
                             //location.reload();
                             //表格重载
                             layer.msg("删除成功！");
                             table.reload('tableId');
-                        } else if (data.exist && !data.success) {
+                        } else if (data.success==1) {
                             layer.alert('请删除分类下的博客！', {
                                 title: '系统提示',
                                 icon: 2,
                                 anim: 6,
                             });
                             return false;
+                        } else {
+                        	layer.msg("删除失败！");
                         }
                     },
                     //success end

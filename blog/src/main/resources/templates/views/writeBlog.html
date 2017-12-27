@@ -92,7 +92,7 @@
 	content : function(value) {
 		value = $.trim(layedit.getText(editIndex));
 		if (value == "")
-			return "自少得有一个字吧";
+			return "至少得有一个字吧";
 		layedit.sync(editIndex);
 	},type :function(value){
 		if(value=='selected') {
@@ -128,10 +128,14 @@
             },
             type: 'post',
             success: function(result) {
-                if ([[result.success]]) {
+          	   if(typeof result === 'string') {
+            		 result = JSON.parse(result)
+            	}
+                if (result.success) {
                     layer.alert('保存成功！', {
                         title: '系统提示',
                         icon: 6,
+                        closeBtn: 0,
                     },
                     function(index) {
 
@@ -144,6 +148,7 @@
                     layer.alert('保存失败。。', {
                         title: '系统提示',
                         icon: 5,
+                        closeBtn: 0,
                     },
                     function(index) {
                         location.reload() //重写加载表格

@@ -26,4 +26,5 @@ public interface BloggerService {
      * @return
      */
     Integer updateBlogger(Blogger blogger);
+    
 }

@@ -16,7 +16,9 @@ import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -42,6 +44,8 @@ import com.alibaba.druid.util.StringUtils;
 @RequestMapping("/blogger")
 public class BloggerController {
 
+	private static final Logger log = org.slf4j.LoggerFactory
+			.getLogger(BloggerController.class);
 	@Resource
 	private BloggerService bloggerService;
 	@Resource
@@ -54,6 +58,9 @@ public class BloggerController {
 	private CommentService commentService;
 	@Autowired
 	private MessageService messageService;
+	@Autowired
+	private RedisTemplate<String, String> redisTemplate;
+
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public String login(Blogger blogger,
@@ -62,12 +69,12 @@ public class BloggerController {
 
 		// System.out.println("是否记住密码：" + rememberMe);
 		Subject subject = SecurityUtils.getSubject();
-		System.out.println("加密前用户名：" + blogger.getUserName() + "\n" + "加密前密码："
+		log.info("加密前用户名：" + blogger.getUserName()  + "加密前密码："
 				+ blogger.getPassword());
 		// 获取加密后密码
 		String password = MD5Util.md5(blogger.getPassword(),
 				blogger.getUserName());
-		System.out.println("加密后的密码：" + password);
+		log.info("加密后的密码：" + password);
 		// 获取用户密码登录token 将需要验证的用户名和密码的MD5值传给myrealm
 		UsernamePasswordToken token = new UsernamePasswordToken(
 				blogger.getUserName(), password);
@@ -77,20 +84,19 @@ public class BloggerController {
 		try {
 			// 根据token登录 会调用MyRealm中的doGetAuthenticationInfo方法进行身份认证
 			subject.login(token);
-			System.out.println("验证密码成功......");
+			log.info("验证密码成功......");
 			String code = request.getParameter("code"); // 得到验证码
 			// 得到后台session的验证码
 			HttpSession session = request.getSession();
-			String sessionCode = (String) session.getAttribute("code");
-			System.out.println("当前session超时="
-					+ session.getMaxInactiveInterval() + "S");
+			String sessionCode = (String) redisTemplate.opsForValue().get("code");
+			log.info("shiro控制的session---->当前session超时=" + session.getMaxInactiveInterval() + "S");
+			log.info("当前rediscode过期时间："+redisTemplate.getExpire("code"));
 			if (!StringUtils.equalsIgnoreCase(code, sessionCode)) { // 忽略验证码大小写
-				System.out.println("验证码对应不上code=" + code + "  sessionCode="
-						+ sessionCode);
+				log.info("验证码对应不上code=" + code + "  redisCode=" + sessionCode);
 				request.setAttribute("errorInfo", "验证码错误！");
 				return "index";
 			}
-			System.out.println("**********************************");
+			log.info("**********************************");
 			// 获取博客总数量
 			Map<String, Object> map = new HashMap<String, Object>();
 			long articleCount = blogService.getTotal(map);
@@ -108,7 +114,7 @@ public class BloggerController {
 			Long commentCount0 = commentService.getTotal(unmap);// 待审核
 			Long commentCount = commentService.getTotal(ismap);// 评论总数量
 			String ip = AddressUtils.getRealIp(request);
-			System.out.println("博主：ip=" + ip);
+			log.info("博主：ip=" + ip);
 			// String ip = request.getRemoteAddr(); // ip
 			String address = AddressUtils.getAddress("ip=" + ip, "utf-8"); // 地址
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -130,8 +136,6 @@ public class BloggerController {
 			application.setAttribute("ip", ip);
 			application.setAttribute("address", address);
 			application.setAttribute("str", str);
-
-			System.out.println("ip:" + ip);
 			return "main";
 		} catch (UnknownAccountException e) {
 			e.printStackTrace();
@@ -151,43 +155,4 @@ public class BloggerController {
 		return "index";
 
 	}
-	// 前台的先注释掉
-	/*
-	 * @RequestMapping("/aboutme") public ModelAndView abouotMe(){ ModelAndView
-	 * modelAndView = new ModelAndView(); Blogger blogger =
-	 * bloggerService.getBloggerData();
-	 * modelAndView.addObject("blogger",blogger);
-	 * 
-	 * //需要携带归档博客信息 List<Blog> blogTimeList = blogService.countList();
-	 * modelAndView.addObject("blogTimeList",blogTimeList); //将友情链接显示出来
-	 * List<Link> linkList = linkService.getTotalData();
-	 * modelAndView.addObject("linkList", linkList);
-	 * modelAndView.addObject("commonPage"
-	 * ,"foreground/blogger/bloggerInfo.jsp"); modelAndView.addObject("titlte",
-	 * "关于博主 - "); modelAndView.setViewName("mainTemp"); return modelAndView; }
-	 * //我的相册
-	 * 
-	 * @RequestMapping("/myalbum") public ModelAndView myAlbun(){
-	 * 
-	 * ModelAndView modelAndView = new ModelAndView(); // // //需要携带归档博客信息 //
-	 * List<Blog> blogTimeList = blogService.countList(); //
-	 * modelAndView.addObject("blogTimeList",blogTimeList); // //将友情链接显示出来 //
-	 * List<Link> linkList = linkService.getTotalData(); //
-	 * modelAndView.addObject("linkList", linkList); // //显示存档信息 // Blogger
-	 * blogger = bloggerService.getBloggerData(); //
-	 * modelAndView.addObject("blogger",blogger); //获取相册，建一个相册表 //
-	 * modelAndView.addObject("commonPage", "foreground/blogger/myAlbum.jsp");
-	 * // modelAndView.setViewName("mainTemp"); return modelAndView; } //博主的资源
-	 * 
-	 * @RequestMapping("resource") public ModelAndView resource(){ ModelAndView
-	 * modelAndView = new ModelAndView(); // // //需要携带归档博客信息 // List<Blog>
-	 * blogTimeList = blogService.countList(); //
-	 * modelAndView.addObject("blogTimeList",blogTimeList); // //将友情链接显示出来 //
-	 * List<Link> linkList = linkService.getTotalData(); //
-	 * modelAndView.addObject("linkList", linkList); // //显示存档信息 // Blogger
-	 * blogger = bloggerService.getBloggerData(); //
-	 * modelAndView.addObject("blogger",blogger); //
-	 * modelAndView.addObject("commonPage", "foreground/blogger/resource.jsp");
-	 * // modelAndView.setViewName("mainTemp"); return modelAndView; }
-	 */
 }

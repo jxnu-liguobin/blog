@@ -13,6 +13,7 @@ import java.util.Set;
  * @version： V1.0
  * 
  */
+@Deprecated
 public class ProdRandom {
 	public static Set<Integer> set = new HashSet<Integer>(); // 不重复
 

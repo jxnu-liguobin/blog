@@ -20,36 +20,39 @@
 </head>
 <body>
 	<!-- 导航 -->
-	<nav class="blog-nav layui-header">
-		<div class="blog-container">
-			<!-- QQ互联登陆 -->
-			<a target="_blank" th:href="@{http://wpa.qq.com/msgrd?v=3&uin=568845948&site=qq&menu=yes}"
-			 class="blog-user"> <i class="fa fa-qq"></i>
-			</a> <a href="javascript:;" class="blog-user layui-hide"> <img
+	<nav class="blog-nav layui-header" >
+	<div class="blog-container">
+	<!-- QQ互联登陆 -->
+	<a target="_blank" th:href="@{/login}" class="blog-user"><span
+		style="color: white;text-align: right;font-size: 15px;"> <i
+			class="layui-icon" style="font-size: 15px;">&#xe614;</i>
+	</span> </a>
+	<!--  <a href="javascript:;" class="blog-user layui-hide"> <img
 				th:src="@{/images/Absolutely.jpg}" alt="jxnu-liguobin"
 				title="jxnu-liguobin" />
-			</a> <a class="blog-logo" th:href="@{/index/home}">梦境迷离</a>
-			<!-- 导航菜单 -->
-			<ul class="layui-nav" lay-filter="nav">
-				<li class="layui-nav-item"><a th:href="@{/index/home}"><i
-						class="fa fa-home fa-fw"></i>&nbsp;网站首页</a></li>
-				<li class="layui-nav-item"><a th:href="@{/index/article}"><i
-						class="fa fa-file-text fa-fw"></i>&nbsp;文章专栏</a></li>
-				<li class="layui-nav-item"><a
-					th:href="@{/indexViews/resource.html}"><i
-						class="fa fa-tags fa-fw"></i>&nbsp;资源分享</a></li>
-				<li class="layui-nav-item"><a
-					th:href="@{/indexViews/timeline.html}"><i
-						class="fa fa-hourglass-half fa-fw"></i>&nbsp;点点滴滴</a></li>
-				<li class="layui-nav-item layui-this"><a
-					th:href="@{/index/about}"><i class="fa fa-info fa-fw"></i>&nbsp;关于本站</a>
-				</li>
-			</ul>
-			<!-- 手机和平板的导航开关 -->
-			<a class="blog-navicon" href="javascript:;"> <i
-				class="fa fa-navicon"></i>
-			</a>
-		</div>
+			</a>  -->
+	<a class="blog-logo" th:href="@{/index/home}">梦境迷离</a>
+	<!-- 导航菜单 -->
+	<ul class="layui-nav" lay-filter="nav">
+		<li class="layui-nav-item"><a th:href="@{/index/home}"><i
+				class="fa fa-home fa-fw"></i>&nbsp;网站首页</a></li>
+		<li class="layui-nav-item"><a th:href="@{/index/article}"><i
+				class="fa fa-file-text fa-fw"></i>&nbsp;文章专栏</a></li>
+		<li class="layui-nav-item"><a
+			th:href="@{/indexViews/resource.html}"><i
+				class="fa fa-tags fa-fw"></i>&nbsp;资源分享</a></li>
+		<li class="layui-nav-item"><a
+			th:href="@{/indexViews/timeline.html}"><i
+				class="fa fa-hourglass-half fa-fw"></i>&nbsp;点点滴滴</a></li>
+		<li class="layui-nav-item layui-this"><a
+			th:href="@{/index/about}"><i class="fa fa-info fa-fw"></i>&nbsp;关于本站</a>
+		</li>
+	</ul>
+	<!-- 手机和平板的导航开关 -->
+	<a class="blog-navicon" href="javascript:;"> <i
+		class="fa fa-navicon"></i>
+	</a>
+</div>
 	</nav>
 	<!-- 主体（一般只改变这里的内容） -->
 	<div class="blog-body">
@@ -70,13 +73,13 @@
 						<div class="layui-tab-item">
 							<div class="aboutinfo">
 								<div class="aboutinfo-figure">
-									<img th:src="@{/images/Logo_100.png}" alt="jxnu-liguobin" />
+									<img style="width: 100px;height: 100px;" th:src="@{/images/Logo_100.png}" alt="jxnu-liguobin" />
 								</div>
 								<p class="aboutinfo-nickname">梦境迷离</p>
-								<p class="aboutinfo-introduce">一个Java程序员的个人博客，记录博主学习和成长之路，分享Java方面技术和源码</p>
+								<p class="aboutinfo-introduce">爱Java，爱生活。</p>
 								<p class="aboutinfo-location">
-									<i class="fa fa-link"></i>&nbsp;&nbsp;<a target="_blank"
-										href="#">??</a>
+									<i class="fa fa-link"></i>&nbsp;&nbsp;<a id="website" target="_blank"
+										href="https://www.dreamylost.cn">www.dreamylost.cn[梦幻迷离]</a>
 								</p>
 								<hr />
 								<div class="aboutinfo-contact">
@@ -91,12 +94,118 @@
 										class="fa fa-hourglass-half fa-2x"></i></a>
 								</div>
 
-								<fieldset class="layui-elem-field layui-field-title">
+								<fieldset class="layui-elem-field">
 									<legend>简介</legend>
-									<div class="layui-field-box aboutinfo-abstract">
-										<p style="text-align:center;">梦境迷离是一个由java开源框架SpringBoot开发的个人博客网站，诞生于2017年11月7日，暂且称为V1.0。</p>
-										<h1>第一个版本</h1>
-										<p>诞生的版本，采用SpringBoot+Mybatis作为后台框架（除了登陆，均是用国产框架Layui布局），前端使用“不落阁”前台模板。在此感谢分享！</p>
+									<div class="layui-field-box aboutinfo-abstract" style="overflow:hidden;" >
+										<p style="text-align:center;">梦境迷离是一个由java开源框架SpringBoot开发的个人博客网站，诞生于2017年12月13日，暂且称为V1.0。</p>
+										  <div class="layui-field-box" style="font-family:monospace; ;font-size: 15px;">
+											  主要技术<br>
+											1、JDK:1.8 (未使用1.8特性)<strong>修改->application-dev.properties, cmd-> java -jar blog.jar 即可运行项目<br>  
+											注：本地不要使用java -jar运行最好，需要改为发布的服务器路径而且坑多，使用eclipse运行application.java最好，使用war则需要添加一个转换和修改打包方方式具体百度。
+											均需要保证路径C:/web/uploads/存在（tomcat的虚拟路径，已经写死在代码中，默认在服务器与本机创建c:\web）
+											在web里新建文件夹filenames,filenames存放静态资源file,则访问方式为ip:port/filenames/file,以此类推，注意Shiro拦截）</strong><br>
+											2、前端模板：来自国产开源框架Layui社区的分享“不落阁”，含百度分享等插件<br>
+											3、全文检索：Lucene<br>
+											4、前端模板引擎：Thymeleaf（nekohtml）<br>
+											5、字体：font-awesome<br>
+											6、代码高亮：prettify<br>
+											7、后台：SpringBoot1.5.8、Mybatis3.4.5、Mysql5.6<br>
+											8、验证：jquery-validate、Shiro<br>
+											9、日志：默认logback<br>
+											10、单元测试：Junit4<br>
+											11、数据库连接池：Druid(含sql与spring监控)<br>
+											12、JSON工具 ：fastjson<br>
+											13、web服务器:Tomcat8.5内嵌式 使用Https<br>
+											14、发布方式：Jar<br>
+											15、代码托管：github<br>
+											16、依赖管理：maven<br>
+											17、开发工具：MyEclipse2013<br>
+											18、缓存：Myabtis二级缓存（友情链接）,redis缓存（验证码）,ehcache（权限）<br>
+										  <div class="layui-field-box">
+										  </div>主要开发进度<br>
+											<h4 style="text-align: left;color:blue;">2017年11月13日</h4>
+											1、使用Layui+SpringBoot+Myabtis+Mysql+Lucene写的个人博客<br>
+											<h4 style="text-align: left;color:blue;">2017年11月13日</h4>
+											1、完成前端分页，侧栏显示<br>
+											<h4 style="text-align: left;color:blue;">2017年11月14日</h4>
+											1、完成详情页面显示跳转和评论<br>
+											<h4 style="text-align: left;color:blue;">2017年11月15日</h4>
+											1、修复详情页面文章内容图片过大问题<br>
+											<h4 style="text-align: left;color:blue;">2017年11月20日</h4>
+											1、添加http强制重定向至https的支持<br>
+											2、修复百度分享不支持https<br>
+											3、修复QQ互联无法打开QQ，群<br>
+											<h4 style="text-align: left;color:blue;">2017年11月21日</h4>
+											1、添加评论验证码，修复thymeleaf无法正常显示（后台返回json,前台解析，ps:直接显示偶而失效）<br>
+											2、bug:无法清空富文本（准备使用自定义函数代替reset【$('#LAY_layedit_1').contents().find('body').html('');】）<br>
+											<h4 style="text-align: left;color:blue;">2017年11月22日</h4>
+											1、添加文章关键字侧栏<br>
+											2、修复写文章和修改文章不能清空富文本bug<br>
+											<h4 style="text-align: left;color:blue;">2017年11月28日</h4>
+											1、修复未审核的评论也被计算在内<br>
+											2、IdentityHashMap造成的乱序问题（覆盖TreeMap的CompareTo方法）未修复<br>
+											3、搜索下方显示最近搜索（cookies）未完成<br>
+											<h4 style="text-align: left;color:blue;">2017年11月29日</h4>
+											1、添加代码高亮显示（bug:如果是直接复制的图片，大小无法控制，图片宽度超过屏幕）<br>
+											2、添加lucene全文检索，关键字高亮（bug:摘要 博客类型构建索引失败--解决）<br>
+											<h4 style="text-align: left;color:blue;">2017年12月1日</h4>
+											1、添加代码高亮显示（显示行数，有bug）<br>
+											2、完善lucene全文检索<br>
+											3、添加搜索排行，显示前20条最高搜索次数的关键词<br>
+											<h4 style="text-align: left;color:blue;">2017年12月4日</h4>
+											1、添加前台ip拦截，禁止访问与倒计时<br>
+											2、完善开发文档<br>
+											3、修复IdentityHashMap造成的乱序问题（与此同时，同key的value仍无法解决）<br>
+											<h4 style="text-align: left;color:blue;">2017年12月5日</h4>
+											1、添加留言以及其他小修改<br>
+											<h4 style="text-align: left;color:blue;">2017年12月6日</h4>
+											1、开启事务支持<br>
+											2、修复ip解析地址时超时，添加数据库字段address存储地址<br>
+											<h4 style="text-align: left;color:blue;">2017年12月9日</h4>
+											添加403 404 405 406 500等页面的处理 <br>
+											1、404 405特殊处理->实现ErrorController接口<br>
+											2、500->实现容器的customize方法<br>
+											3、403使用Shiro session 406使用拦截器<br>
+											添加公告功能，完成公告dao以及service层接口与测试<br>
+											<h4 style="text-align: left;color:blue;">2017年12月10日</h4>
+											1、修正手机Ipad的悬浮窗显示不正确<br>
+											2、头像上传改为缩略图显示，前台文章和个人信息也缩放。后台管理系统不兼容手机等小屏幕，表格过于密集<br>
+											<h4 style="text-align: left;color:blue;">2017年12月11日</h4>
+											1、修正layui富文本编辑器带来的自定义验证问题（初始化仍然有可能失败）<br>
+											2、完成公告控制层，修改留言的邮箱正则表达式<br>
+											<h4 style="text-align: left;color:blue;">2017年12月12日</h4>
+											1、完成服务器的路径配置<br>
+											2、优化手机样式<br>
+											<h4 style="text-align: left;color:blue;">2017年12月13日</h4>
+											1、修复关于作者缩略图失效问题，通过绑定tab的切换事件（bug:刷新会复原）<br>
+											2、完善手机显示样式（bug:无法随机取出map的元素）<br>
+											3、添加留言板的流加载（懒加载）<br>
+											<h4 style="text-align: left;color:blue;">2017年12月14日</h4>
+											1、添加文章评论懒加载，全文检索分页修复,留言评论字体完善<br>
+											2、添加相册，实现等比缩放，悬浮放大，懒加载<br>
+											<h4 style="text-align: left;color:blue;">2017年12月16日</h4>
+											1、添加相册的点赞功能<br>
+											2、待优化----减少表单提交后的刷新<br>
+											<h4 style="text-align: left;color:blue;">2017年12月17日</h4>
+											1、使用RestController注解<br>
+											<h4 style="text-align: left;color:blue;">2017年12月18日</h4>
+											1、使用流加载导致无法打印将打印的thymeleaf模板解析html中的表达式（无法记住ip对图片状态）<br>
+											2、阻止刷新增加浏览量<br>
+											<h4 style="text-align: left;color:blue;">2017年12月1日</h4>
+											1、bug：QQ浏览器传中文参数乱码 未修复<br>
+											2、添加文章查询评论接口，修复评论与留言数量显示，添加删除审核过的评论将减小评论量，
+											修复评论与留言懒加载会显示所有评论的错误<br>
+											3、QQ浏览器uri乱码，添加#uris.escapePath编码解决，默认utf-8解码，不需要设置接收<br>
+											<h4 style="text-align: left;color:blue;">2017年12月20日</h4>
+											1、添加音乐插件，美化图册<br>
+											<h4 style="text-align: left;color:blue;">2017年12月21日</h4>
+											1、使用redis缓存替代使用session带来的与Shiro缓存时间的冲突<br>
+											2、对主要类添加logback日志<br>
+											<h4 style="text-align: left;color:blue;">2017年12月23日</h4>
+											1、对iphone5 4.0寸到ipad pro9.7“关于本站”界面的适配（后改为去除字体包裹标签使用layui的自适应）<br>
+											<h4 style="text-align: left;color:blue;">2017年12月27日</h4>
+											1、添加druid的sql监控，注解式spring的service与dao层监控
+										  </div>
 										<h1 style="text-align:center;">The End</h1>
 									</div>
 								</fieldset>
@@ -139,9 +248,10 @@
 									<div class="layui-field-box aboutinfo-abstract abstract-bloger">
 										<p style="text-align:center;">jxnu在校大三生。</p>
 										<h1  id="p" >个人介绍</h1>
-										<p  th:utext="${application.blogger.profile}"></p>
+										<p id="profile" th:utext="${application.blogger.profile}"></p>
 										<h1 style="text-align:center;">The End</h1>
 									</div>
+									
 								</fieldset>
 							</div>
 						</div>
@@ -153,8 +263,8 @@
 								</div>
 								<p class="aboutinfo-nickname">留言墙</p>
 								<p class="aboutinfo-introduce">
-									本页面可留言、吐槽、提问。欢迎灌水，杜绝广告！<br> <span style="color: red;">注：因为一开始表就设计好了，本来是想做个人Blog就是匿名评论吧，但是不好区分访客，后来想到用ip或者UUID但是不想重构了，
-										后面就直接用留言添加邮箱的形式回复了！ ^0^ 可以选择是否发送邮箱，后台看到也会以邮件的形式回复！</span>
+									本页面可留言、吐槽、提问。欢迎灌水，杜绝广告！<br> <span style="color: red;">注：因为表设计的比较早，缺陷很多，本个人Blog使用匿名评论。
+									仅显示地址概要信息，留言选填。可以选择是否发送邮箱，后台看到也会以邮件的形式回复！访客用户名自填与多级评论暂时不实现。</span>
 								</p>
 								<p class="aboutinfo-location">
 									<i class="fa fa-clock-o"></i>&nbsp;<span id="time"></span>
@@ -179,25 +289,25 @@
 															lay-verify="mail" id="email">
 													</div>
 												</div>
-												<div class="layui-form-item" >
+												<div class="layui-form-item"  >
 													<input type="text" name="code" lay-verify="required"
 														placeholder="请输入验证码" autocomplete="off"
 														class="layui-input" id="code" value=""> <a
 														class="layui-btn layui-btn-primary "
-														style="padding: 0 0 0 ;border: 0;margin-top: 16px;" data-type="refresh">
-														<img id="imgObj" alt="验证码" style="margin:0 0"
-														th:src="@{/blog/validateCode}" />
+														style="padding: 0 0 0 ;border: 0;margin-top: 16px;float: left;" data-type="refresh">
+														<img id="imgObj" alt="验证码" style="margin:0 0;float: left;"
+														th:src="@{/blog/redisValidateCode}" />
 													</a>
 
 												</div>
-												<div class="layui-form-item">
-													<span id="error" style="font-size: 12px; color: red;"></span>
+												<div class="layui-form-item " style="float: left;">
+													<span  id="error" style="font-size: 12px; color: red;float: left;"></span>
 
 												</div><hr>
 												<div class="layui-form-item">
-													<a class="layui-btn  layui-btn-primary layui-btn-xs"
+													<a  style="float: left;"class="layui-btn  layui-btn-primary layui-btn-xs"
 														data-type="refresh"> 换一张</a>
-													<button class="layui-btn layui-btn-xs"
+													<button style="float: left;" class="layui-btn layui-btn-xs"
 														lay-submit="formLeaveMessage"
 														lay-filter="formLeaveMessage">提交</button>
 												</div>
@@ -206,7 +316,7 @@
 
 										<fieldset id="Lazy" class="layui-elem-field"
 											th:if="${not #lists.isEmpty(messageList)}">
-											<legend style="text-align: center;" th:text="访客评论"></legend>
+											<legend style="text-align: center;font-size: 1em" th:text="访客评论"></legend>
 											<!-- <fieldset class="layui-elem-field layui-field-title"
 												th:each="message,messageStat: ${messageList}" th:if="${messageStat.count lt 6}">
 												<legend  style="font-size: 10px;text-align: left;"
@@ -286,11 +396,11 @@
 	<!-- 底部 -->
 	<footer class="blog-footer">
 		<p>
-			<span>Copyright</span><span>&copy;</span><span>2017</span><a href="#">梦境迷离</a><span>Design
+			<span>Copyright</span><span>&copy;</span><span>2017</span><a href="https://www.dreamylost.cn">梦境迷离</a><span>Design
 				By jxnu-liguobin</span>
 		</p>
 		<p>
-			<a href="http://www.miibeian.gov.cn/" target="_blank">蜀ICP备16029915号-1</a>
+			<a href="http://www.miitbeian.gov.cn" target="_blank">赣ICP备17017283号-1</a>
 		</p>
 	</footer>
 	<!--侧边导航-->
@@ -322,6 +432,37 @@
 			</div>
 		</div>
 	</div>
+	 <!-- 音乐播放器 -->
+    <div id="QPlayer">
+	<ol id="playlist"></ol>
+	<div id="pContent">
+		<div id="player">
+			<span class="cover"></span>
+			<div class="ctrl">
+				<div class="musicTag marquee">
+					<strong>Title</strong>
+					 <span> - </span>
+					<span class="artist">Artist</span>
+				</div>
+				<div class="progress">
+					<div class="timer left">0:00</div>
+					<div class="contr">
+						<div class="rewind icon"></div>
+						<div class="playback icon"></div>
+						<div class="fastforward icon"></div>
+					</div>
+					<div class="right">
+						<div class="liebiao icon"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="ssBtn">
+		        <div class="adf"></div>
+	    </div>
+	</div>
+	</div>
+    
 	<!--遮罩-->
 	<div class="blog-mask animated layui-hide"></div>
 	<!-- layui.js -->
@@ -330,6 +471,9 @@
 	<script th:src="@{/js/global.js}"></script>
 	<script th:src="@{/js/about.js}"></script>
 	<!-- 本页脚本 -->
+	<script th:src="@{/js/jquery.min.js}"></script>
+    <script th:src="@{/js/jquery.marquee.min.js}"></script>
+	<script th:src="@{/js/player.js}"></script>
 	<script th:inline="javascript" type="text/javascript">
 	layui.use(['laypage', 'layer','jquery','form','element','layedit','flow'], function(){
 	  var laypage = layui.laypage,layer = layui.layer,$ = layui.jquery,form=layui.form,element=layui.element,layedit =layui.layedit ;
@@ -338,6 +482,23 @@
 			height : 150,
 			tool : ['strong','italic','link', ,'unlink','|','left', 'center', 'right', '|', 'face'],
 		});
+		window.onload = function(){
+			var  w =$('#p').width()*1/6 ;
+			if (w<100){
+				w=100;
+			} 
+			$('img').each(function(){
+				var img_w = $(this).width();// 图片宽度
+				var img_h = $(this).height();// 图片高度
+				if (img_w > w) {// 如果图片宽度超出指定最大宽度
+					var height = (w * img_h) / img_w; // 高度等比缩放
+					$(this).css({
+						"width" : w,
+						"height" : height
+					});// 设置缩放后的宽度和高度
+				} 
+			})
+		}
 		//流加载
 		var flow = layui.flow;
 		flow.load({
@@ -354,10 +515,10 @@
 				},
 				success:function(res){
 						layui.each(res.data, function(index, item){			
-				      		lis.push('<fieldset class="layui-elem-field layui-field-title"><legend style="font-size: 9px;text-align: left;">'
+				      		lis.push('<fieldset class="layui-elem-field layui-field-title"><legend style="font-size: 0.8em;text-align: left;">'
 				      		+((index+1)+(res.currentPage-1)*10)+'楼  '
 				      		+item.address+'网友  '+
-				 			'</legend><div class="layui-field-box"><span style="color:red;font-size: 8px;float:right;">'+item.messageDateStr
+				 			'</legend><div class="layui-field-box"><span style="color:red;font-size: 0.75em;float:right;">'+item.messageDateStr
 				 			+'</span><br><div class="content" style="text-align: left;"><p>'
 				      		+item.content+
 				      		'</p></div></div></fieldset>'); 
@@ -371,7 +532,7 @@
 			content : function(value) {
 				value = $.trim(layedit.getText(editIndex));
 				if (value == "")
-					return "自少得有一个字吧";
+					return "至少得有一个字吧";
 				layedit.sync(editIndex);
 			},mail :[
 				/(^(?:\w+\.?)*\w+@(?:\w+\.)+\w+$)|(^$)/,
@@ -396,16 +557,22 @@
 			},
 			type : 'post',
 			success : function(result) {
-					var result = JSON.parse(result);
+					if(typeof result ==='string'){
+						result = JSON.parse(result);
+					}
 					console.log(result)
 					if (result.success) {
 						layer.alert('留言成功，您的留言将在审核后显示！', {
 							title : '系统提示',
 							icon : 6,
+							closeBtn: 0
 						}, function(index) {
-							layer.close(index); //关闭
+							layer.close(index);
 							location.reload();
-							//$('#LAY_layedit_1').contents().find('body').html('');//清空
+							//$('#LAY_layedit_1').contents().find('body').html('');
+							//$('#code').val("");
+							$('#email').val("");
+							$('#LAY_layedit_1').contents().find('body').html('');//清空
 						});
 					} if (!result.success) {
 							var error = result.errorInfo
@@ -425,7 +592,7 @@ var $ = layui.$,
 	 */
        refresh: function() {
       	var imgSrc = $("#imgObj");  
-        var src = '/blog/validateCode';
+        var src = '/blog/redisValidateCode';
         var url = src;
         var timestamp = (new Date()).valueOf();  
         var index = url.indexOf("?",url);  

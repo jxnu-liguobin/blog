@@ -22,13 +22,16 @@
 	<!-- 导航 -->
 	<nav class="blog-nav layui-header">
 		<div class="blog-container">
-			<!-- QQ互联登陆 -->
-			<a target="_blank" th:href="@{http://wpa.qq.com/msgrd?v=3&uin=568845948&site=qq&menu=yes}"
-			 class="blog-user"> <i class="fa fa-qq"></i>
-			</a> <a href="javascript:;" class="blog-user layui-hide"> <img
+			<!-- QQ互联登陆 --没有做--> 
+			<a target="_blank" th:href="@{/login}"
+			 class="blog-user"><span style="color: white;text-align: right;font-size: 15px;">
+			 <i class="layui-icon" style="font-size: 15px;">&#xe614;</i></span>
+			</a>
+			<!--  <a href="javascript:;" class="blog-user layui-hide"> <img
 				th:src="@{/images/Absolutely.png}" alt="jxnu-liguobin"
 				title="jxnu-liguobin" />
-			</a> <a class="blog-logo" th:href="@{/index/home}">梦境迷离</a>
+			</a> -->
+			 <a class="blog-logo" th:href="@{/index/home}">梦境迷离</a>
 			<!-- 导航菜单 -->
 			<ul class="layui-nav" lay-filter="nav">
 				<li class="layui-nav-item layui-this"><a
@@ -98,7 +101,7 @@
 							</div>
 							<!-- 文章摘要 -->
 							<div class="article-abstract">
-								<span th:text="${blog.summary}">摘要</span>
+								<p style="overflow:hidden" th:text="${blog.summary}">摘要</p>
 							</div>
 						</div>
 						<div class="clear"></div>
@@ -148,9 +151,7 @@
 								class="fa fa-weibo fa-2x"></i></a> <a target="_blank" title="码云"
 								th:href="@{https://github.com/jxnu-liguobin}"><i
 								class="fa fa-git fa-2x"></i></a></div>
-								<div><span class="blogerinfo-introduce"  >Java学习交流群:</span>
-							<a target="_blank" href="//shang.qq.com/wpa/qunwpa?idkey=b848c6be2032426b1166f66a608247ce8fb2f8becf97f5f0c89dd64c8681fe39" class="fa fa-2x">
-							<img border="0" src="//pub.idqqimg.com/wpa/images/group.png" alt="Java从入门到放弃" title="Java从入门到放弃"></a>	
+								<div><a id="jiaqun" href="javascript:addQun();"><span class="blogerinfo-introduce"  >群（禁止广告）</span></a>
 						</div>
 					</div>
 					<div></div>
@@ -162,7 +163,7 @@
 							th:if="${not #lists.isEmpty(application.blogCountList)}">
 							<li><i class="layui-icon"
 								style="color: #1E9FFF;margin-left: 0px;">&#xe637;</i> 
-								<a th:href="@{'/index/home?releaseDateStr='+${dateList.releaseDateStr}}">
+								<a th:href="@{'/index/home?releaseDateStr='+${#uris.escapePath(dateList.releaseDateStr)}}">
 								<span th:text="${dateList.releaseDateStr}">
 								</span>
 									（<span th:text="${dateList.blogCount }"></span>）</a>
@@ -173,74 +174,13 @@
 						</ul>
 					</div>
 					<div class="blog-module shadow">
-						<div class="blog-module-title">一路走来</div>
-						<dl class="footprint">
-							<dt>2017年11月13日</dt>
-							<dd>1、使用Layui+SpringBoot+Myabtis+Mysql+Lucene写的个人博客</dd>
-							<dt>2017年11月13日</dt>
-							<dd>1、完成前端分页，侧栏显示</dd>
-							<dt>2017年11月14日</dt>
-							<dd>1、完成详情页面显示跳转和评论</dd>
-							<dt>2017年11月15日</dt>
-							<dd>1、修复详情页面文章内容图片过大问题</dd>
-							<dt>2017年11月20日</dt>
-							<dd>1、添加http强制重定向至https的支持</dd>
-							<dd>2、修复百度分享不支持https</dd>
-							<dd>3、修复QQ互联无法打开QQ，群</dd>
-							<dt>2017年11月21日</dt>
-							<dd>1、添加评论验证码，修复thymeleaf[[]]无法正常显示（后台返回json,前台解析，ps:直接显示偶而失效）</dd>
-							<dd>2、bug:无法清空富文本（准备使用自定义函数代替reset
-							【$('#LAY_layedit_1').contents().find('body').html('');】）</dd>
-							<dt>2017年11月22日</dt>
-							<dd>1、添加文章关键字侧栏</dd>
-							<dd>2、修复写文章和修改文章不能清空富文本bug</dd>
-							<dt>2017年11月28日</dt>
-							<dd>1、修复未审核的评论也被计算在内</dd>
-							<dd>2、IdentityHashMap造成的乱序问题（覆盖TreeMap的CompareTo方法）未修复</dd>
-							<dd>3、搜索下方显示最近搜索（cookies）未完成</dd>
-							<dt>2017年11月29日</dt>
-							<dd>1、添加代码高亮显示（bug:如果是直接复制的图片，大小无法控制，图片宽度超过屏幕）</dd>
-							<dd>2、添加lucene全文检索，关键字高亮（bug:摘要 博客类型构建索引失败--解决）</dd>
-							<dt>2017年12月1日</dt>
-							<dd>1、添加代码高亮显示（显示行数，有bug）</dd>
-							<dd>2、完善lucene全文检索</dd>
-							<dd>3、添加搜索排行，显示前20条最高搜索次数的关键词</dd>
-							<dt>2017年12月4日</dt>
-							<dd>1、添加前台ip拦截，禁止访问与倒计时</dd>
-							<dd>2、完善开发文档</dd>
-							<dd>3、修复IdentityHashMap造成的乱序问题（与此同时，同key的value仍无法解决）</dd>
-							<dt>2017年12月5日</dt>
-							<dd>1、添加留言以及其他小修改</dd>
-							<dt>2017年12月6日</dt>
-							<dd>1、开启事务支持</dd>
-							<dd>2、修复ip解析地址时超时，添加数据库字段address存储地址</dd>
-							<dt>2017年12月9日</dt>
-							<dd>添加403 404 405 406 500等页面的处理 </dd>
-							<dd>1、404 405特殊处理->实现ErrorController接口</dd>
-							<dd>2、500->实现容器的customize方法</dd>
-							<dd>3、403使用Shiro session 406使用拦截器</dd>
-							<dd>添加公告功能，完成公告dao以及service层接口与测试</dd>
-							<dt>2017年12月10日</dt>
-							<dd>1、修正手机Ipad的悬浮窗显示不正确</dd>
-							<dd>2、头像上传改为缩略图显示，前台文章和个人信息也缩放。后台管理系统不兼容手机等小屏幕，表格过于密集</dd>
-							<dt>2017年12月11日</dt>
-							<dd>1、修正layui富文本编辑器带来的自定义验证问题（初始化仍然有可能失败）</dd>
-							<dd>2、完成公告控制层，修改留言的邮箱正则表达式</dd>
-							<dt>2017年12月12日</dt>
-							<dd>1、完成服务器的路径配置</dd>
-							<dd>2、优化手机样式</dd>
-							<dt>2017年12月13日</dt>
-							<dd>1、修复关于作者缩略图失效问题，通过绑定tab的切换事件（bug:刷新会复原）</dd>
-							<dd>2、完善手机显示样式（bug:无法随机取出map的元素）</dd>
-							<dd>3、添加留言板的流加载（懒加载）</dd>
-							<dt>2017年12月14日</dt>
-							<dd>1、添加文章评论懒加载，全文检索分页修复</dd>
-						</dl>
+						<div class="blog-module-title">日历</div>
+							<div id="date"></div>
 					</div>
 					<div class="blog-module shadow">
 						<div class="blog-module-title">友情链接</div>
 						<fieldset class="layui-elem-field">
-							  <legend>友情链接要求：</legend>
+							  <legend>要求：</legend>
 							  <div class="layui-field-box">
 							  	<i class="fa fa-close"></i>经常宕机&nbsp;
                                     <i class="fa fa-close"></i>不合法规&nbsp;
@@ -252,7 +192,7 @@
 							</fieldset>
 						<ul class="blogroll" th:each="link : ${application.linkList}"
 							th:if="${not #lists.isEmpty(application.linkList)}">
-							<li><a target="_blank" th:href="${link.linkUrl}"
+							<li><i class="layui-icon" style="font-size: 15px; color: #1E9FFF;">&#xe64c;</i>  <a target="_blank" th:href="${link.linkUrl}"
 								th:title="${link.linkName}"><span th:text="${link.linkName}+'  '+${link.linkUrl}"></span></a></li>
 						</ul>
 						<ul class="blogroll" th:each="link : ${application.linkList}"
@@ -268,10 +208,11 @@
 	<!-- 底部 -->
 	<footer class="blog-footer">
 		<p>
-			<span>Copyright</span><span>&copy;</span><span>2017</span><a>梦境迷离</a><span>Design By jxnu-liguobin</span>
+			<span>Copyright</span><span>&copy;</span><span>2017</span><a href="https://www.dreamylost.cn">梦境迷离</a><span>Design
+				By jxnu-liguobin</span>
 		</p>
 		<p>
-			<a  target="_blank">??</a>
+			<a href="http://www.miitbeian.gov.cn" target="_blank">赣ICP备17017283号-1</a>
 		</p>
 	</footer>
 	<!--侧边导航-->
@@ -302,6 +243,37 @@
 			</div>
 		</div>
 	</div>
+	 <!-- 音乐播放器 -->
+    <div id="QPlayer">
+	<ol id="playlist"></ol>
+	<div id="pContent">
+		<div id="player">
+			<span class="cover"></span>
+			<div class="ctrl">
+				<div class="musicTag marquee">
+					<strong>Title</strong>
+					 <span> - </span>
+					<span class="artist">Artist</span>
+				</div>
+				<div class="progress">
+					<div class="timer left">0:00</div>
+					<div class="contr">
+						<div class="rewind icon"></div>
+						<div class="playback icon"></div>
+						<div class="fastforward icon"></div>
+					</div>
+					<div class="right">
+						<div class="liebiao icon"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="ssBtn">
+		        <div class="adf"></div>
+	    </div>
+	</div>
+	</div>
+    
 	<!--遮罩-->
 	<div class="blog-mask animated layui-hide"></div>
 	<!-- layui.js -->
@@ -309,14 +281,34 @@
 	<!-- 全局脚本 -->
 	<script th:src="@{/js/global.js}"></script>
 	<!-- 本页脚本 -->
+	<!-- 音乐播放器 -->
+    <script th:src="@{/js/jquery.min.js}"></script>
+    <script th:src="@{/js/jquery.marquee.min.js}"></script>
+	<script th:src="@{/js/player.js}"></script>
+	<script th:src="@{/layui/lay/modules/layer.js}"></script>  <!-- 提供自定义js调用  -->
 	<script th:src="@{/js/home.js}"></script>
 	<script th:inline="javascript" type="text/javascript">
-	layui.use(['laypage', 'layer','jquery'], function(){
-	  var laypage = layui.laypage,layer = layui.layer,$ = layui.jquery;
+	layui.use(['laypage', 'layer','jquery','laydate'], function(){
+	var laypage = layui.laypage,layer = layui.layer,$ = layui.jquery,laydate = layui.laydate;
+		//嵌套在指定容器中
+		laydate.render({
+		  elem: '#date'
+		  ,position: 'static'
+		  ,change: function(value, date){ //监听日期被切换
+		    lay('#testView').html(value);
+		  }
+		  ,btns: ['now']
+		  ,theme: 'grid'
+		  ,calendar: true
+		  ,mark: {
+    			'2017-12-12': '发布博客'
+  			}
+		});
 	  	//图片缩放
 	window.onload = function() {  
-      var w = $('#imageForArticle').width()-$('.article-title').width();//设置最大宽度,也可根据img的外部容器 而动态获得,比如：$("#demo").width();
+      var w = $('#imageForArticle').width()-$('.article-title').width()-15;//设置最大宽度,也可根据img的外部容器 而动态获得,比如：$("#demo").width();
       console.info("当前宽："+w);
+      if(w>0){
       $("img").each(function() {//如果有很多图片,使用each()遍历   
             var img_w = $(this).width();//图片宽度   
             var img_h = $(this).height();//图片高度   
@@ -328,6 +320,7 @@
             }  
         });  
        }
+      }
 	  //自定义样式
 	  $("#imageName").attr('src','../uploads/'+[[${application.blogger.imageName}]]); //显示博主头像
 	  var pindex = [[${application.pageBean.currPage}]];// 当前页
@@ -360,7 +353,14 @@
 	  });
 	  
 	});
+	
+	function addQun() {
+		layer.open({
+			  title: '群（严禁广告）'
+			  ,content: '<img src="../images/qqqun.png">'
+			});     
+  
+	}
 </script>
-
 </body>
 </html>

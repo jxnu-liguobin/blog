@@ -19,49 +19,57 @@ import cn.edu.jxnu.blog.service.CommentService;
 @Service
 public class CommentServiceImpl implements CommentService {
 
-    @Resource
-    private CommentDao commentDao;
+	@Resource
+	private CommentDao commentDao;
 
+	public PageBean<Comment> listByPage(PageBean<Comment> pageBean) {
+		pageBean.getMap().put("start", pageBean.getStart());
+		pageBean.getMap().put("end", pageBean.getEnd());
+		pageBean.setResult(commentDao.listByPage(pageBean.getMap()));
+		pageBean.setTotal(commentDao.getTotal(pageBean.getMap()));
+		return pageBean;
+	}
 
-    public PageBean<Comment> listByPage(PageBean<Comment> pageBean) {
-        pageBean.getMap().put("start",pageBean.getStart());
-        pageBean.getMap().put("end",pageBean.getEnd());
-        pageBean.setResult(commentDao.listByPage(pageBean.getMap()));
-        pageBean.setTotal(commentDao.getTotal(pageBean.getMap()));
-        return pageBean;
-    }
+	public Long getTotal(Map<String, Object> map) {
+		return commentDao.getTotal(map);
+	}
 
+	public Comment getById(Integer id) {
+		return commentDao.getById(id);
+	}
 
-    public Long getTotal(Map<String, Object> map) {
-        return commentDao.getTotal(map);
-    }
+	@Transactional
+	public Integer saveComment(Comment comment) {
+		return commentDao.saveComment(comment);
+	}
 
+	@Transactional
+	public Integer deleteComment(Integer id) {
+		return commentDao.deleteComment(id);
+	}
 
-    public Comment getById(Integer id) {
-        return commentDao.getById(id);
-    }
+	@Transactional
+	public Integer updateComment(Comment comment) {
+		return commentDao.updateComment(comment);
+	}
 
-    @Transactional
-    public Integer saveComment(Comment comment){
-        return commentDao.saveComment(comment);
-    }
+	@Transactional
+	public Long deleteCommentByBlogId(Integer blogId) {
+		return commentDao.deleteCommentByBlogId(blogId);
+	}
 
-    @Transactional
-    public Integer deleteComment(Integer id) {
-        return commentDao.deleteComment(id);
-    }
+	@Deprecated
+	public List<Comment> getCommentData(Map<String, Object> map) {
+		return commentDao.listByPage(map);
+	}
 
-    @Transactional
-    public Integer updateComment(Comment comment) {
-        return commentDao.updateComment(comment);
-    }
+	@Override
+	public List<Comment> queryCommentsByBlogId(Integer blogId) {
+		return commentDao.queryByBlogId(blogId);
+	}
 
-    @Transactional
-    public Long deleteCommentByBlogId(Integer blogId) {
-        return commentDao.deleteCommentByBlogId(blogId);
-    }
-
-    public List<Comment> getCommentData(Map<String, Object> map) {
-        return commentDao.listByPage(map);
-    }
+	@Override
+	public List<Comment> listComment(Map<String, Object> map) {
+		return commentDao.listByPage(map);
+	}
 }

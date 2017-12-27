@@ -16,7 +16,7 @@
 			<div class="layui-logo">梦境迷离</div>
 			<div class="layui-logo kit-logo-mobile">K</div>
 			<ul class="layui-nav layui-layout-left kit-nav" kit-one-level>
-				<li class="layui-nav-item"><a th:href="@{/index/home}">博客首页</a></li>
+				<li class="layui-nav-item"><a th:href="@{/index/home}"><i class="layui-icon" style="float: center;">&#xe68e;</i>&nbsp;博客首页</a></li>
 			</ul>
 			<ul class="layui-nav layui-layout-right kit-nav">
 				<li class="layui-nav-item"><a href="javascript:;"> 
@@ -32,7 +32,7 @@
 					</dl> --></li>
 				<li class="layui-nav-item">
 				<a href="/admin/blogger/logout"> <i class="fa fa-sign-out" aria-hidden="true">
-					</i> 安全退出
+					</i> <i class="layui-icon" style="float: center;">&#xe65c;</i>&nbsp;安全退出
 				</a></li>
 			</ul>
 		</div>
@@ -144,17 +144,41 @@
 								</a>
 							</dd>
 						</dl></li>
-
-
 					<li class="layui-nav-item"><a class="" href="javascript:;">
-							<i class="fa fa-plug" aria-hidden="true"></i> <i
-							class="layui-icon">&#xe614;</i><span> 设置</span>
+							<i class="fa fa-plug" aria-hidden="true"></i><i
+							class="layui-icon">&#xe60d;</i> <span> 相册</span>
 					</a>
 						<dl class="layui-nav-child">
 							<dd>
 								<a href="javascript:;" kit-target
+									data-options="{url:'/views/pictureUpload.html',icon:'&#xe62f;',title:'图片上传',id:'15'}">
+									<i class="layui-icon">&#xe62f;</i><span> 图片上传</span>
+								</a>
+							</dd>
+							<dd>
+								<a href="javascript:;" kit-target
+									data-options="{url:'/views/pictureManage.html',icon:'&#xe7a0;',title:'图片管理',id:'14'}">
+									<i class="layui-icon">&#xe7a0;</i><span> 图片管理</span>
+								</a>
+							</dd>
+						</dl></li>
+
+
+					<li class="layui-nav-item"><a class="" href="javascript:;">
+							<i class="fa fa-plug" aria-hidden="true"></i> <i
+							class="layui-icon">&#xe614;</i><span> 系统与设置</span>
+					</a>
+						<dl class="layui-nav-child">
+							<dd>
+								<a  href="javascript:;" kit-target
 									data-options="{url:'/views/refreshSystem',icon:'&#x1002;',title:'刷新缓存',id:'11'}">
-									<i lay-id="refresh" class="layui-icon">&#x1002;</i><span> 刷新缓存</span>
+									<i lay-id="refresh" class="layui-icon">&#x1002;</i><span> 初始化系统</span>
+								</a>
+							</dd>
+							<dd>
+								<a href="javascript:;" kit-target
+									data-options="{url:'/druid',icon:'&#x1002;',title:'SQL监控',id:'16'}">
+									<i lay-id="sql" class="layui-icon">&#xe629;</i><span> SQL监控</span>
 								</a>
 							</dd>
 							<dd>
@@ -184,9 +208,8 @@
 
 		<div class="layui-footer">
 			<!-- 底部固定区域 -->
-			2017 &copy; <a href="http://kit.zhengjinfan.cn/">kit.zhengjinfan.cn/</a>
+			2017 &copy; <a href="https://www.dreamylost.cn">www.dreamylost.cn</a>
 			MIT license
-
 		</div>
 	</div>
 	<script th:src="@{/layui/layui.js}" charset="utf-8"></script>

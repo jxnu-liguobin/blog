@@ -3,6 +3,8 @@ package cn.edu.jxnu.blog.dao;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.stereotype.Repository;
+
 import cn.edu.jxnu.blog.domin.Notice;
 
 /**
@@ -13,6 +15,7 @@ import cn.edu.jxnu.blog.domin.Notice;
  * @version： V1.0
  * 
  */
+@Repository
 public interface NoticeDao {
 	/**
 	 * @Description 根据id删除公告

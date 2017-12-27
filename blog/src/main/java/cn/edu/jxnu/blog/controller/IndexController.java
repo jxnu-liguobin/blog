@@ -13,6 +13,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.slf4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -27,6 +28,7 @@ import cn.edu.jxnu.blog.domin.PageBean;
 import cn.edu.jxnu.blog.service.BlogService;
 import cn.edu.jxnu.blog.service.BlogTypeService;
 import cn.edu.jxnu.blog.service.BloggerService;
+import cn.edu.jxnu.blog.service.CommentService;
 import cn.edu.jxnu.blog.service.LinkService;
 import cn.edu.jxnu.blog.service.NoticeService;
 
@@ -38,6 +40,8 @@ import cn.edu.jxnu.blog.service.NoticeService;
 @RequestMapping("/index")
 public class IndexController {
 
+	private static final Logger log = org.slf4j.LoggerFactory
+			.getLogger(IndexController.class);
 	@Resource
 	private BlogService blogService;
 	@Resource
@@ -46,9 +50,12 @@ public class IndexController {
 	private LinkService linkService;
 	@Resource
 	private BlogTypeService blogTypeService;
-	
+
 	@Resource
 	private NoticeService noticeService;
+
+	@Resource
+	private CommentService commentService;
 
 	/**
 	 * @Description 请求主页
@@ -56,14 +63,15 @@ public class IndexController {
 	 */
 	@RequestMapping("/home")
 	public String index(
+			@RequestParam(value = "releaseDateStr", required = false) String releaseDateStr,
 			@RequestParam(value = "page", required = false) String page,
 			@RequestParam(value = "typeId", required = false) String typeId,
-			@RequestParam(value = "releaseDateStr", required = false) String releaseDateStr,
 			HttpServletRequest request) throws Exception {
 
 		if (StringUtil.isEmpty(page)) {
 			page = "1";
 		}
+		log.info("当前请求主页。。");
 		// 获取分页的bean
 		PageBean<Blog> pageBean = new PageBean<Blog>(Integer.parseInt(page), 10); // 每页显示10条数据
 
@@ -73,6 +81,7 @@ public class IndexController {
 		map.put("end", pageBean.getEnd());
 		map.put("typeId", typeId);
 		map.put("releaseDateStr", releaseDateStr);
+		map.put("orderBy", "releaseDate");
 		// 获取博客信息
 		List<Blog> blogList = blogService.listBlog(map);
 		if (releaseDateStr != null) {
@@ -107,17 +116,16 @@ public class IndexController {
 		List<Link> linkList = linkService.getTotalData();
 		Blogger blogger = bloggerService.getBloggerData();
 		List<Blog> blogCountList = blogService.countList();
-		//开始装载公告信息
-		List<Notice> list = noticeService.getAllNotices(); //以等级降序
-		
-		
+		// 开始装载公告信息
+		List<Notice> list = noticeService.getAllNotices(); // 以等级降序
 		ServletContext application = RequestContextUtils
 				.findWebApplicationContext(request).getServletContext();
 		application.setAttribute("blogger", blogger);
-		SecurityUtils.getSubject().getSession().setAttribute("blogger", blogger);
+		SecurityUtils.getSubject().getSession()
+				.setAttribute("blogger", blogger);
 		application.setAttribute("linkList", linkList);
 		application.setAttribute("blogCountList", blogCountList); // 日期分档博客信息
-		application.setAttribute("pageBean", pageBean);//必须实时刷新
+		application.setAttribute("pageBean", pageBean);// 必须实时刷新
 		application.setAttribute("notice", list);
 		return "indexViews/home";
 

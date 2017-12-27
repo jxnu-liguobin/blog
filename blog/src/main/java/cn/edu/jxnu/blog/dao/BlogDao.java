@@ -3,12 +3,15 @@ package cn.edu.jxnu.blog.dao;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.stereotype.Repository;
+
 import cn.edu.jxnu.blog.domin.Blog;
 
 /**
  * @Description 博客Dao接口
  * 
  */
+@Repository
 public interface BlogDao {
 	/**
 	 * @Description 根据日期月份分组查询

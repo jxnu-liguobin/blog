@@ -70,14 +70,14 @@
 		</set>
 		where id=#{id}
 	</update>
-	<!-- 根据blog id查询评论信息 -->
+	<!-- 根据blog id查询评论信息  已经审核过的 -->
 	<select id="queryByBlogId" resultMap="CommentResultMap"
 		parameterType="java.lang.Integer">
 		SELECT id,user_ip,content,comment_date,state,address,
 		blog_id,DATE_FORMAT(comment_date,'%Y年%m月%d日 %H:%i:%S') AS
 		commentDateStr
 		FROM t_comment
-		where blog_id=#{blogId}
+		where state=1 and blog_id=#{blogId} 
 	</select>
 	<!-- 删除评论 -->
 	<delete id="deleteCommentByBlogId" parameterType="java.lang.Integer">

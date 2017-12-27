@@ -17,12 +17,13 @@
 	  //普通图片上传
 	  var uploadInst = upload.render({
 	    elem: '#test1'
-	    ,url: '../uploadFile/'
+	    ,url: '../uploadFile?flag=1'
 	    ,size: 1000 //1MB
 	    ,before: function(obj){
 	      //预读本地文件示例，不支持ie8
 	      obj.preview(function(index, file, result){
 	       	$('#imageFile').attr('src', result); //图片链接（base64）
+	       	$('#imageFile').attr('width', $('#imageFile').width()*2/5+'px;'); //图片链接（base64）
 	      });
 	    }
 	    ,done: function(result){
@@ -63,7 +64,7 @@
 			<div class="layui-input-block">
 				<input type="text" name="userName" lay-verify="required"
 					placeholder="用户名" autocomplete="off" class="layui-input"
-					id="userName">
+					id="userName" readonly="readonly">
 			</div>
 		</div>
 		<div class="layui-form-item">
@@ -120,21 +121,24 @@
        var $ = layui.jquery;  
        $(document).ready(function(){
 	   $.ajax({
-			url: "../admin/blogger/getBloggerInfo?rand="+Math.random() ,
+			url: "../admin/blogger/getBloggerInfo",
 			type: "get" ,
 			dataType:'json',
 			success:function(result){
-			if([[result.success]]){
+			if(typeof result === 'string') {
+				 result = JSON.parse(result)
+			}
+			if(result.success){
 				var index = layer.load(2, {time: 5*1000}); //又换了种风格，并且设定最长等待5秒 
 				 /* var resultt = eval("(" + result.responseText + ")"); */
                 	 /* result = JSON.parse(result.responseText); */
-                   $("#userName").val(result.userName);
-                   $("#nickName").val(result.nickName);
+                   $("#userName").val(result.blogger.userName);
+                   $("#nickName").val(result.blogger.nickName);
                   //var finalurl ='/uploads/2017/10/'+result.imageName; //这里需要动态获取，根据img前面6个字符
-                   $("#imageFile").attr('src','../uploads/'+result.imageName); //去除年月日了
-                   $("#sign").val(result.sign);
-                   $("#LAY_demo_editor").val(result.profile);
-				layer.close(index);     
+                   $("#imageFile").attr('src','../uploads/'+result.blogger.imageName); //去除年月日了
+                   $("#sign").val(result.blogger.sign);
+                   $("#LAY_demo_editor").val(result.blogger.profile);
+				   layer.close(index);     
 			}else{
 					layer.msg("加载失败！");
 				}
@@ -161,7 +165,7 @@ layui.use(['form', 'layedit', 'laydate', 'jquery', 'layer'],
         }
     });
 	window.onload = function() {  
-     var w = $('#imageFile').width()*1/4;//设置最大宽度,也可根据img的外部容器 而动态获得,比如：$("#demo").width();  
+     var w = $('#imageFile').width()*2/5;//设置最大宽度,也可根据img的外部容器 而动态获得,比如：$("#demo").width();  
       $("img").each(function() {//如果有很多图片,使用each()遍历   
             var img_w = $(this).width();//图片宽度   
             var img_h = $(this).height();//图片高度   
@@ -181,14 +185,14 @@ layui.use(['form', 'layedit', 'laydate', 'jquery', 'layer'],
 		content : function(value) {
 			value = $.trim(layedit.getText(editIndex));
 			if (value == "")
-				return "自少得有一个字吧";
+				return "至少得有一个字吧";
 				layedit.sync(editIndex);
 			}
 		});
     //监听提交
   form.on('submit(demo1)',
    function(data) {
-	        var userName = data.field["userName"]
+	     //   var userName = data.field["userName"]
 	        var nickName = data.field["nickName"]
 	        var sign = data.field["sign"]
 	      	var imageName = data.field["imageName"]
@@ -199,7 +203,7 @@ layui.use(['form', 'layedit', 'laydate', 'jquery', 'layer'],
 	            url: '../admin/blogger/save',
 	            data: {
 	                //thymeleaf获取request参数id值
-	                'userName': userName,
+	               // 'userName': userName,
 	                'nickName': nickName,
 	                'imageName': imageName,
 	                'sign': sign,
@@ -207,10 +211,14 @@ layui.use(['form', 'layedit', 'laydate', 'jquery', 'layer'],
 	            },
 	            type: 'post',
 	            success: function(result) {
-	                if ([[result.success]]) {
+	           		if(typeof result === 'string') {
+							 result = JSON.parse(result)
+						}
+	                if (result.success) {
 	                    layer.alert('修改成功！', {
 	                        title: '系统提示',
 	                        icon: 6,
+	                        closeBtn: 0,
 	                    },
 	                    function(index) {
 	                        layer.close(index); //关闭并回到管理页面
@@ -221,6 +229,7 @@ layui.use(['form', 'layedit', 'laydate', 'jquery', 'layer'],
 	                    layer.alert('修改失败。。', {
 	                        title: '系统提示',
 	                        icon: 5,
+	                        closeBtn: 0,
 	                    },
 	                    function(index) {
 	                        layer.close(index); //关闭 重新回调修改页面

@@ -25,11 +25,12 @@
 	<nav class="blog-nav layui-header">
 		<div class="blog-container">
 			<!-- QQ互联登陆 -->
-			<a target="_blank" th:href="@{http://wpa.qq.com/msgrd?v=3&uin=568845948&site=qq&menu=yes}"
-			 class="blog-user"> <i class="fa fa-qq"></i>
-			</a> <a href="javascript:;" class="blog-user layui-hide"> <img
+			<a target="_blank" th:href="@{/login}"
+			 class="blog-user"><span style="color: white;text-align: right;font-size: 15px;">
+			 <i class="layui-icon" style="font-size: 15px;">&#xe614;</i></span>
+			</a><!--  <a href="javascript:;" class="blog-user layui-hide"> <img
 				th:src="@{/images/Absolutely.jpg}" alt="jxnu-liguobin" title="jxnu-liguobin" />
-			</a> <a class="blog-logo" th:href="@{/index/home}">梦境迷离</a>
+			</a> --> <a class="blog-logo" th:href="@{/index/home}">梦境迷离</a>
 			<ul class="layui-nav" lay-filter="nav">
 				<li class="layui-nav-item"><a th:href="@{/index/home}"><i
 						class="fa fa-home fa-fw"></i>&nbsp;网站首页</a></li>
@@ -60,10 +61,11 @@
 			</blockquote>
 			<div class="blog-main">
 				<div class="child-nav shadow">
-					<a th:href="@{/indexViews/timeline.html}"> <span
-						class="child-nav-btn child-nav-btn-this">时光轴</span></a> <a
-						th:href="@{/indexViews/note.html}"> <span
-						class="child-nav-btn">笔记墙</span></a>
+					<span
+						class="child-nav-btn child-nav-btn-this">
+						<a th:href="@{/indexViews/timeline.html}"> 时光轴</a></span>  
+						<span class="child-nav-btn"><a
+						th:href="@{/indexViews/note.html}">笔记墙</a></span>
 				</div>
 				<div class="timeline-box shadow">
 					<div class="timeline-main">
@@ -78,18 +80,84 @@
 							</h2>
 							<div class="timeline-month">
 								<h3 class=" animated fadeInLeft">
+									<a class="monthToggle" href="javascript:;">12月</a><i
+										class="fa fa-caret-down fa-fw"></i>
+								</h3>
+								<ul>
+									<li class=" ">
+										<div class="h4  animated fadeInLeft">
+											<p class="date">12月23日 19:33</p>
+										</div>
+										<p class="dot-circle animated ">
+											<i class="fa fa-dot-circle-o"></i>
+										</p>
+										<div class="content animated fadeInRight">完成线上测试与优化，over</div>
+										<div class="clear"></div>
+									</li>
+									<li class=" ">
+										<div class="h4  animated fadeInLeft">
+											<p class="date">12月28日 20:29</p>
+										</div>
+										<p class="dot-circle animated ">
+											<i class="fa fa-dot-circle-o"></i>
+										</p>
+										<div class="content animated fadeInRight">完成前端显示</div>
+										<div class="clear"></div>
+									</li>
+									<li class=" ">
+										<div class="h4  animated fadeInLeft">
+											<p class="date">12月8日 08:35</p>
+										</div>
+										<p class="dot-circle animated ">
+											<i class="fa fa-dot-circle-o"></i>
+										</p>
+										<div class="content animated fadeInRight">功能补充</div>
+										<div class="clear"></div>
+									</li>
+								</ul>
+							</div>
+							<div class="timeline-month">
+								<h3 class=" animated fadeInLeft">
+									<a class="monthToggle" href="javascript:;">11月</a><i
+										class="fa fa-caret-down fa-fw"></i>
+								</h3>
+								<ul>
+									<li class=" ">
+										<div class="h4  animated fadeInLeft">
+											<p class="date">11月27日 20:29</p>
+										</div>
+										<p class="dot-circle animated ">
+											<i class="fa fa-dot-circle-o"></i>
+										</p>
+										<div class="content animated fadeInRight">完成各功能CRUD</div>
+										<div class="clear"></div>
+									</li>
+									<li class=" ">
+										<div class="h4  animated fadeInLeft">
+											<p class="date">11月7日17:35</p>
+										</div>
+										<p class="dot-circle animated ">
+											<i class="fa fa-dot-circle-o"></i>
+										</p>
+										<div class="content animated fadeInRight">搭建后台管理界面ui</div>
+										<div class="clear"></div>
+									</li>
+								</ul>
+							</div>
+							<div class="timeline-month">
+								<h3 class=" animated fadeInLeft">
 									<a class="monthToggle" href="javascript:;">10月</a><i
 										class="fa fa-caret-down fa-fw"></i>
 								</h3>
 								<ul>
 									<li class=" ">
 										<div class="h4  animated fadeInLeft">
-											<p class="date">10月23日 19:33</p>
+											<p class="date">10月20日 9:40</p>
 										</div>
 										<p class="dot-circle animated ">
 											<i class="fa fa-dot-circle-o"></i>
 										</p>
-										<div class="content animated fadeInRight">该时光轴支持手机平板PC，但并不能兼容一些老的浏览器！</div>
+										<div class="content animated fadeInRight">设计博客数据库表与关系</div>
 										<div class="clear"></div>
 									</li>
 									<li class=" ">
@@ -99,93 +167,17 @@
 										<p class="dot-circle animated ">
 											<i class="fa fa-dot-circle-o"></i>
 										</p>
-										<div class="content animated fadeInRight">这是2017年10月发表的</div>
+										<div class="content animated fadeInRight">后端技术选型</div>
 										<div class="clear"></div>
 									</li>
 									<li class=" ">
 										<div class="h4  animated fadeInLeft">
-											<p class="date">10月10日 20:35</p>
+											<p class="date">10月1日12:30</p>
 										</div>
 										<p class="dot-circle animated ">
 											<i class="fa fa-dot-circle-o"></i>
 										</p>
-										<div class="content animated fadeInRight">这是2017年10月发表的</div>
-										<div class="clear"></div>
-									</li>
-								</ul>
-							</div>
-							<div class="timeline-month">
-								<h3 class=" animated fadeInLeft">
-									<a class="monthToggle" href="javascript:;">9月</a><i
-										class="fa fa-caret-down fa-fw"></i>
-								</h3>
-								<ul>
-									<li class=" ">
-										<div class="h4  animated fadeInLeft">
-											<p class="date">9月23日 19:33</p>
-										</div>
-										<p class="dot-circle animated ">
-											<i class="fa fa-dot-circle-o"></i>
-										</p>
-										<div class="content animated fadeInRight">这是2017年9月发表的</div>
-										<div class="clear"></div>
-									</li>
-									<li class=" ">
-										<div class="h4  animated fadeInLeft">
-											<p class="date">9月11日 20:29</p>
-										</div>
-										<p class="dot-circle animated ">
-											<i class="fa fa-dot-circle-o"></i>
-										</p>
-										<div class="content animated fadeInRight">这是2017年9月发表的</div>
-										<div class="clear"></div>
-									</li>
-									<li class=" ">
-										<div class="h4  animated fadeInLeft">
-											<p class="date">9月10日 20:35</p>
-										</div>
-										<p class="dot-circle animated ">
-											<i class="fa fa-dot-circle-o"></i>
-										</p>
-										<div class="content animated fadeInRight">这是2017年9月发表的</div>
-										<div class="clear"></div>
-									</li>
-								</ul>
-							</div>
-							<div class="timeline-month">
-								<h3 class=" animated fadeInLeft">
-									<a class="monthToggle" href="javascript:;">8月</a><i
-										class="fa fa-caret-down fa-fw"></i>
-								</h3>
-								<ul>
-									<li class=" ">
-										<div class="h4  animated fadeInLeft">
-											<p class="date">8月23日 19:33</p>
-										</div>
-										<p class="dot-circle animated ">
-											<i class="fa fa-dot-circle-o"></i>
-										</p>
-										<div class="content animated fadeInRight">这是2017年8月发表的</div>
-										<div class="clear"></div>
-									</li>
-									<li class=" ">
-										<div class="h4  animated fadeInLeft">
-											<p class="date">8月11日 20:29</p>
-										</div>
-										<p class="dot-circle animated ">
-											<i class="fa fa-dot-circle-o"></i>
-										</p>
-										<div class="content animated fadeInRight">这是2017年8月发表的</div>
-										<div class="clear"></div>
-									</li>
-									<li class=" ">
-										<div class="h4  animated fadeInLeft">
-											<p class="date">8月10日 20:35</p>
-										</div>
-										<p class="dot-circle animated ">
-											<i class="fa fa-dot-circle-o"></i>
-										</p>
-										<div class="content animated fadeInRight">这是2017年8月发表的</div>
+										<div class="content animated fadeInRight">需求分析</div>
 										<div class="clear"></div>
 									</li>
 								</ul>
@@ -200,13 +192,13 @@
 		</div>
 	</div>
 	<!-- 底部 -->
-	<footer class="blog-footer">
+		<footer class="blog-footer">
 		<p>
-			<span>Copyright</span><span>&copy;</span><span>2017</span><a>梦境迷离</a><span>Design
+			<span>Copyright</span><span>&copy;</span><span>2017</span><a href="https://www.dreamylost.cn">梦境迷离</a><span>Design
 				By jxnu-liguobin</span>
 		</p>
 		<p>
-			<a target="_blank">??</a>
+			<a href="http://www.miitbeian.gov.cn" target="_blank">赣ICP备17017283号-1</a>
 		</p>
 	</footer>
 	<!--侧边导航-->
@@ -218,7 +210,7 @@
 		<li class="layui-nav-item"><a th:href="@{/index/article}"><i
 				class="fa fa-file-text fa-fw"></i>&nbsp;文章专栏</a></li>
 		<li class="layui-nav-item"><a
-			th:href="@{/indexViews/resource.html}"><i
+			th:href="@{/indexViews/mixed_pic.html}"><i
 				class="fa fa-tags fa-fw"></i>&nbsp;资源分享</a></li>
 		<li class="layui-nav-item layui-this"><a
 			th:href="@{/indexViews/timeline.html}">
@@ -239,6 +231,37 @@
 			</div>
 		</div>
 	</div>
+	 <!-- 音乐播放器 -->
+    <div id="QPlayer">
+	<ol id="playlist"></ol>
+	<div id="pContent">
+		<div id="player">
+			<span class="cover"></span>
+			<div class="ctrl">
+				<div class="musicTag marquee">
+					<strong>Title</strong>
+					 <span> - </span>
+					<span class="artist">Artist</span>
+				</div>
+				<div class="progress">
+					<div class="timer left">0:00</div>
+					<div class="contr">
+						<div class="rewind icon"></div>
+						<div class="playback icon"></div>
+						<div class="fastforward icon"></div>
+					</div>
+					<div class="right">
+						<div class="liebiao icon"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="ssBtn">
+		        <div class="adf"></div>
+	    </div>
+	</div>
+	</div>
+    
 	<!--遮罩-->
 	<div class="blog-mask animated layui-hide"></div>
 	<!-- layui.js -->
@@ -246,6 +269,10 @@
 	<!-- 全局脚本 -->
 	<script th:src="@{/js/global.js}"></script>
 	<!-- 本页脚本 -->
+	<!-- 音乐 -->
+	<script th:src="@{/js/jquery.min.js}"></script>
+    <script th:src="@{/js/jquery.marquee.min.js}"></script>
+	<script th:src="@{/js/player.js}"></script>
 	<script th:inline="javascript" type="text/javascript">
         layui.use('jquery', function () {
             var $ = layui.jquery;

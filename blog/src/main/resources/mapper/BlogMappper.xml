@@ -45,7 +45,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				and DATE_FORMAT(releaseDate,'%Y年%m月')=#{releaseDateStr}
 			</if>
 		</where>
-		ORDER BY clickHit DESC
+		<if test="orderBy!=null and orderBy!=''">
+		ORDER BY ${orderBy}  DESC
+			</if>
 		<if test="start!=null and end!=null">
 			limit #{start},#{end}
 		</if>

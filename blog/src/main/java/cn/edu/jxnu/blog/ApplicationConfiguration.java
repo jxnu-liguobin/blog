@@ -74,8 +74,7 @@ public class ApplicationConfiguration extends WebMvcConfigurerAdapter {
 			}
 		};// 服务器上部署必须添加下面的
 		tomcat.addAdditionalTomcatConnectors(httpConnector());
-		tomcat.setBaseDirectory(new File("C:/web/")); // 虚拟路径映射
-														// 访问图片路径：C:\web-->localhost
+		tomcat.setBaseDirectory(new File("C:/web/")); // 虚拟路径映射// 访问图片路径：C:\web-->localhost
 		// tomcat.setContextPath("/");//访问的url
 		return tomcat;
 	}

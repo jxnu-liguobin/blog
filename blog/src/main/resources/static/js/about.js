@@ -12,9 +12,12 @@
 	element.on('tab(tabAbout)', function(elem) {
 		location.hash = 'tabIndex=' + $(this).attr('lay-id');
 		if (elem.index == 1) { //只对第二个点击生效
-			var w = $('#p').width() * 1 / 4;// 设置最大宽度,也可根据img的外部容器
-											// 而动态获得,比如：$("#demo").width();
-			$("img").each(function() {// 如果有很多图片,使用each()遍历
+			var w = $('.aboutinfo-figure').width();// 设置最大宽度,也可根据img的外部容器
+			if (w<100){
+					w=100;
+			} 
+			else {
+				$("img").each(function() {// 如果有很多图片,使用each()遍历
 				var img_w = $(this).width();// 图片宽度
 				var img_h = $(this).height();// 图片高度
 				if (img_w > w) {// 如果图片宽度超出指定最大宽度
@@ -26,6 +29,7 @@
 				}
 
 			});
+		}
 		}
 	});
 });

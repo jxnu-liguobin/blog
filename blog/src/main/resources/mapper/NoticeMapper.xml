@@ -68,4 +68,5 @@
 		SELECT id,content,notice_publisher,DATE_FORMAT(notice_date,'%Y年%m月%d日 %H:%i:%S') AS notice_date_str,level FROM
 		t_notice order by level desc
 	</select>
+	<cache flushInterval="600000"></cache>
 </mapper>

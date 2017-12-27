@@ -60,4 +60,5 @@ public interface MessageDao {
 	 * @return
 	 */
 	public Integer updateMessage(Message message);
+	
 }
