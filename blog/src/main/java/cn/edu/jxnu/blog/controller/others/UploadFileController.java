@@ -1,16 +1,13 @@
 package cn.edu.jxnu.blog.controller.others;
 
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.ibatis.annotations.Param;
@@ -48,13 +45,13 @@ public class UploadFileController {
 			@RequestParam(value = "flag", required = false) Integer flag,
 			@RequestParam(value = "isUploads", required = false) String isUploads)
 			throws IOException {
-		InputStream is = file.getInputStream();
-		BufferedImage bi = ImageIO.read(is);
-		int width = bi.getWidth();
-		if (width > 1920) {
+//		InputStream is = file.getInputStream();
+//		BufferedImage bi = ImageIO.read(is);
+//		int width = bi.getWidth();
+		if (file.getSize() > 2*1024*1024) {
 			Map<String, Object> map = new HashMap<>();
 			map.put("code", 1);// 0表示成功，1失败
-			map.put("msg", "图片宽不能大于1920px");// 提示消息
+			map.put("msg", "图片不能大于2M");// 提示消息
 			String result = new JSONObject(map).toString();
 			return result;
 		}

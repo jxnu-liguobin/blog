@@ -45,7 +45,7 @@ layui.use(['upload','table'], function(){
     ,exts:'jpg|png|gif|bmp|jpeg'
     ,multiple: true
     ,auto: false
-    ,size:'1000'
+    ,size:'2000'
     ,bindAction: '#testListAction'
     ,choose: function(obj){   
       var files = this.files = obj.pushFile(); //将每次选择的文件追加到文件队列
@@ -82,13 +82,15 @@ layui.use(['upload','table'], function(){
         tds.eq(2).html('<span style="color: #5FB878;">上传成功</span>');
         tds.eq(3).html(''); //清空操作
         return delete this.files[index]; //删除文件队列已经上传成功的文件
+      }else {
+			return layer.msg(res.msg);      
       }
       this.error(index, upload);
     }
     ,error: function(index, upload){
       var tr = demoListView.find('tr#upload-'+ index)
       ,tds = tr.children();
-      tds.eq(2).html('<span style="color: #FF5722;">上传失败，检查图片宽度大于1920px</span>');
+      tds.eq(2).html('<span style="color: #FF5722;">上传失败!</span>');
       tds.eq(3).find('.demo-reload').removeClass('layui-hide'); //显示重传
     }
   });

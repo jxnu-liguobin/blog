@@ -23,10 +23,10 @@
 	<nav class="blog-nav layui-header" >
 	<div class="blog-container">
 	<!-- QQ互联登陆 -->
-	<a target="_blank" th:href="@{/login}" class="blog-user"><span
+<!-- 	<a target="_blank" th:href="@{/login}" class="blog-user"><span
 		style="color: white;text-align: right;font-size: 15px;"> <i
 			class="layui-icon" style="font-size: 15px;">&#xe614;</i>
-	</span> </a>
+	</span> </a> -->
 	<!--  <a href="javascript:;" class="blog-user layui-hide"> <img
 				th:src="@{/images/Absolutely.jpg}" alt="jxnu-liguobin"
 				title="jxnu-liguobin" />
@@ -121,6 +121,7 @@
 											16、依赖管理：maven<br>
 											17、开发工具：MyEclipse2013<br>
 											18、缓存：Myabtis二级缓存（友情链接）,redis缓存（验证码）,ehcache（权限）<br>
+											19、评论插件：搜狐畅评
 										  <div class="layui-field-box">
 										  </div>主要开发进度<br>
 											<h4 style="text-align: left;color:blue;">2017年11月13日</h4>
@@ -205,6 +206,7 @@
 											1、对iphone5 4.0寸到ipad pro9.7“关于本站”界面的适配（后改为去除字体包裹标签使用layui的自适应）<br>
 											<h4 style="text-align: left;color:blue;">2017年12月27日</h4>
 											1、添加druid的sql监控，注解式spring的service与dao层监控
+											2、文章评论使用搜狐畅评替代
 										  </div>
 										<h1 style="text-align:center;">The End</h1>
 									</div>
@@ -246,7 +248,7 @@
 								<fieldset class="layui-elem-field layui-field-title">
 									<legend>简介</legend>
 									<div class="layui-field-box aboutinfo-abstract abstract-bloger">
-										<p style="text-align:center;">jxnu在校大三生。</p>
+										<p style="text-align:center;">在校生~</p>
 										<h1  id="p" >个人介绍</h1>
 										<p id="profile" th:utext="${application.blogger.profile}"></p>
 										<h1 style="text-align:center;">The End</h1>
@@ -263,8 +265,8 @@
 								</div>
 								<p class="aboutinfo-nickname">留言墙</p>
 								<p class="aboutinfo-introduce">
-									本页面可留言、吐槽、提问。欢迎灌水，杜绝广告！<br> <span style="color: red;">注：因为表设计的比较早，缺陷很多，本个人Blog使用匿名评论。
-									仅显示地址概要信息，留言选填。可以选择是否发送邮箱，后台看到也会以邮件的形式回复！访客用户名自填与多级评论暂时不实现。</span>
+									本页面可留言、吐槽、提问。拒绝灌水！<br> <span style="color: red;">注：访客用户名自填与多级评论暂时不实现。
+									灌水请在文章下评论。</span>
 								</p>
 								<p class="aboutinfo-location">
 									<i class="fa fa-clock-o"></i>&nbsp;<span id="time"></span>
@@ -483,7 +485,7 @@
 			tool : ['strong','italic','link', ,'unlink','|','left', 'center', 'right', '|', 'face'],
 		});
 		window.onload = function(){
-			var  w =$('#p').width()*1/6 ;
+			var  w =$('#p').width()*1/8 ;
 			if (w<100){
 				w=100;
 			} 

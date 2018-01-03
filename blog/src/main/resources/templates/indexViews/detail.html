@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Language" content="zh-CN">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, user-scalable=no" />
-<title>梦境迷离  - 文章详情</title>
+<title th:text="${blog.title}"></title>
 <link rel="shortcut icon" th:href="@{/images/Logo_40.png}"
 	type="image/x-icon">
 <!--Layui-->
@@ -35,18 +35,18 @@ pre {
 	<nav class="blog-nav layui-header">
 		<div class="blog-container">
 			<!-- QQ互联登陆 -->
-			<a target="_blank" th:href="@{/login}"
-			 class="blog-user"><span style="color: white;text-align: right;font-size: 15px;">
-			 <i class="layui-icon" style="font-size: 15px;">&#xe614;</i></span>
-			</a> <!-- <a href="javascript:;" class="blog-user layui-hide"> <img
+			<!-- <a target="_blank" th:href="@{/login}" class="blog-user"><span
+				style="color: white;text-align: right;font-size: 15px;"> <i
+					class="layui-icon" style="font-size: 15px;">&#xe614;</i></span> </a> -->
+			<!-- <a href="javascript:;" class="blog-user layui-hide"> <img
 				th:src="@{/images/Absolutely.jpg}" alt="jxnu-liguobin"
 				title="jxnu-liguobin" />
-			</a> --> <a class="blog-logo" th:href="@{/index/home}">梦境迷离</a>
+			</a> -->
+			<a class="blog-logo" th:href="@{/index/home}">梦境迷离</a>
 			<!-- 导航菜单 layui2.2 更新，导致i失效 -->
 			<ul class="layui-nav" lay-filter="nav">
-				<li class="layui-nav-item"><a
-					th:href="@{/index/home}"><i class="fa fa-home fa-fw"></i>&nbsp;网站首页</a>
-				</li>
+				<li class="layui-nav-item"><a th:href="@{/index/home}"><i
+						class="fa fa-home fa-fw"></i>&nbsp;网站首页</a></li>
 				<li class="layui-nav-item"><a th:href="@{/index/article}"><i
 						class="fa fa-file-text fa-fw layui-this"></i>&nbsp;文章专栏</a></li>
 				<li class="layui-nav-item"><a
@@ -88,7 +88,8 @@ pre {
 								class="layui-badge-rim layui-bg-gray" th:text="${key}"></span></span>
 						</div>
 						<div class="article-detail-content">
-								<pre><p class="layui-text layui-elip" th:utext="${blog.content}"></p>
+							<pre style="overflow:hidden">
+								<p class="layui-text layui-elip" th:utext="${blog.content}"></p>
 								</pre>
 						</div>
 						<hr>
@@ -96,61 +97,30 @@ pre {
 					<!-- 评论区域 -->
 					<div class="blog-module shadow"
 						style="box-shadow: 0 1px 8px #a6a6a6;">
-						<div class="aboutinfo-figure">
-							<fieldset class="layui-elem-field layui-field-title">
-								<legend>评论</legend>
-								<div class="layui-field-box">
-									<div class="leavemessage" style="text-align:initial">
-										<form class="layui-form blog-editor" action="">
-											<div class="layui-form-item">
-												<textarea name="content" lay-verify="content" id="content"
-													placeholder="请输入内容" class="layui-textarea layui-hide"></textarea>
-											</div>
-											<div class="layui-form-item layui-input-inline">
-
-												<input type="text" name="code" lay-verify="required"
-													placeholder="请输入验证码" autocomplete="off" class="layui-input"
-													id="code" value=""> <a
-													class="layui-btn layui-btn-primary "
-													style="padding: 0 0 0 ;border: 0" data-type="refresh">
-													<img id="imgObj" alt="验证码" style="margin-top: 16px;"
-													th:src="@{/blog/redisValidateCode}" />
-												</a>
-											</div>
-											<div class="layui-form-item">
-												<span id="error" style="font-size: 12px; color: red;"></span>
-
-											</div><hr>
-											<div class="layui-form-item">
-												<a class="layui-btn  layui-btn-primary layui-btn-xs"
-													data-type="refresh"> 换一张</a>
-												<button class="layui-btn layui-btn-xs"
-													lay-submit="formLeaveMessage" lay-filter="formLeaveMessage">提交</button>
-											</div>
-										</form>
-									</div>
-									<fieldset id="Lazy" class="layui-elem-field"
-										th:if="${not #lists.isEmpty(commentList)}">
-										<legend style="text-align: center;font-size: 1em;" th:text="评论区"></legend>
-										
-									<!-- 	<fieldset class="layui-elem-field layui-field-title"
-											th:each="comment,commentStat: ${commentList}">
-											<legend style="font-size: 10px;"
-												th:text="${commentStat.index+1}+'楼                           '+${comment.address}"></legend>
-											<div class="layui-field-box">
-												&nbsp;&nbsp;<span
-													style="color: red;float:right ;font-size: 10px;"
-													th:text="${comment.commentDateStr}"></span>
-												<div class="content" style="text-align: left;">
-													<p id="p" th:utext="${comment.content}"></p>
-												</div>
-											</div>
-										</fieldset> -->
-									</fieldset>
-
-								</div>
-							</fieldset>
-						</div>
+						<div style="text-align: center;"id="cyReward" role="cylabs" data-use="reward"></div>
+						<!--PC和WAP自适应版-->
+						<div id="cyQing" role="cylabs" data-use="qing"></div>
+						<div id="SOHUCS" th:sid="${blog.id}"></div>
+						<script type="text/javascript"> 
+					(function(){ 
+							var appid = 'cytoujWAK'; 
+							var conf = '569260efd41169f71a9a14d6ac7074d4'; 
+							var width = window.innerWidth || document.documentElement.clientWidth; 
+						if (width < 960) { 
+							window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); 
+						} else { 
+							var loadJs=function(d,a){
+							var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;
+							var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);
+						if(typeof a==="function"){
+							if(window.attachEvent){b.onreadystatechange=function(){
+								var e=b.readyState;if(e==="loaded"||e==="complete"){
+								b.onreadystatechange=null;a()}}}
+							else{
+							b.onload=a}}c.appendChild(b)};loadJs("https://changyan.sohu.com/upload/changyan.js",
+						function(){
+						window.changyan.api.config({appid:appid,conf:conf})}); } })(); 
+				</script>
 					</div>
 				</div>
 				<div class="blog-main-right">
@@ -160,10 +130,10 @@ pre {
 					</div>
 					<!--这个div位置不能改，否则需要添加一个div来代替它或者修改样式表-->
 					<div class="article-category shadow">
-						<div class="article-category-title" style="text-align: left;margin-left: 5px">文章分类</div>
+						<div class="article-category-title"
+							style="text-align: left;margin-left: 5px">文章分类</div>
 						<!-- 点击分类后的页面和artile.html页面一样，只是数据是某一类别的 -->
-						<i> <span
-							th:each="blogType : ${blogTypeList}"
+						<i> <span th:each="blogType : ${blogTypeList}"
 							th:if="${not #lists.isEmpty(blogTypeList)}"> <a
 								th:href="@{'/index/home?typeId='+${blogType.id}}"> <span
 									style="font-size: 15px; font-style:normal;margin-left: 1px;"
@@ -177,30 +147,24 @@ pre {
 					<div class="blog-module shadow">
 						<div class="blog-module-title">文章标签</div>
 						<!-- 点击分类后的页面和artile.html页面一样，只是数据是某一类别的 -->
-						<i> <span
-							th:each="key,keyStat : ${keysMap}"
-							 th:if="${keyStat.count lt 21}"> <a
+						<i> <span th:each="key,keyStat : ${keysMap}"
+							th:if="${keyStat.count lt 21}"> <a
 								th:href="@{'/blog/articles/'+${keyStat.current.value}}"> <span
 									style="font-size: 15px;font-style: normal;"
 									th:text="${keyStat.current.key}"></span></a>
 						</span></i>
-					<div class="clear"></div>
+						<div class="clear"></div>
 						<div th:if="${#lists.isEmpty(keysMap)}">
 							<span th:text="暂无信息！"></span>
 						</div>
 					</div>
 					<div class="blog-module shadow">
-						<div class="blog-module-title">评论排行</div>
-						<ul class="fa-ul blog-module-ul" th:each="blog :${blogList}"
-							th:if="${not #lists.isEmpty(blogList)}">
-							<li><i class="fa-li fa  fa-comment-o"></i><a
-								th:href="@{'/blog/articles/'+${blog.id}}"><span
-									th:text="${blog.title}">文章标题</span>&nbsp;&nbsp;&nbsp;<span
-									style="color: gray" th:text="'('+${blog.replyHit}+')'"></span></a></li>
-						</ul>
-						<div th:if="${#lists.isEmpty(blogList)}">
-							<span th:text="暂无信息！"></span>
-						</div>
+						<div class="blog-module-title">热门评论</div>
+						<div  style="margin-left: 0px;margin-top: 28px;" id="cyReping" role="cylabs" data-use="reping"></div>
+					</div>
+					<div class="blog-module shadow" style="overflow:hidden;">
+						<div class="blog-module-title">热评用户</div>
+						<div style="margin-left: 0px;"  id="cyHotusers" role="cylabs" data-use="hotusers"></div>
 					</div>
 				</div>
 				<div class="clear"></div>
@@ -210,8 +174,9 @@ pre {
 	<!-- 底部 -->
 	<footer class="blog-footer">
 		<p>
-			<span>Copyright</span><span>&copy;</span><span>2017</span><a href="https://www.dreamylost.cn">梦境迷离</a><span>Design
-				By jxnu-liguobin</span>
+			<span>Copyright</span><span>&copy;</span><span>2017</span><a
+				href="https://www.dreamylost.cn">梦境迷离</a><span>Design By
+				jxnu-liguobin</span>
 		</p>
 		<p>
 			<a href="http://www.miitbeian.gov.cn" target="_blank">赣ICP备17017283号-1</a>
@@ -223,8 +188,8 @@ pre {
 		lay-filter="nav">
 		<li class="layui-nav-item"><a th:href="@{/index/home}"><i
 				class="fa fa-home fa-fw"></i>&nbsp;网站首页</a></li>
-		<li class="layui-nav-item layui-this"><a th:href="@{/index/article}"><i
-				class="fa fa-file-text fa-fw"></i>&nbsp;文章专栏</a></li>
+		<li class="layui-nav-item layui-this"><a
+			th:href="@{/index/article}"><i class="fa fa-file-text fa-fw"></i>&nbsp;文章专栏</a></li>
 		<li class="layui-nav-item"><a
 			th:href="@{/indexViews/resource.html}"><i
 				class="fa fa-tags fa-fw"></i>&nbsp;资源分享</a></li>
@@ -248,37 +213,35 @@ pre {
 		</div>
 	</div>
 	<!--遮罩-->
-	 <!-- 音乐播放器 -->
-    <div id="QPlayer">
-	<ol id="playlist"></ol>
-	<div id="pContent">
-		<div id="player">
-			<span class="cover"></span>
-			<div class="ctrl">
-				<div class="musicTag marquee">
-					<strong>Title</strong>
-					 <span> - </span>
-					<span class="artist">Artist</span>
-				</div>
-				<div class="progress">
-					<div class="timer left">0:00</div>
-					<div class="contr">
-						<div class="rewind icon"></div>
-						<div class="playback icon"></div>
-						<div class="fastforward icon"></div>
+	<!-- 音乐播放器 -->
+	<div id="QPlayer">
+		<ol id="playlist"></ol>
+		<div id="pContent">
+			<div id="player">
+				<span class="cover"></span>
+				<div class="ctrl">
+					<div class="musicTag marquee">
+						<strong>Title</strong> <span> - </span> <span class="artist">Artist</span>
 					</div>
-					<div class="right">
-						<div class="liebiao icon"></div>
+					<div class="progress">
+						<div class="timer left">0:00</div>
+						<div class="contr">
+							<div class="rewind icon"></div>
+							<div class="playback icon"></div>
+							<div class="fastforward icon"></div>
+						</div>
+						<div class="right">
+							<div class="liebiao icon"></div>
+						</div>
 					</div>
 				</div>
 			</div>
+			<div class="ssBtn">
+				<div class="adf"></div>
+			</div>
 		</div>
-		<div class="ssBtn">
-		        <div class="adf"></div>
-	    </div>
 	</div>
-	</div>
-    
+
 	<div class="blog-mask animated layui-hide"></div>
 	<!-- layui.js -->
 	<script th:src="@{/layui/layui.js}"></script>
@@ -288,7 +251,7 @@ pre {
 	<script th:src="@{/js/prettify.js}"></script>
 	<!-- 本页脚本 -->
 	<script th:src="@{/js/jquery.min.js}"></script>
-    <script th:src="@{/js/jquery.marquee.min.js}"></script>
+	<script th:src="@{/js/jquery.marquee.min.js}"></script>
 	<script th:src="@{/js/player.js}"></script>
 	<script type="text/javascript" th:inline="javascript">
     
@@ -329,7 +292,7 @@ pre {
 	});
 	//流加载
 	//获得该文章的id
-	 	var blogId = [[${blog.id}]]
+/* 	 	var blogId = [[${blog.id}]]
 		var flow = layui.flow;
 		flow.load({
 	    elem: '#Lazy' //指定列表容器
@@ -356,7 +319,7 @@ pre {
 				next(lis.join(''), page < res.count);
 			}
 		});}
-		}); 
+		});  */
 	form.on('submit(formLeaveMessage)', function(data) {
 		//获取评论内容 带标记
 		var content = layedit.getContent(editIndex);
@@ -442,5 +405,7 @@ $(window).load(function(){
      prettyPrint();
 })
 </script>
+<script type="text/javascript" charset="utf-8" src="https://changyan.itc.cn/js/lib/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="https://changyan.sohu.com/js/changyan.labs.https.js?appid=cytoujWAK"></script>
 </body>
 </html>

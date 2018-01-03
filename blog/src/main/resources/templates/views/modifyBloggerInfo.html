@@ -18,7 +18,7 @@
 	  var uploadInst = upload.render({
 	    elem: '#test1'
 	    ,url: '../uploadFile?flag=1'
-	    ,size: 1000 //1MB
+	    ,size: 2000 //1MB
 	    ,before: function(obj){
 	      //预读本地文件示例，不支持ie8
 	      obj.preview(function(index, file, result){
@@ -28,14 +28,14 @@
 	    }
 	    ,done: function(result){
 	      //如果上传失败
-	      if(result.code == 1){
-	        return layer.msg('图片宽大于1000px将无法上传');
-	      } if(result.code == 0){
+	    if(result.code == 0){
 	      	$('#imageName').val(result.data["title"]); //图片名称保存到隐藏域
 	      	layer.msg('上传成功');
 	      	//layer.msg("图片名称："+result.data["title"]); //成功
 	        return;
-	      }
+	      }else{
+			return layer.msg(res.msg);      
+     	 }
 	    },
 	    success :function(res){
 	    	alert(res)

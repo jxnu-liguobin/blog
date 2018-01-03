@@ -40,7 +40,7 @@ function() {
         var idd = data.field["idd"]
         var content = data.field["content"]
         var level = data.field["level"] 
-        var noticePublisher = [[${session.currentUser.userName}]]
+        var noticePublisher = '[[${session.currentUser.userName}]]'
 		$.ajax({
             async: false,
             url: '../admin/notice/save',

@@ -31,10 +31,10 @@ import cn.edu.jxnu.blog.domin.Blogger;
 public class Application {
 	private static final Logger log = org.slf4j.LoggerFactory
 			.getLogger(Application.class);
-
-	public static void main(String[] args) {
+	public static void main(String[] args) throws InterruptedException {
 		SpringApplication.run(Application.class, args);
-
+		Thread thread = new Thread(new ThreadForPushTo());
+		thread.start();
 	}
 
 	// 处理登陆页面

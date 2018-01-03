@@ -1,5 +1,28 @@
 ﻿layui.use(['element', 'layer', 'util', 'form'], function () {
     var $ = layui.jquery;
+    $(function(){
+    	//百度统计
+    		var _hmt = _hmt || [];
+    		(function() {
+    		  var hm = document.createElement("script");
+    		  hm.src = "https://hm.baidu.com/hm.js?39d697209d70ecab6c5db481d03d63d7";
+    		  var s = document.getElementsByTagName("script")[0]; 
+    		  s.parentNode.insertBefore(hm, s);
+    		})();
+    	});
+    	//百度搜索
+    	(function(){
+    	    var bp = document.createElement('script');
+    	    var curProtocol = window.location.protocol.split(':')[0];
+    	    if (curProtocol === 'https') {
+    	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    	    }
+    	    else {
+    	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    	    }
+    	    var s = document.getElementsByTagName("script")[0];
+    	    s.parentNode.insertBefore(bp, s);
+    	})();
 //    //模拟QQ登陆
 //    $('.blog-user').click(function () {
 //        var user = this;
@@ -22,16 +45,6 @@
                 }
             }
         }
-    });
-    $(function(){
-    	//百度统计
-    	var _hmt = _hmt || [];
-    	(function() {
-    	  var hm = document.createElement("script");
-    	  hm.src = "https://hm.baidu.com/hm.js?39d697209d70ecab6c5db481d03d63d7";
-    	  var s = document.getElementsByTagName("script")[0]; 
-    	  s.parentNode.insertBefore(hm, s);
-    	})();
     });
     
     //子栏目导航点击事件
@@ -155,4 +168,3 @@ window._bd_share_config = {
     "share": {}
 };
 with (document) 0[(getElementsByTagName('head')[0] || body).appendChild(createElement('script')).src = '/static/api/js/share.js?v=89860593.js?cdnversion=' + ~(-new Date() / 36e5)];
-

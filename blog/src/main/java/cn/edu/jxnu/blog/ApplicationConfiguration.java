@@ -2,6 +2,8 @@ package cn.edu.jxnu.blog;
 
 import java.io.File;
 
+import javax.servlet.MultipartConfigElement;
+
 import org.apache.catalina.Context;
 import org.apache.catalina.connector.Connector;
 import org.apache.tomcat.util.descriptor.web.SecurityCollection;
@@ -11,6 +13,7 @@ import org.springframework.boot.context.embedded.EmbeddedServletContainerCustomi
 import org.springframework.boot.context.embedded.EmbeddedServletContainerFactory;
 import org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainerFactory;
 import org.springframework.boot.web.servlet.ErrorPage;
+import org.springframework.boot.web.servlet.MultipartConfigFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
@@ -78,6 +81,15 @@ public class ApplicationConfiguration extends WebMvcConfigurerAdapter {
 		// tomcat.setContextPath("/");//访问的url
 		return tomcat;
 	}
+    @Bean  
+    public MultipartConfigElement multipartConfigElement() {  
+        MultipartConfigFactory factory = new MultipartConfigFactory();  
+        //文件最大  
+        factory.setMaxFileSize("5MB"); //KB,MB  
+        /// 设置总上传数据总大小  
+        factory.setMaxRequestSize("5MB");  
+        return factory.createMultipartConfig();  
+    }  
 
 	@Bean
 	public Connector httpConnector() {

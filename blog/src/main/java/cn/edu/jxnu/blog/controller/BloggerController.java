@@ -108,11 +108,11 @@ public class BloggerController {
 				blogClickCount += blog.getClickHit();
 			}
 
-			Map<String, Object> ismap = new HashMap<>();
-			Map<String, Object> unmap = new HashMap<>();
-			unmap.put("state", 0);// 待审核
-			Long commentCount0 = commentService.getTotal(unmap);// 待审核
-			Long commentCount = commentService.getTotal(ismap);// 评论总数量
+//			Map<String, Object> ismap = new HashMap<>();
+//			Map<String, Object> unmap = new HashMap<>();
+//			unmap.put("state", 0);// 待审核
+//			Long commentCount0 = commentService.getTotal(unmap);// 待审核
+//			Long commentCount = commentService.getTotal(ismap);// 评论总数量
 			String ip = AddressUtils.getRealIp(request);
 			log.info("博主：ip=" + ip);
 			// String ip = request.getRemoteAddr(); // ip
@@ -128,8 +128,8 @@ public class BloggerController {
 			Long messageCount0 = messageService.getTotal(map2);
 			Long messageCount = messageService.getTotal(map3);// 总留言
 			application.setAttribute("articleCount", articleCount);
-			application.setAttribute("commentCount0", commentCount0);
-			application.setAttribute("commentCount", commentCount);
+//			application.setAttribute("commentCount0", commentCount0);
+//			application.setAttribute("commentCount", commentCount);
 			application.setAttribute("blogClickCount", blogClickCount);
 			application.setAttribute("messageCount0", messageCount0);
 			application.setAttribute("messageCount", messageCount);

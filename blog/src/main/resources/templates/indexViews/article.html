@@ -42,10 +42,10 @@
 		<nav class="blog-nav layui-header">
 			<div class="blog-container">
 				<!-- QQ互联登陆 -->
-				<a target="_blank" th:href="@{/login}"
+				<!-- <a target="_blank" th:href="@{/login}"
 			 class="blog-user"><span style="color: white;text-align: right;font-size: 15px;">
 			 <i class="layui-icon" style="font-size: 15px;">&#xe614;</i> </span>
-			</a> <!-- <a href="javascript:;" class="blog-user layui-hide"> <img
+			</a> --> <!-- <a href="javascript:;" class="blog-user layui-hide"> <img
 					th:src="@{/images/Absolutely.png}" alt="jxnu-liguobin"
 					title="jxnu-liguobin" />
 				</a> --> <a class="blog-logo" th:href="@{/index/home}">梦境迷离</a>
@@ -114,8 +114,10 @@
 								th:text="${blog.blogType.typeName}">类型</span></a></span> <span
 							class="article-viewinfo"><i class="fa fa-eye"></i>&nbsp;<span
 							th:text="${blog.clickHit}">浏览量</span></span> <span
-							class="article-viewinfo"><i class="fa fa-commenting"></i>&nbsp;<span
-							th:text="${blog.replyHit}">评论量</span></span>
+							class="article-viewinfo"><i class="fa fa-commenting"></i>&nbsp;	<span th:attr="id='sourceId::'+${blog.id}"class = "cy_cmt_count" ></span>
+								<script id="cy_cmt_num" 
+									src="https://changyan.sohu.com/upload/plugins/plugins.list.count.js?clientId=cytoujWAK">
+								</script></span>
 					</div>
 				</div>
 				<fieldset class="layui-elem-field layui-field-title"

@@ -1,11 +1,12 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+<meta name="baidu-site-verification" content="jtk7WuRmGu" />
 <meta http-equiv="Content-Type" content="text/html; Charset=utf-8">
 <meta http-equiv="Content-Language" content="zh-CN">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, user-scalable=no" />
-<title>梦境迷离 - A java developer come from jxnu.</title>
+<title>梦境迷离 - 一位Java程序员的学习记录与分享之路</title>
 <link rel="shortcut icon" th:href="@{/images/Logo_40.png}"
 	type="image/x-icon">
 <!--Layui-->
@@ -23,10 +24,10 @@
 	<nav class="blog-nav layui-header">
 		<div class="blog-container">
 			<!-- QQ互联登陆 --没有做--> 
-			<a target="_blank" th:href="@{/login}"
+			<!-- <a target="_blank" th:href="@{/login}"
 			 class="blog-user"><span style="color: white;text-align: right;font-size: 15px;">
 			 <i class="layui-icon" style="font-size: 15px;">&#xe614;</i></span>
-			</a>
+			</a> -->
 			<!--  <a href="javascript:;" class="blog-user layui-hide"> <img
 				th:src="@{/images/Absolutely.png}" alt="jxnu-liguobin"
 				title="jxnu-liguobin" />
@@ -113,8 +114,13 @@
 									th:text="${blog.blogType.typeName}">类型</span></a></span> <span
 								class="article-viewinfo"><i class="fa fa-eye"></i>&nbsp;<span
 								th:text="${blog.clickHit}">浏览量</span></span> <span
-								class="article-viewinfo"><i class="fa fa-commenting"></i>&nbsp;<span
-								th:text="${blog.replyHit}">评论量</span></span>
+								class="article-viewinfo"><i class="fa fa-commenting"></i>&nbsp;
+								<span th:attr="id='sourceId::'+${blog.id}"class = "cy_cmt_count" ></span>
+								<script id="cy_cmt_num" 
+									src="https://changyan.sohu.com/upload/plugins/plugins.list.count.js?clientId=cytoujWAK">
+								</script>
+		
+								</span>
 						</div>
 					</div>
 					<fieldset class="layui-elem-field layui-field-title"
@@ -174,13 +180,29 @@
 						</ul>
 					</div>
 					<div class="blog-module shadow">
-						<div class="blog-module-title">日历</div>
-							<div id="date"></div>
+					<div class="blog-module-title">统计信息</div>
+						<ul style="margin-left: 10px;" class="fa-ul blog-module-ul">
+						<li>文章数：<span style="font-style: italic;" th:text="${application.articleCount}"></span></li>
+						<li>留言量：<span style="font-style: italic;" th:text="${application.messageList}"></span></li>
+						<li>公告数：<span style="font-style: italic;" th:text="${application.noticeCount}"></span></li>
+						<li>图片数：<span style="font-style: italic;" th:text="${application.pictureCount}"></span></li>
+						<!-- <li>文章评论量：<span style="font-style: italic;"  th:text="${application.commentCount}"></span></li> -->
+						<li>文章浏览量：<span style="font-style: italic;" th:text="${application.blogClickCount}"></span></li>
+						<li>您的IP：<span style="font-style: italic;" th:text="${application.ip}"></span></li>
+						<li>访问时间：<span style="font-style: italic;" th:text="${application.str}"></span></li>
+							
+						</ul>
+					</div>
+					<div class="blog-module shadow">
+					<div class="blog-module-title">热门文章</div>
+					<div  style="margin-left: 0px;" id="cyWallvertical" role="cylabs" data-use="wallvertical"></div>
+					<div  style="margin-left: 0px;" id="cyHotnews" role="cylabs" data-use="hotnews"></div>
+					<script type="text/javascript" charset="utf-8" src="https://changyan.itc.cn/js/lib/jquery.js"></script>
+					<script type="text/javascript" charset="utf-8" src="https://changyan.sohu.com/js/changyan.labs.https.js?appid=cytoujWAK"></script>
 					</div>
 					<div class="blog-module shadow">
 						<div class="blog-module-title">友情链接</div>
 						<fieldset class="layui-elem-field">
-							  <legend>要求：</legend>
 							  <div class="layui-field-box">
 							  	<i class="fa fa-close"></i>经常宕机&nbsp;
                                     <i class="fa fa-close"></i>不合法规&nbsp;
@@ -199,6 +221,10 @@
 							th:if="${#lists.isEmpty(application.linkList)}">
 							<li>暂无信息！</li>
 						</ul>
+					</div>
+					<div class="blog-module shadow">
+						<div class="blog-module-title">日历</div>
+							<div id="date"></div>
 					</div>
 				</div>
 				<div class="clear"></div>
@@ -347,7 +373,17 @@
 	    console.log(obj.limit); //得到每页显示的条数
 	    console.log(obj.count); //得到每页显示的条数
 	      if(!first){
-            window.location.href="/index/home?page="+obj.curr
+		      var releaseDateStr = [[${application.releaseDateStr}]];
+		      var type = [[${application.type}]];
+		      var flag = [[${application.flag}]];
+		      if(releaseDateStr!=null) {
+		      	 window.location.href=encodeURI("/index/home?page="+obj.curr+"&releaseDateStr="+releaseDateStr);
+		      }
+		      else if(type!=null){
+		      	 window.location.href=encodeURI("/index/home?page="+obj.curr+"&typeId="+type);
+		      }else if(flag!=null) {
+		      		window.location.href=encodeURI("/index/home?page="+obj.curr+"&flag="+flag);
+		      }
        }
 	  }
 	  });

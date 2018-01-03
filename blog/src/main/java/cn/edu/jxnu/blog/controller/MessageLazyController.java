@@ -49,7 +49,7 @@ public class MessageLazyController {
 		map.put("state", 1);
 		List<Message> messageList = messageService.listByMessages(map);
 		pageBean.setResult(messageList);
-		System.out.println(pageBean.getStart() + pageBean.getEnd());
+		//System.out.println(pageBean.getStart() + pageBean.getEnd());
 		JSONObject result = new JSONObject();
 		JSON.DEFFAULT_DATE_FORMAT = "yyyy-MM-dd";
 		String jsonStr = JSONObject.toJSONString(pageBean.getResult(),

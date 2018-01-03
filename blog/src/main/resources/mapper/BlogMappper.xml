@@ -36,7 +36,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		t_blog
 		<where>
 			<if test="title!=null and title!=''">
-				and title like "%"#{title}"%"
+				and title  like CONCAT('%',#{title},'%')  
 			</if>
 			<if test="typeId!=null and typeId!=''">
 				and type_id=#{typeId}
@@ -57,7 +57,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT COUNT(*) FROM t_blog
 		<where>
 			<if test="title!=null and title!=''">
-				and title like "%"#{title}"%"
+				and title like CONCAT('%',#{title},'%')  
 			</if>
 			<if test="typeId!=null and typeId!=''">
 				and type_id=#{typeId}

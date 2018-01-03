@@ -28,7 +28,6 @@ import cn.edu.jxnu.blog.commons.TreeMapComparatorForkinds;
 import cn.edu.jxnu.blog.domin.Blog;
 import cn.edu.jxnu.blog.domin.BlogType;
 import cn.edu.jxnu.blog.domin.Blogger;
-import cn.edu.jxnu.blog.domin.Comment;
 import cn.edu.jxnu.blog.lucene.BlogIndex;
 import cn.edu.jxnu.blog.service.BlogService;
 import cn.edu.jxnu.blog.service.BlogTypeService;
@@ -163,11 +162,11 @@ public class BlogController {
 		} 
 	}
 		modelAndView.addObject("blog", blog);
-		List<Comment> commentList = commentService.queryCommentsByBlogId(blog
+	/*	List<Comment> commentList = commentService.queryCommentsByBlogId(blog
 				.getId());
 		for (Comment message : commentList) {
 			message.setAddress(message.getAddress() + "网友");
-		}
+		}*/
 		Blogger blogger = bloggerService.getBloggerData();
 		Map<String, Object> mapForComment = new HashMap<String, Object>();
 		List<Blog> bloglist = blogService.listBlog(mapForComment);// 所有博客数据
@@ -214,7 +213,7 @@ public class BlogController {
 			modelAndView.addObject("blogList", bloglist); // 评论排行 应该只需要state==1
 		}
 		List<BlogType> blogTypeList = blogTypeService.getBlogTypeData();
-		modelAndView.addObject("commentList", commentList);
+		/*modelAndView.addObject("commentList", commentList);*/
 		modelAndView.addObject("blogger", blogger);
 		modelAndView.addObject("blogTypeList", blogTypeList);
 		modelAndView.setViewName("indexViews/detail");
