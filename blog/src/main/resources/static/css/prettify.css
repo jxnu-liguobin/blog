@@ -111,13 +111,13 @@ li.L0,li.L1,li.L2,li.L3,li.L5,li.L6,li.L7,li.L8 {
 li.L1,li.L3,li.L5,li.L7,li.L9 {
 	background: #eee
 }
-
+/* 
 .prettyprint.linenums {
 	-webkit-box-shadow: inset 40px 0 0 #fbfbfc, inset 41px 0 0 #ececf0;
 	-moz-box-shadow: inset 40px 0 0 #fbfbfc, inset 41px 0 0 #ececf0;
 	box-shadow: inset 40px 0 0 #fbfbfc, inset 41px 0 0 #ececf0;
-}
-
+} */
+/* 
 ol.linenums {
 	padding: 0 0 0 33px;
 }
@@ -127,4 +127,4 @@ ol.linenums li {
 	color: #bebec5;
 	line-height: 18px;
 	text-shadow: 0 1px 0 #fff;
-}
+} */

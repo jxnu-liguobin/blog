@@ -39,4 +39,11 @@ public interface GreatDao {
 	 */
 	public Great getByUserIpAndImageId(@Param("userIp") String userIp,
 			@Param("imageId") Integer imageId);
+	
+	/**
+	 * 根据imageid 删除所有对应的记录
+	 * @param id
+	 * @return
+	 */
+	public Integer deleteGreatByImageId(Integer id);
 }

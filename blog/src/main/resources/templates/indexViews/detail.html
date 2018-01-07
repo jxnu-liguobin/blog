@@ -42,12 +42,12 @@ pre {
 				th:src="@{/images/Absolutely.jpg}" alt="jxnu-liguobin"
 				title="jxnu-liguobin" />
 			</a> -->
-			<a class="blog-logo" th:href="@{/index/home}">梦境迷离</a>
+			<a class="blog-logo" th:href="@{/index/home.html}">梦境迷离</a>
 			<!-- 导航菜单 layui2.2 更新，导致i失效 -->
 			<ul class="layui-nav" lay-filter="nav">
-				<li class="layui-nav-item"><a th:href="@{/index/home}"><i
+				<li class="layui-nav-item"><a th:href="@{/index/home.html}"><i
 						class="fa fa-home fa-fw"></i>&nbsp;网站首页</a></li>
-				<li class="layui-nav-item"><a th:href="@{/index/article}"><i
+				<li class="layui-nav-item"><a th:href="@{/index/article.html}"><i
 						class="fa fa-file-text fa-fw layui-this"></i>&nbsp;文章专栏</a></li>
 				<li class="layui-nav-item"><a
 					th:href="@{/indexViews/resource.html}"><i
@@ -55,7 +55,7 @@ pre {
 				<li class="layui-nav-item"><a
 					th:href="@{/indexViews/timeline.html}"><i
 						class="fa fa-hourglass-half fa-fw"></i>&nbsp;点点滴滴</a></li>
-				<li class="layui-nav-item"><a th:href="@{/index/about}"><i
+				<li class="layui-nav-item"><a th:href="@{/index/about.html}"><i
 						class="fa fa-info fa-fw"></i>&nbsp;关于本站</a></li>
 			</ul>
 			<!-- 手机和平板的导航开关 -->
@@ -68,8 +68,8 @@ pre {
 	<div class="blog-body">
 		<div class="blog-container">
 			<blockquote class="layui-elem-quote sitemap layui-breadcrumb shadow">
-				<cite><a th:href="@{/index/home}" title="网站首页">网站首页</a></cite> <cite><a
-					th:href="@{/index/article}" title="文章专栏">文章专栏</a> </cite> <cite><a
+				<cite><a th:href="@{/index/home.html}" title="网站首页">网站首页</a></cite> <cite><a
+					th:href="@{/index/article.html}" title="文章专栏">文章专栏</a> </cite> <cite><a
 					th:text="${blog.title}">基于layui的laypage扩展模块！</a></cite>
 			</blockquote>
 			<div class="blog-main">
@@ -80,7 +80,7 @@ pre {
 							<span th:text="${blog.title}"></span>
 						</div>
 						<div class="article-detail-info">
-							<span>最近编辑时间：<span th:text="${blog.releaseDateStr}"></span></span>
+							<span>发表时间：<span th:text="${blog.releaseDateStr}"></span></span>
 							<span>作者：<span th:text="${blogger.nickName}"></span></span> <span>浏览量：<span
 								th:text="${blog.clickHit}"></span></span><br> <span>标签：</span> <span
 								th:each="key : ${blogKeys}"
@@ -135,7 +135,7 @@ pre {
 						<!-- 点击分类后的页面和artile.html页面一样，只是数据是某一类别的 -->
 						<i> <span th:each="blogType : ${blogTypeList}"
 							th:if="${not #lists.isEmpty(blogTypeList)}"> <a
-								th:href="@{'/index/home?typeId='+${blogType.id}}"> <span
+								th:href="@{'/index/home.html?typeId='+${blogType.id}}"> <span
 									style="font-size: 15px; font-style:normal;margin-left: 1px;"
 									th:text="${blogType.typeName}"></span></a>
 						</span></i>
@@ -186,17 +186,17 @@ pre {
 	<ul
 		class="layui-nav layui-nav-tree layui-nav-side blog-nav-left layui-hide"
 		lay-filter="nav">
-		<li class="layui-nav-item"><a th:href="@{/index/home}"><i
+		<li class="layui-nav-item"><a th:href="@{/index/home.html}"><i
 				class="fa fa-home fa-fw"></i>&nbsp;网站首页</a></li>
 		<li class="layui-nav-item layui-this"><a
-			th:href="@{/index/article}"><i class="fa fa-file-text fa-fw"></i>&nbsp;文章专栏</a></li>
+			th:href="@{/index/article.html}"><i class="fa fa-file-text fa-fw"></i>&nbsp;文章专栏</a></li>
 		<li class="layui-nav-item"><a
 			th:href="@{/indexViews/resource.html}"><i
 				class="fa fa-tags fa-fw"></i>&nbsp;资源分享</a></li>
 		<li class="layui-nav-item"><a
 			th:href="@{/indexViews/timeline.html}"><i
 				class="fa fa-road fa-fw"></i>&nbsp;点点滴滴</a></li>
-		<li class="layui-nav-item"><a th:href="@{/index/about}"><i
+		<li class="layui-nav-item"><a th:href="@{/index/about.html}"><i
 				class="fa fa-info fa-fw"></i>&nbsp;关于本站</a></li>
 	</ul>
 	<!--分享窗体-->

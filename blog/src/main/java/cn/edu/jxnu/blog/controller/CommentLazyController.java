@@ -53,6 +53,7 @@
 //		log.info("当前请求懒加载分页....");
 //		//分页
 //		List<Comment>  comments= commentService.listComment(map);
+//		pageBean.setTotal(commentService.getTotal(map));//查询总数
 //		pageBean.setResult(comments);
 //		JSONObject result = new JSONObject();
 //		JSON.DEFFAULT_DATE_FORMAT = "yyyy-MM-dd";

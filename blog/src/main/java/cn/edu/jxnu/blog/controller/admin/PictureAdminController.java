@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import cn.edu.jxnu.blog.domin.PageBean;
 import cn.edu.jxnu.blog.domin.Picture;
+import cn.edu.jxnu.blog.service.GreatService;
 import cn.edu.jxnu.blog.service.PictureService;
 
 import com.alibaba.fastjson.JSON;
@@ -30,6 +31,9 @@ public class PictureAdminController {
 			.getLogger(PictureAdminController.class);
 	@Autowired
 	private PictureService pictureService;
+	
+	@Autowired
+	private GreatService greatService;
 
 	/**
 	 * @description 分页查询
@@ -96,6 +100,10 @@ public class PictureAdminController {
 		int j = 0;
 		for (int i = 0; i < idsStr.length; i++) {
 			int id = Integer.parseInt(idsStr[i]);
+			//如果删除的id，有点击量的话，则使用imageID将对应的所有great关系记录删除
+			if(pictureService.getPictureByid(id).getClick()>0) {
+				greatService.deleteByImageId(id);
+			}
 			pictureService.deletePicture(id);
 			j++;
 		}

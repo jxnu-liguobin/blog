@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
+import cn.edu.jxnu.blog.commons.PVFinalCount;
 import cn.edu.jxnu.blog.commons.StringUtil;
 import cn.edu.jxnu.blog.domin.Blog;
 import cn.edu.jxnu.blog.domin.Blogger;
@@ -46,13 +47,14 @@ public class ArticleController {
 	@Resource
 	private BlogTypeService blogTypeService;
 
-	@RequestMapping("/article")
+	@RequestMapping("/article.html")
 	public String index(
 			@RequestParam(value = "page", required = false) String page,
 			@RequestParam(value = "typeId", required = false) String typeId,
 			@RequestParam(value = "releaseDateStr", required = false) String releaseDateStr,
 			HttpServletRequest request) throws Exception {
 
+		PVFinalCount.Count.incrementAndGet();
 		if (StringUtil.isEmpty(page)) {
 			page = "1";
 		}

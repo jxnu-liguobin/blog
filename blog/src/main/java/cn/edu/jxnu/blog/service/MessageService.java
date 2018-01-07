@@ -66,12 +66,4 @@ public interface MessageService {
 	 * @return
 	 */
 	public Integer updateMessage(Message message);
-
-	/**
-	 * 前台专用分页，懒加载
-	 * 
-	 * @param map
-	 * @return
-	 */
-	public List<Message> listByMessages(Map<String, Object> map);
 }

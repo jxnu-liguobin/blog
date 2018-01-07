@@ -38,4 +38,9 @@ public class GreatServiceImpl implements GreatService {
 		return greatDao.getByUserIpAndImageId(userIp, imageId);
 	}
 
+	@Override
+	public Integer deleteByImageId(Integer id) {
+		return greatDao.deleteGreatByImageId(id);
+	}
+
 }

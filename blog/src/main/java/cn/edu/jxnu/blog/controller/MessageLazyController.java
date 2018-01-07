@@ -1,9 +1,5 @@
 package cn.edu.jxnu.blog.controller;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
@@ -45,10 +41,8 @@ public class MessageLazyController {
 			HttpServletRequest httpServletRequest) {
 		log.info("当前正在请求留言懒加载页面。。。");
 		PageBean<Message> pageBean = new PageBean<>(Integer.parseInt(page), 10);
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("state", 1);
-		List<Message> messageList = messageService.listByMessages(map);
-		pageBean.setResult(messageList);
+		pageBean.getMap().put("state", 1);
+		pageBean = messageService.listByPage(pageBean);
 		//System.out.println(pageBean.getStart() + pageBean.getEnd());
 		JSONObject result = new JSONObject();
 		JSON.DEFFAULT_DATE_FORMAT = "yyyy-MM-dd";

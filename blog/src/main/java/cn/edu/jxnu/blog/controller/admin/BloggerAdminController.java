@@ -102,6 +102,6 @@ public class BloggerAdminController {
 	public String logout() throws Exception {
 		log.info("您已经退出后台系统");
 		SecurityUtils.getSubject().logout();
-		return "redirect:/login";
+		return "redirect:/login.html";
 	}
 }

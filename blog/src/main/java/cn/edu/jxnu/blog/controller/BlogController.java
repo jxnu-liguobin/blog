@@ -23,6 +23,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
 import cn.edu.jxnu.blog.commons.AddressUtils;
+import cn.edu.jxnu.blog.commons.PVFinalCount;
 import cn.edu.jxnu.blog.commons.StringUtil;
 import cn.edu.jxnu.blog.commons.TreeMapComparatorForkinds;
 import cn.edu.jxnu.blog.domin.Blog;
@@ -61,6 +62,8 @@ public class BlogController {
 	@RequestMapping("/articles/{id}")
 	public ModelAndView details(@PathVariable("id") Integer id,
 			HttpServletRequest request) throws Exception {
+		PVFinalCount.Count.incrementAndGet();
+
 		ModelAndView modelAndView = new ModelAndView();
 		// 获取id对于的博客
 		Blog blog = blogService.getById(id);

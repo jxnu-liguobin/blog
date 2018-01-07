@@ -66,9 +66,5 @@ public class MessageServiceImpl implements MessageService {
 		return messageDao.updateMessage(message);
 	}
 
-	@Override
-	public List<Message> listByMessages(Map<String, Object> map) {
-		return messageDao.listByPage(map);
-	}
 
 }

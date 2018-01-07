@@ -32,14 +32,14 @@
 				th:src="@{/images/Absolutely.png}" alt="jxnu-liguobin"
 				title="jxnu-liguobin" />
 			</a> -->
-			 <a class="blog-logo" th:href="@{/index/home}">梦境迷离</a>
+			 <a class="blog-logo" th:href="@{/index/home.html}">梦境迷离</a>
 			<!-- 导航菜单 -->
 			<ul class="layui-nav" lay-filter="nav">
 				<li class="layui-nav-item layui-this"><a
-					th:href="@{/index/home}"><i class="fa fa-home fa-fw"></i>&nbsp;网站首页</a>
+					th:href="@{/index/home.html}"><i class="fa fa-home fa-fw"></i>&nbsp;网站首页</a>
 				</li>
 				<li class="layui-nav-item"><a
-					th:href="@{/index/article}"><i
+					th:href="@{/index/article.html}"><i
 						class="fa fa-file-text fa-fw"></i>&nbsp;文章专栏</a></li>
 				<li class="layui-nav-item"><a
 					th:href="@{/indexViews/resource.html}"><i
@@ -48,7 +48,7 @@
 					th:href="@{/indexViews/timeline.html}"><i
 						class="fa fa-hourglass-half fa-fw"></i>&nbsp;点点滴滴</a></li>
 				<li class="layui-nav-item"><a
-					th:href="@{/index/about}"><i class="fa fa-info fa-fw"></i>&nbsp;关于本站</a>
+					th:href="@{/index/about.html}"><i class="fa fa-info fa-fw"></i>&nbsp;关于本站</a>
 				</li>
 			</ul>
 			<!-- 手机和平板的导航开关 -->
@@ -110,7 +110,7 @@
 							<!-- 文章的访问信息 -->
 							<span><i class="fa fa-clock-o"></i>&nbsp;&nbsp;<span
 								th:text="${blog.releaseDateStr}">日期</span></span> <span><i
-								class="fa fa-tag"></i>&nbsp;&nbsp;<a th:href="@{'/index/home?typeId='+${blog.blogType.id}}"><span
+								class="fa fa-tag"></i>&nbsp;&nbsp;<a th:href="@{'/index/home.html?typeId='+${blog.blogType.id}}"><span
 									th:text="${blog.blogType.typeName}">类型</span></a></span> <span
 								class="article-viewinfo"><i class="fa fa-eye"></i>&nbsp;<span
 								th:text="${blog.clickHit}">浏览量</span></span> <span
@@ -169,7 +169,7 @@
 							th:if="${not #lists.isEmpty(application.blogCountList)}">
 							<li><i class="layui-icon"
 								style="color: #1E9FFF;margin-left: 0px;">&#xe637;</i> 
-								<a th:href="@{'/index/home?releaseDateStr='+${#uris.escapePath(dateList.releaseDateStr)}}">
+								<a th:href="@{'/index/home.html?releaseDateStr='+${#uris.escapePath(dateList.releaseDateStr)}}">
 								<span th:text="${dateList.releaseDateStr}">
 								</span>
 									（<span th:text="${dateList.blogCount }"></span>）</a>
@@ -188,6 +188,7 @@
 						<li>图片数：<span style="font-style: italic;" th:text="${application.pictureCount}"></span></li>
 						<!-- <li>文章评论量：<span style="font-style: italic;"  th:text="${application.commentCount}"></span></li> -->
 						<li>文章浏览量：<span style="font-style: italic;" th:text="${application.blogClickCount}"></span></li>
+						<li>网站PV：<span style="font-style: italic;" th:text="${application.countPV}"></span></li>
 						<li>您的IP：<span style="font-style: italic;" th:text="${application.ip}"></span></li>
 						<li>访问时间：<span style="font-style: italic;" th:text="${application.str}"></span></li>
 							
@@ -245,15 +246,15 @@
 	<ul
 		class="layui-nav layui-nav-tree layui-nav-side blog-nav-left layui-hide"
 		lay-filter="nav">
-		<li class="layui-nav-item layui-this"><a th:href="@{/index/home}"><i
+		<li class="layui-nav-item layui-this"><a th:href="@{/index/home.html}"><i
 				class="fa fa-home fa-fw"></i>&nbsp;网站首页</a></li>
-		<li class="layui-nav-item"><a th:href="@{/index/article}"><i
+		<li class="layui-nav-item"><a th:href="@{/index/article.html}"><i
 				class="fa fa-file-text fa-fw"></i>&nbsp;文章专栏</a></li>
 		<li class="layui-nav-item"><a th:href="@{/indexViews/resource.html}"><i
 				class="fa fa-tags fa-fw"></i>&nbsp;资源分享</a></li>
 		<li class="layui-nav-item"><a th:href="@{/indexViews/timeline.html}"><i
 				class="fa fa-road fa-fw"></i>&nbsp;点点滴滴</a></li>
-		<li class="layui-nav-item"><a th:href="@{/index/about}"><i
+		<li class="layui-nav-item"><a th:href="@{/index/about.html}"><i
 				class="fa fa-info fa-fw"></i>&nbsp;关于本站</a></li>
 	</ul>
 	<!--分享窗体-->
@@ -377,12 +378,12 @@
 		      var type = [[${application.type}]];
 		      var flag = [[${application.flag}]];
 		      if(releaseDateStr!=null) {
-		      	 window.location.href=encodeURI("/index/home?page="+obj.curr+"&releaseDateStr="+releaseDateStr);
+		      	 window.location.href=encodeURI("/index/home.html?page="+obj.curr+"&releaseDateStr="+releaseDateStr);
 		      }
 		      else if(type!=null){
-		      	 window.location.href=encodeURI("/index/home?page="+obj.curr+"&typeId="+type);
+		      	 window.location.href=encodeURI("/index/home.html?page="+obj.curr+"&typeId="+type);
 		      }else if(flag!=null) {
-		      		window.location.href=encodeURI("/index/home?page="+obj.curr+"&flag="+flag);
+		      		window.location.href=encodeURI("/index/home.html?page="+obj.curr+"&flag="+flag);
 		      }
        }
 	  }

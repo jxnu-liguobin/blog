@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import cn.edu.jxnu.blog.commons.PVFinalCount;
 import cn.edu.jxnu.blog.domin.Blogger;
 import cn.edu.jxnu.blog.domin.Message;
 import cn.edu.jxnu.blog.service.BlogService;
@@ -53,14 +54,15 @@ public class AboutMeController {
 	 * @Description 请求关于我们
 	 * @return
 	 */
-	@RequestMapping("/about")
+	@RequestMapping("/about.html")
 	public Object index(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		/**
 		 * 携带留言信息到留言板。
 		 * 
 		 */
-		// 查询评论
+		PVFinalCount.Count.incrementAndGet();
+		// 查询
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("state", 1);
 		List<Message> messageList = messageService.getMessageData(map);
@@ -74,7 +76,7 @@ public class AboutMeController {
 		if (blogger == null) {
 			
 			 //modelAndView.setViewName("indexViews/home");
-			 response.sendRedirect("/index/home");  //重定向去主页
+			 response.sendRedirect("/index/home.html");  //重定向去主页
 			 return null;  //OK
 			// request.getRequestDispatcher("/index/home").forward(request,response)
 		} else {

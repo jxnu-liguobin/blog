@@ -1,5 +1,6 @@
 package cn.edu.jxnu.blog;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -13,6 +14,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
+import cn.edu.jxnu.blog.commons.PVFinalCount;
 import cn.edu.jxnu.blog.domin.Blog;
 import cn.edu.jxnu.blog.service.BlogService;
 
@@ -51,9 +53,9 @@ public class ThreadForPushTo implements Runnable,ServletContextListener {
 				// 获取所有的链接
 				List<Blog> list = blogService.listBlog(new HashMap<String, Object>());
 				// 不再需要同步
-				StringBuffer lists = new StringBuffer(list.size());
+				StringBuilder lists = new StringBuilder(list.size());
 				for (Blog blog : list) {
-					lists.append(STATE_URL + blog.getId() + ',');
+					lists.append(STATE_URL + blog.getId()+',');
 				}
 				// 去除最后一个,
 				String li = lists.toString().substring(0, lists.length() - 1);
@@ -87,8 +89,13 @@ public class ThreadForPushTo implements Runnable,ServletContextListener {
 				}
 				try {
 					// 睡眠1小时
+					//顺便再这里对文件定时写入
+					PVFinalCount.writeFileString(PVFinalCount.Count.get());
+					log.info("每小时写入一次："+PVFinalCount.Count.get());
 					TimeUnit.HOURS.sleep(1); 
 				} catch (InterruptedException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
 					e.printStackTrace();
 				}
 

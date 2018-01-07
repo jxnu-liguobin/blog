@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
 import cn.edu.jxnu.blog.commons.AddressUtils;
+import cn.edu.jxnu.blog.commons.PVFinalCount;
 import cn.edu.jxnu.blog.commons.StringUtil;
 import cn.edu.jxnu.blog.domin.Blog;
 import cn.edu.jxnu.blog.domin.Blogger;
@@ -67,12 +68,13 @@ public class IndexController {
 	 * @Description 请求主页
 	 * @return
 	 */
-	@RequestMapping("/home")
+	@RequestMapping("/home.html")
 	public String index(
 			@RequestParam(value = "releaseDateStr", required = false) String releaseDateStr,
 			@RequestParam(value = "page", required = false) String page,
 			@RequestParam(value = "typeId", required = false) String typeId,
 			HttpServletRequest request) throws Exception {
+		PVFinalCount.Count.incrementAndGet();
 		
 		ServletContext application = RequestContextUtils.findWebApplicationContext(request)
 				.getServletContext();
@@ -165,6 +167,7 @@ public class IndexController {
 		java.util.Date date = new java.util.Date(); // 登录的时间
 		String str = sdf.format(date);
 		application.setAttribute("str", str);
+		application.setAttribute("countPV", PVFinalCount.Count.get()); //总PV
 		//保存参数
 		if (releaseDateStr != null) {
 			application.setAttribute("releaseDateStr",releaseDateStr);

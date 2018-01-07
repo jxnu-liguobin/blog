@@ -103,9 +103,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="keyWord!=null and keyWord!=''">
 				keyWord=#{keyWord},
 			</if>
-			<if test="releaseDate!=null">
+			<!-- <if test="releaseDate!=null">
 				releaseDate=now(),
-			</if>
+			</if> -->
 		</set>
 		where id=#{id}
 	</update>

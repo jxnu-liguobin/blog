@@ -25,4 +25,10 @@
 		where user_ip=#{userIp}
 		and image_id=#{imageId}
 	</select>
+	<!-- 根据imageid 删除所有对应的记录 -->
+	<delete id="deleteGreatByImageId" parameterType="Integer">
+		delete from t_great
+		where
+		image_id=#{imageId}
+	</delete>
 </mapper>

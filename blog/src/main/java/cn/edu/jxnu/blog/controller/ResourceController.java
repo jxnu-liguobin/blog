@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
 import cn.edu.jxnu.blog.commons.AddressUtils;
+import cn.edu.jxnu.blog.commons.PVFinalCount;
 import cn.edu.jxnu.blog.domin.Great;
 import cn.edu.jxnu.blog.domin.PageBean;
 import cn.edu.jxnu.blog.domin.Picture;
@@ -49,6 +50,8 @@ public class ResourceController {
 	public String listMessage(
 			@RequestParam(value = "page", required = false) String page,
 			HttpServletRequest httpServletRequest) {
+		PVFinalCount.Count.incrementAndGet();
+
 		log.info("当前请求的相册。。。懒加载");
 		PageBean<Picture> pageBean = new PageBean<Picture>(
 				Integer.parseInt(page), 10);

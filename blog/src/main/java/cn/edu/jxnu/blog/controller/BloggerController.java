@@ -62,7 +62,7 @@ public class BloggerController {
 	private RedisTemplate<String, String> redisTemplate;
 
 
-	@RequestMapping(value = "/login", method = RequestMethod.POST)
+	@RequestMapping(value = "/login.html", method = RequestMethod.POST)
 	public String login(Blogger blogger,
 	/* @RequestParam(value = "rememberMe", required = false) boolean rememberMe, */
 	HttpServletRequest request) throws Exception {

@@ -38,4 +38,11 @@ public interface GreatService {
 	 */
 	public Great isClick(@Param("userIp") String userIp,
 			@Param("imageId") Integer imageId);
+	/**
+	 * 根据imageid 删除所有对应的记录
+	 * @param id
+	 * @return
+	 */
+	public Integer deleteByImageId(Integer id);
+
 }

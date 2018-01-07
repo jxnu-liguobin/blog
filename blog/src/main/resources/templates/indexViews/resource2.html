@@ -39,12 +39,12 @@
 			</a> --><!--  <a href="javascript:;" class="blog-user layui-hide"> <img
 				th:src="@{/images/Absolutely.png}" alt="jxnu-liguobin"
 				title="jxnu-liguobin" />
-			</a> --> <a class="blog-logo" th:href="@{/index/home}">梦境迷离</a>
+			</a> --> <a class="blog-logo" th:href="@{/index/home.html}">梦境迷离</a>
 			<!-- 导航菜单 -->
 			<ul class="layui-nav" lay-filter="nav">
-				<li class="layui-nav-item"><a th:href="@{/index/home}"><i
+				<li class="layui-nav-item"><a th:href="@{/index/home.html}"><i
 						class="fa fa-home fa-fw"></i>&nbsp;网站首页</a></li>
-				<li class="layui-nav-item"><a th:href="@{/index/article}"><i
+				<li class="layui-nav-item"><a th:href="@{/index/article.html}"><i
 						class="fa fa-file-text fa-fw"></i>&nbsp;文章专栏</a></li>
 				<li class="layui-nav-item layui-this"><a
 					th:href="@{/indexViews/resource.html}"><i
@@ -52,7 +52,7 @@
 				<li class="layui-nav-item"><a
 					th:href="@{/indexViews/timeline.html}"><i
 						class="fa fa-hourglass-half fa-fw"></i>&nbsp;点点滴滴</a></li>
-				<li class="layui-nav-item"><a th:href="@{/index/about}"><i
+				<li class="layui-nav-item"><a th:href="@{/index/about.html}"><i
 						class="fa fa-info fa-fw"></i>&nbsp;关于本站</a></li>
 			</ul>
 			<!-- 手机和平板的导航开关 -->
@@ -65,7 +65,7 @@
 	<div class="blog-body" onload="toSmall();">
 		<div class="blog-container">
 			<blockquote class="layui-elem-quote sitemap layui-breadcrumb shadow">
-				<cite><a th:href="@{/index/home}" title="网站首页">网站首页&nbsp;</a>
+				<cite><a th:href="@{/index/home.html}" title="网站首页">网站首页&nbsp;</a>
 				</cite> <cite><a>资源分享&nbsp;</a></cite>
 			</blockquote>
 			<div class="blog-main site-demo-flow" id="LAY_demo3" style="overflow:auto;">
@@ -89,7 +89,7 @@
                                 <a class="layui-btn layui-btn-xs layui-btn-primary" th:href="@{https://github.com/jxnu-liguobin/blog}" target="_blank"><i class="fa fa-eye fa-fw"></i>下载</a>
                                 <a class="layui-btn layui-btn-xs layui-btn-primary" th:href="@{https://www.dreamylost.cn}" target="_blank"><i class="fa fa-download fa-fw"></i>演示</a>
                             </div>
-                        </div>
+                        </div></div>
 				<div class="clear"></div>
 				</div>
 			</div>
@@ -109,9 +109,9 @@
 	<ul
 		class="layui-nav layui-nav-tree layui-nav-side blog-nav-left layui-hide"
 		lay-filter="nav">
-		<li class="layui-nav-item"><a th:href="@{/index/home}"><i
+		<li class="layui-nav-item"><a th:href="@{/index/home.html}"><i
 				class="fa fa-home fa-fw"></i>&nbsp;网站首页</a></li>
-		<li class="layui-nav-item"><a th:href="@{/index/article}"><i
+		<li class="layui-nav-item"><a th:href="@{/index/article.html}"><i
 				class="fa fa-file-text fa-fw"></i>&nbsp;文章专栏</a></li>
 		<li class="layui-nav-item layui-this"><a
 			th:href="@{/indexViews/resource.html}"><i
@@ -119,7 +119,7 @@
 		<li class="layui-nav-item"><a
 			th:href="@{/indexViews/timeline.html}"><i
 				class="fa fa-road fa-fw"></i>&nbsp;点点滴滴</a></li>
-		<li class="layui-nav-item"><a th:href="@{/index/about}"><i
+		<li class="layui-nav-item"><a th:href="@{/index/about.html}"><i
 				class="fa fa-info fa-fw"></i>&nbsp;关于本站</a></li>
 	</ul>
 	<!--分享窗体-->

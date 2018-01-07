@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import cn.edu.jxnu.blog.commons.PVFinalCount;
 import cn.edu.jxnu.blog.domin.Blogger;
 
 /**
@@ -38,7 +39,7 @@ public class Application {
 	}
 
 	// 处理登陆页面
-	@RequestMapping("/login")
+	@RequestMapping("/login.html")
 	public String index() {
 		log.info("登录页面------>/login");
 		return "index";
@@ -98,6 +99,7 @@ public class Application {
 	@RequestMapping("/indexViews/{path}")
 	public String indexViews(@PathVariable String path,
 			HttpServletRequest request) {
+		PVFinalCount.Count.incrementAndGet();
 		log.info("正常访问/indexViews/*.html");
 		return "indexViews/" + path;
 	}
