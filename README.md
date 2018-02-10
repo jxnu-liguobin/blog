@@ -1,4 +1,4 @@
-# A blog for beginners named 'www.dreamylost.cn'  by  a java developer who comes from jxnu .
+# A blog for beginners
 # feature1支才是最新的。 主分支废了 ，代码均有关键注释，类注释。项目中被优化替换的类使用了过期注解。
 ## Branch1分支是我开发的项目完整版（add .提交），包含搜狐畅游评论，使用的话需要替换自己的appid,里面我只删除了CA证书，文件都在，用于测试。与feature1支不同的主要是修复分页的bug和评论是用的第三方插件
 ## 主要技术与说明  第一次写项目，考虑不周见谅。特别是图片缩略有问题  存在的问题都在笔记墙说了。本blog仅供新手学习.
