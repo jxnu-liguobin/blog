@@ -26,3 +26,5 @@
   
 ###  点个star更好  qaq 预览地址www.dreamylost.cn
 ###  需要后台预览地址的邮箱私信即可
+忽略 
+ sql注释乱码
