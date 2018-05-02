@@ -2,6 +2,7 @@
 #### feature1支不推荐，有BUG。 主分支废了 ，代码均有关键注释，类注释。项目中被优化替换的类使用了过期注解。
 #### Branch1分支是我开发的项目完整版（add .提交），包含搜狐畅游评论，使用的话需要替换自己的appid,里面我只删除了CA证书，文件都在，用于测试。与feature1支不同的主要是修复分页的bug和评论是用的第三方插件
 #### 主要技术与说明  第一次写项目，考虑不周见谅。特别是图片缩略有问题  存在的问题都在笔记墙说了。本blog仅供新手学习.
+
 *  JDK:1.8 (开发环境是8，未使用1.8特性,发布目标1.7)<strong>修改->application-dev.properties, cmd-> java -jar blog.jar 即可运行项目 
 *  注：本地不要使用java -jar运行最好，需要改为发布的服务器路径而且坑多，使用eclipse运行application.java最好，使用war则需要添加一 个转换和修改打包方方式具体百度。 
 主要需要修改配置如下：日志位置，PV文件，索引位置，tomcat虚拟路径配置，sql url配置，https证书位置（我自 己的会删除，CA的，也可以自己用jdk工具生成，不再赘述） 均需要保证路径C:/web/uploads/存在（tomcat的虚拟路径，已经写死在代码中，默认在服务器与本机创建c:\web与uploads,linux按着改分隔符吧）在web里新建文件夹filenames,filenames存放静态资源file,则访问方式为ip:port/filenames/file,以此类推，注意Shiro拦截）
@@ -26,5 +27,5 @@
   
 ###  点个star更好  qaq 预览地址www.dreamylost.cn
 ###  需要后台预览地址的邮箱私信即可
-忽略 
- sql注释乱码
+ 
+####  sql中文乱码是因为编码一开始忘记改，后来改完没有清空数据导致的乱码，全部清空数据，以UTF-8建表即可。
