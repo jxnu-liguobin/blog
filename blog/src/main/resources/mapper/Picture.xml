@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.edu.jxnu.blog.dao.PictureDao">
+	<resultMap id="PictureResultMap" type="Picture">
+		<id property="id" column="id" />
+		<result property="url" column="url" />
+		<result property="publisher" column="publisher" />
+		<result property="date" column="date" />
+		<result property="dateStr" column="dateStr" />
+		<result property="click" column="click" />
+		<result property="name" column="name" />
+	</resultMap>
+	<!-- 得到所有图片并排序分页 -->
+	<select id="listByPage" resultMap="PictureResultMap"
+		parameterType="java.util.Map">
+		SELECT
+		id,url,publisher,DATE_FORMAT(date,'%Y/%m/%d ')
+		AS
+		dateStr,click,name
+		FROM t_picture ORDER BY date
+		<if test="start!=null and end!=null">
+			limit #{start},#{end}
+		</if>
+	</select>
+	<!-- 得到图片总数 -->
+	<select id="getTotalCount" resultType="java.lang.Long">
+		SELECT count(*) FROM
+		t_picture
+	</select>
+	<!-- 添加图片，不用加id -->
+	<insert id="addPicture" parameterType="Picture">
+		insert INTO t_picture
+		VALUES
+		(null,#{url},#{publisher},#{date},0,#{name})
+	</insert>
+	<!-- 根据id删除链接 -->
+	<delete id="deletePicture" parameterType="Integer">
+		delete from t_picture
+		where
+		id=#{id}
+	</delete>
+	<!-- 根据id更新图片信息 -->
+	<update id="updatePicture" parameterType="Picture">
+		update t_picture
+		<set>
+			<if test="url!=null and url!=''">
+				url=#{url},
+			</if>
+			<if test="publisher!=null and publisher!=''">
+				publisher=#{publisher},
+			</if>
+			<if test="date!=null">
+				date=#{date},
+			</if>
+			<if test="name!=null and name!=''">
+				name=#{name},
+			</if>
+			<if test="click!=null">
+				click=#{click},
+			</if>
+		</set>
+		where id=#{id}
+	</update>
+	<!-- 根据id查询图片 点赞用 -->
+	<select id="getPictureById" parameterType="java.lang.Integer"
+		resultMap="PictureResultMap">
+		SELECT id,url,publisher,date,click,name
+		from
+		t_picture
+		where
+		id=#{id}
+	</select>
+</mapper>

@@ -5,7 +5,7 @@ import org.springframework.stereotype.Repository;
 import cn.edu.jxnu.blog.domin.Blogger;
 
 /**
- * 博主dao接口
+ * @Description 博主dao接口
  */
 @Repository //注册为持久层的bean
 public interface BloggerDao {

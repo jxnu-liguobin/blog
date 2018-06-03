@@ -3,14 +3,14 @@ package cn.edu.jxnu.blog.controller.admin;
 import javax.annotation.Resource;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
-import cn.edu.jxnu.blog.commons.ResponseUtil;
 import cn.edu.jxnu.blog.domin.BlogType;
 import cn.edu.jxnu.blog.domin.PageBean;
 import cn.edu.jxnu.blog.service.BlogService;
@@ -24,10 +24,13 @@ import com.alibaba.fastjson.JSONObject;
  * 
  * @Description 博客分类控制器
  */
-@Controller
+@RestController
 @RequestMapping(value = "/admin/blogType")
 public class BlogTypeAdminController {
 
+
+	private static final Logger log = org.slf4j.LoggerFactory
+			.getLogger(BlogTypeAdminController.class);
 	@Resource
 	private BlogTypeService blogTypeService;
 	@Autowired
@@ -37,9 +40,9 @@ public class BlogTypeAdminController {
 	@RequestMapping("/list")
 	public String listBlogType(
 			@RequestParam(value = "page", required = false) String page,
-			@RequestParam(value = "limit", required = false) String limit,
-			HttpServletResponse response, HttpServletRequest httpServletRequest)
+			@RequestParam(value = "limit", required = false) String limit)
 			throws Exception {
+		log.info("当前请求博客类型管理页面。。。");
 		// 定义分页bean
 		PageBean<BlogType> pageBean = new PageBean<BlogType>(
 				Integer.parseInt(page), Integer.parseInt(limit));
@@ -56,15 +59,14 @@ public class BlogTypeAdminController {
 		result.put("count", pageBean.getTotal());
 
 		// 使用自定义工具类向response中写入数据
-		ResponseUtil.write(response, result);
-		return null;
+		return result.toJSONString();
 	}
 
 	// 添加和更新博客类别
-	@RequestMapping("/save")
-	public String save(BlogType blogType, HttpServletResponse response,
-			HttpServletRequest httpServletRequest) throws Exception {
-
+	@RequestMapping(value = "/save", method = RequestMethod.POST)
+	public String save(BlogType blogType, HttpServletRequest httpServletRequest)
+			throws Exception {
+		log.info("当前更新博客类别。。。");
 		int resultTotal = 0; // 接收返回结果记录数
 		if (blogType.getId() == null) { // 说明是第一次插入
 			resultTotal = blogTypeService.addBlogType(blogType);
@@ -81,36 +83,31 @@ public class BlogTypeAdminController {
 		// 在这里刷新application
 		ServletContext application = httpServletRequest.getServletContext();
 		application.removeAttribute("blogTypeList");// 清空ServletContext，触发ServletContextAttributeListener
-		ResponseUtil.write(response, result);
-		return null;
+		return result.toJSONString();
 	}
 
 	// 博客类别信息删除
-	@RequestMapping(value = "/delete")
+	@RequestMapping(value = "/delete", method = RequestMethod.POST)
 	public String deleteBlog(
 			@RequestParam(value = "ids", required = false) String ids,
-			HttpServletResponse response, HttpServletRequest httpServletRequest)
-			throws Exception {
+			HttpServletRequest httpServletRequest) throws Exception {
 		// 分割字符串得到id数组
+		log.info("当前请求删除博客类别。。。");
 		String[] idsStr = ids.split(",");
 		JSONObject result = new JSONObject();
 		for (int i = 0; i < idsStr.length; i++) {
 			int id = Integer.parseInt(idsStr[i]);
 			// 要判断该博客类别下面是否有博客 如果有就禁止删除博客类别 ，等我们完成博客对应的操作再来完善
 			if (blogService.getBlogByTypeId(id) > 0) {
-				result.put("success", false);
-				result.put("exist", true);
-				ResponseUtil.write(response, result);
-				return null;
+				result.put("success", 1);
+				return result.toJSONString();
 			} else {
 				blogTypeService.deleteBlogType(id);
 			}
 		}
-		result.put("exist", false);
-		result.put("success", true);// 返回一个json对象，带有一个boolean值，写入输出流response中。
+		result.put("success", 0);// 返回一个json对象，带有一个boolean值，写入输出流response中。
 		ServletContext application = httpServletRequest.getServletContext();
 		application.removeAttribute("blogTypeList");// 清空ServletContext，触发ServletContextAttributeListener
-		ResponseUtil.write(response, result);
-		return null;
+		return result.toJSONString();
 	}
 }

@@ -9,6 +9,7 @@ import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import cn.edu.jxnu.blog.domin.Blogger;
@@ -18,6 +19,9 @@ import cn.edu.jxnu.blog.service.BloggerService;
  * @Description 自定义realm
  */
 public class MyRealm extends AuthorizingRealm {
+
+	private static final Logger log = org.slf4j.LoggerFactory
+			.getLogger(MyRealm.class);
 
 	@Autowired
 	private BloggerService bloggerService;
@@ -50,17 +54,18 @@ public class MyRealm extends AuthorizingRealm {
 		// 获取页面传送过来的
 		UsernamePasswordToken token = (UsernamePasswordToken) authenticationToken;
 		String username = (String) token.getUsername(); // 获取输入的用户名
-		System.out.println("前台获取的用户名：" + username);
+		log.info("前台获取的用户名：" + username);
 		Blogger blogger = bloggerService.getBloggerByName(username); // 根据输入的用户名从数据库查询用户信息
 		if (blogger != null) {
-			System.out.println("从数据库用户获取到的用户名-密码：" + blogger.getUserName()
-					+ "-" + blogger.getPassword());
+			log.info("从数据库用户获取到的用户名-密码：" + blogger.getUserName() + "-"
+					+ blogger.getPassword());
 			// 不等于空的时候还要判断密码正确
-			System.out.println("正在验证密码......");
+			log.info("正在验证密码......");
 			/***** 注意：此处把当前登录的用户的信息保存在session中 ********/
-			SecurityUtils.getSubject().getSession().setTimeout(1000*60*10);
+			SecurityUtils.getSubject().getSession().setTimeout(1000 * 60 * 15);
 			SecurityUtils.getSubject().getSession()
 					.setAttribute("currentUser", blogger);// 把当前用户存到session中
+															// //当前session共享系统session的过期时间
 			// 把数据库的用户名，密码，取出交给SimpleAuthenticationInfo
 			authcInfo = new SimpleAuthenticationInfo(username,
 					blogger.getPassword(), "MyRealm");

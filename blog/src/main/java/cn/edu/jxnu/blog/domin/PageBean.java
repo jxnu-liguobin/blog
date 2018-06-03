@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 分页bean封装
+ * @Description 分页bean封装
  */
 public class PageBean<T>  {
 

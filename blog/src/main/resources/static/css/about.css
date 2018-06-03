@@ -1,15 +1,10 @@
-﻿/*
-
-@Name：不落阁整站模板源码 
-@Author：Absolutely 
-@Site：http://www.lyblogs.cn
-
-*/
-.layui-tab-brief {
+﻿.layui-tab-brief {
     background: #fff;
     min-height: 100vh;
 }
-
+#Lazy p{
+	margin-left: 5px;
+}
     .layui-tab-brief .layui-tab-title {
         text-align: center;
         border-bottom: 1px solid #5FB878;
@@ -25,7 +20,7 @@
 
 .aboutinfo {
     text-align: center;
-    padding: 0 15px;
+    padding: 0 10px;
 }
 
 .aboutinfo-figure {
@@ -65,6 +60,7 @@
 .aboutinfo-abstract {
     width: 90%;
     margin: 0 auto;
+      text-align: left;
 }
 
     .aboutinfo-abstract > h1 {
@@ -75,10 +71,10 @@
     }
 
     .aboutinfo-abstract > p {
-        margin: 5px 0;
+        margin: 2px 0;
         font-size: 14px;
         text-align: left;
-        text-indent: 2em;
+        text-indent: 1em;
     }
 
 #frinedlink {
@@ -139,19 +135,61 @@
     line-height: 20px;
     margin-top: 5px;
 }
-
 .leavemessage .blog-comment li:first-child {
     border-top: 1px dotted #01AAED;
 }
 
-/* 小屏幕（平板，大于等于 768px） */
-@media (min-width: 768px) {
-    .layui-tab-brief .layui-tab-title li {
-        font-size: 14px;
+/* 小屏幕（平板，大于等于 320px） */
+@media (min-width: 320px) {
+   .aboutinfo-abstract{
+    	width:235px;
+    	margin-left: 0px;
     }
-
-    #frinedlink {
-        display: inline-block;
+    .aboutinfo-abstract >p{
+   		  margin: 1px 0;
+        font-size: 8px;
+        text-align: left;
+        text-indent: 0.75em;
+    }
+}
+/* 小屏幕（平板，大于等于 360px） */
+@media (min-width: 360px) {
+   .aboutinfo-abstract{
+    	width:280px;
+    	margin-left: 0px;
+    }
+    .aboutinfo-abstract >p{
+   		  margin: 2px 0;
+        font-size: 8px;
+        text-align: left;
+        text-indent: 1em;
+    }
+}/* 小屏幕（平板，大于等于 400px） */
+@media (min-width: 400px) {
+   .aboutinfo-abstract{
+    	width:320px;
+    	margin-left: 0px;
+    }
+    .aboutinfo-abstract >p{
+   		  margin: 1px 0;
+        font-size: 9px;
+        text-align: left;
+        text-indent: 0.75em;
+    }
+}
+/**
+ipone5 i6 6p nexus5x 6p ipad ipad pro gs5 适配
+*/
+@media (min-width: 700px) {
+   .aboutinfo-abstract{
+    	width:680px;
+    	margin-left: 0px;
+    }
+    .aboutinfo-abstract >p{
+   		  margin: 1px 0;
+        font-size: 12px;
+        text-align: left;
+        text-indent: 0.75em;
     }
 }
 
@@ -159,5 +197,15 @@
 @media (min-width: 992px) {
     .blog-container {
         width: 962px;
+    }
+     .aboutinfo-abstract{
+    	width:900px;
+    	margin-left: 0px;
+    }
+    .aboutinfo-abstract >p{
+   		  margin: 1px 0;
+        font-size: 15px;
+        text-align: left;
+        text-indent: 0.75em;
     }
 }

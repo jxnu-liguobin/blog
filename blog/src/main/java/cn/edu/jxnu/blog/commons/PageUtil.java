@@ -5,6 +5,7 @@ import cn.edu.jxnu.blog.domin.Blog;
 
 /**
  * @Description 分页工具类
+ * @deprecated
  */
 public class PageUtil {
 

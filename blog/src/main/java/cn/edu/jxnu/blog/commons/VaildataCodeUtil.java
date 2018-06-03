@@ -13,8 +13,9 @@ import java.util.Random;
 import javax.imageio.ImageIO;
 
 /**
- * 验证码生成器
- * 
+ * @Description 验证码生成器
+ * @author liguobin
+ *
  */
 public class VaildataCodeUtil {
 	// 图片的宽度。

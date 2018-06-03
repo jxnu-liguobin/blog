@@ -3,7 +3,7 @@ package cn.edu.jxnu.blog.service;
 import cn.edu.jxnu.blog.domin.Blogger;
 
 /**
- * 博主service接口
+ * @Description 博主service接口
  */
 
 public interface BloggerService {
@@ -26,4 +26,5 @@ public interface BloggerService {
      * @return
      */
     Integer updateBlogger(Blogger blogger);
+    
 }

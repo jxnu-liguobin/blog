@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import cn.edu.jxnu.blog.domin.Link;
 
 /**
- * 友情连接dao接口
+ * @Description 友情连接dao接口
  */
 @Repository
 public interface LinkDao {

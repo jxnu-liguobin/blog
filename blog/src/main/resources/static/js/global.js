@@ -1,14 +1,14 @@
 ﻿layui.use(['element', 'layer', 'util', 'form'], function () {
     var $ = layui.jquery;
-    //模拟QQ登陆
-    $('.blog-user').click(function () {
-        var user = this;
-        var index = layer.load(1);
-        setTimeout(function () {
-            layer.close(index);
-            $(user).toggleClass('layui-hide').siblings('a.blog-user').toggleClass('layui-hide');
-        }, 800);
-    });
+//    //模拟QQ登陆
+//    $('.blog-user').click(function () {
+//        var user = this;
+//        var index = layer.load(1);
+//        setTimeout(function () {
+//            layer.close(index);
+//            $(user).toggleClass('layui-hide').siblings('a.blog-user').toggleClass('layui-hide');
+//        }, 800);
+//    });
     //分享工具
     layui.util.fixbar({
         bar1: '&#xe641;',
@@ -23,11 +23,21 @@
             }
         }
     });
-
+    $(function(){
+    	//百度统计
+    	var _hmt = _hmt || [];
+    	(function() {
+    	  var hm = document.createElement("script");
+    	  hm.src = "https://hm.baidu.com/hm.js?39d697209d70ecab6c5db481d03d63d7";
+    	  var s = document.getElementsByTagName("script")[0]; 
+    	  s.parentNode.insertBefore(hm, s);
+    	})();
+    });
+    
     //子栏目导航点击事件
     $('.child-nav span').click(function () {
-        layer.msg('切换到相应栏目');
-        $(this).addClass('child-nav-btn-this').siblings().removeClass('child-nav-btn-this');
+       // layer.msg('切换到相应栏目');
+       // $(this).addClass('child-nav-btn-this').siblings().removeClass('child-nav-btn-this');
     });
 
     //侧边导航开关点击事件
@@ -145,3 +155,4 @@ window._bd_share_config = {
     "share": {}
 };
 with (document) 0[(getElementsByTagName('head')[0] || body).appendChild(createElement('script')).src = '/static/api/js/share.js?v=89860593.js?cdnversion=' + ~(-new Date() / 36e5)];
+

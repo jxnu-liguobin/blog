@@ -6,16 +6,19 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.json.JSONObject;
 
 public class AddressUtils {
 
 	/**
 	 * @param args
+	 * @Description 根据ip查询地址
 	 */
 	public static void main(String[] args) {
 
-		String ip = "0:0:0:0:0:0:0:1";
+		String ip = "118.212.202.202";
 
 		String address = "";
 
@@ -82,13 +85,13 @@ public class AddressUtils {
 
 			} else {
 
-				return "获取地址失败!";
+				return "匿名";
 
 			}
 
 		}
 
-		return null;
+		return "匿名";
 
 	}
 
@@ -112,15 +115,15 @@ public class AddressUtils {
 
 			connection = (HttpURLConnection) url.openConnection();// 新建连接实例
 
-			connection.setConnectTimeout(2000);// 设置连接超时时间，单位毫 秒
+			connection.setConnectTimeout(3000);// 设置连接超时时间，单位毫 秒
 
-			connection.setReadTimeout(2000);// 设置读取数据超时时间，单位毫秒
+			connection.setReadTimeout(3000);// 设置读取数据超时时间，单位毫秒
 
 			connection.setDoInput(true);// 是否打开输出 true|false
 
 			connection.setDoOutput(true);// 是否打开输入流true|false
 
-			connection.setRequestMethod("POST");// 提交方法POST|GET
+			connection.setRequestMethod("GET");// 提交方法POST|GET
 
 			connection.setUseCaches(false);// 是否缓存true|false
 
@@ -300,6 +303,39 @@ public class AddressUtils {
 
 		return buffer.toString();
 
+	}
+
+	public static String getRealIp(HttpServletRequest request) {
+		String ip = request.getHeader("x-forwarded-for");
+		System.out.println("come from x-forwarded-for " + ip );
+		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+			if (ip == null || ip.length() == 0
+					|| "unknown".equalsIgnoreCase(ip)) {
+				ip = request.getHeader("HTTP_CLIENT_IP");
+				System.out.println("ip HTTP_CLIENT_IP "+ ip);
+			}
+			if (ip == null || ip.length() == 0
+					|| "unknown".equalsIgnoreCase(ip)) {
+				ip = request.getHeader("X-Real-IP");
+				System.out.println("ip from real "+ ip);
+			}
+			if (ip == null || ip.length() == 0
+					|| "unknown".equalsIgnoreCase(ip)) {
+				ip = request.getRemoteAddr();
+				System.out.println("ip from addr "+ip);
+			}
+		} else if (ip.length() > 15) {
+			String[] ips = ip.split(",");
+			for (int index = 0; index < ips.length; index++) {
+				String strIp = (String) ips[index];
+				if (!("unknown".equalsIgnoreCase(strIp))) {
+					ip = strIp;
+					System.out.println("ip come come from x-forwarded-fors  " +ip);
+					break;
+				}
+			}
+		}
+		return ip;
 	}
 
 }

@@ -6,7 +6,8 @@
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
 <title>欢迎</title>
 <link rel="stylesheet" th:href="@{/layui/css/layui.css}" media="all">
-<link rel="stylesheet" type="text/css" th:href="@{/plug/font-awesome/css/font-awesome.css}">
+<link rel="stylesheet" type="text/css"
+	th:href="@{/plug/font-awesome/css/font-awesome.css}">
 <style>
 .info-box {
 	height: 85px;
@@ -80,9 +81,21 @@
 						style="background-color:#00c0ef !important;color:white;"><i
 						class="fa fa-ambulance" aria-hidden="true"></i></span>
 					<div class="info-box-content">
-						<span class="info-box-text" style="margin-top: 14px;">待审核评论数</span>
+						<span class="info-box-text" style="margin-top: 14px;">待审核评论</span>
 						<span class="info-box-number"
 							th:text="${application.commentCount0}"></span>
+					</div>
+				</div>
+			</div>
+			<div class="layui-col-md3">
+				<div class="info-box">
+					<span class="info-box-icon"
+						style="background-color:#00c0ef !important;color:white;"><i
+						class="fa fa-ambulance" aria-hidden="true"></i></span>
+					<div class="info-box-content">
+						<span class="info-box-text" style="margin-top: 14px;">待审核留言</span>
+						<span class="info-box-number"
+							th:text="${application.messageCount0}"></span>
 					</div>
 				</div>
 			</div>
@@ -92,9 +105,19 @@
 						style="background-color:#dd4b39 !important;color:white;"><i
 						class="fa fa-google-plus" aria-hidden="true"></i></span>
 					<div class="info-box-content">
-						<span class="info-box-text" style="margin-top: 14px;">总评论数</span>
-						<span class="info-box-number"
-							th:text="${application.commentCount}"></span>
+						<span class="info-box-text" style="margin-top: 14px;">总留言</span> <span
+							class="info-box-number" th:text="${application.messageCount}"></span>
+					</div>
+				</div>
+			</div>
+			<div class="layui-col-md3">
+				<div class="info-box">
+					<span class="info-box-icon"
+						style="background-color:#dd4b39 !important;color:white;"><i
+						class="fa fa-google-plus" aria-hidden="true"></i></span>
+					<div class="info-box-content">
+						<span class="info-box-text" style="margin-top: 14px;">总评论</span> <span
+							class="info-box-number" th:text="${application.commentCount}"></span>
 					</div>
 				</div>
 			</div>
@@ -134,6 +157,49 @@
 						<h3 class="layui-timeline-title">置顶的说明</h3>
 						<ul>
 							<li>龟速更新...</li>
+						</ul>
+					</div></li>
+						<li class="layui-timeline-item"><i
+					class="layui-icon layui-timeline-axis">&#xe63f;</i>
+					<div class="layui-timeline-content layui-text">
+						<h3 class="layui-timeline-title">12月15日</h3>
+						<ul>
+							<li>完成相册与点赞的api设计与junit单元测试</li>
+							<li>完成后台多图上传与管理等</li>
+						</ul>
+					</div></li>
+						<li class="layui-timeline-item"><i
+					class="layui-icon layui-timeline-axis">&#xe63f;</i>
+					<div class="layui-timeline-content layui-text">
+						<h3 class="layui-timeline-title">12月11日</h3>
+						<ul>
+							<li>完成公告管理</li>
+						</ul>
+					</div></li>
+					<li class="layui-timeline-item"><i
+					class="layui-icon layui-timeline-axis">&#xe63f;</i>
+					<div class="layui-timeline-content layui-text">
+						<h3 class="layui-timeline-title">12月9日</h3>
+						<ul>
+							<li>富文本加载初始化信息有bug</li>
+						</ul>
+					</div></li>
+				<li class="layui-timeline-item"><i
+					class="layui-icon layui-timeline-axis">&#xe63f;</i>
+					<div class="layui-timeline-content layui-text">
+						<h3 class="layui-timeline-title">11月28日</h3>
+						<ul>
+							<li>更改文章发布日期为最近更新日期。修复mybatis日期的非空字符判断bug导致的抛出异常</li>
+						</ul>
+					</div></li>
+				<li class="layui-timeline-item"><i
+					class="layui-icon layui-timeline-axis">&#xe63f;</i>
+					<div class="layui-timeline-content layui-text">
+						<h3 class="layui-timeline-title">11月27日</h3>
+						<ul>
+							<li>添加留言板后台管理与审核</li>
+							<li>layui框架更新2.2，修复表格width自适应</li>
+							<li>修复Shiro与servlet的session过期不同步</li>
 						</ul>
 					</div></li>
 				<li class="layui-timeline-item"><i

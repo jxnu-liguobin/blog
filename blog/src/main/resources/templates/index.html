@@ -2,6 +2,9 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="utf-8" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, maximum-scale=1" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <title>登陆</title>
 <!--用百度的静态资源库的cdn安装bootstrap环境-->
 <!-- Bootstrap 核心 CSS 文件 -->
@@ -45,15 +48,17 @@
 </script>
 <style type="text/css">
 body {
-	background: url(../img/4.jpg) no-repeat;
+	background: url(../images/4.jpg) no-repeat;
 	background-size: cover;
 	font-size: 16px;
 }
 
 .form {
 	background: rgba(255, 255, 255, 0.2);
-	width: 400px;
-	margin: 100px auto;
+	width:450px;
+	margin:100px auto;
+	padding-left: 10px;
+	padding-right: 10px;
 }
 
 #login_form {
@@ -88,7 +93,7 @@ input[type="text"],input[type="password"] {
 				class="form-horizontal col-sm-offset-3 col-md-offset-3"
 				method="post" id="login_form">
 				<!-- 标题 -->
-				<h3 class="form-title">SpringBoot Blog</h3>
+				<h3 class="form-title" style="margin-left: 10%">Admin for Blog</h3>
 				<div class="col-sm-9 col-md-9">
 					<div class="form-group">
 						<i class="fa fa-user fa-lg"> </i>
@@ -108,7 +113,7 @@ input[type="text"],input[type="password"] {
 							<input type="text" name="code" lay-verify="" placeholder="请输入验证码"
 								autocomplete="off" class="form-control required">
 						<hr />
-						<img id="imgObj" alt="验证码" th:src="@{/blog/validateCode}"
+						<img id="imgObj" alt="验证码" th:src="@{/blog/redisValidateCode}"
 							onclick="changeImg()" /> 
 							<a href="#" onclick="changeImg()">换一张</a>
 					</div>
@@ -126,12 +131,21 @@ input[type="text"],input[type="password"] {
 				</div>
 			</form>
 		</div>
-	</div>
+	</div></body>
+	<footer>
+		<p  style="text-align: center;">
+			<span>Copyright</span><span>&copy;</span><span>2017</span><a style="color: blue" href="https://www.dreamylost.cn">梦境迷离</a><span>Design
+				By jxnu-liguobin</span>
+		</p>
+		<p style="text-align: center;">
+			<a style="color: blue" href="http://www.miitbeian.gov.cn" target="_blank">赣ICP备17017283号-1</a>
+		</p>
+	</footer>
 	<script th:inline="javascript" type="text/javascript">  
     // 刷新图片  
     function changeImg() {  
         var imgSrc = $("#imgObj");  
-        var src = '/blog/validateCode'
+        var src = '/blog/redisValidateCode'
         imgSrc.attr("src", changeUrl(src));  
     }  
     //为了使每次生成图片不一致，即不让浏览器读缓存，所以需要加上时间戳  

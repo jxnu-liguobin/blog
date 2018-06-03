@@ -1,11 +1,14 @@
 package cn.edu.jxnu.blog.domin;
 
+import java.io.Serializable;
+
 
 
 /**
  * @Description 友情链接实体类
  */
-public class Link {
+@SuppressWarnings("serial")
+public class Link implements Serializable{
 
 	/**
 	 * 

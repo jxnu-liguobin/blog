@@ -7,8 +7,6 @@ import org.springframework.stereotype.Repository;
 import cn.edu.jxnu.blog.domin.BlogType;
 
 /**
- * Created by xp on 2017/4/14.
- * @author xp
  * @Description 博客类别dao
  */
 @Repository

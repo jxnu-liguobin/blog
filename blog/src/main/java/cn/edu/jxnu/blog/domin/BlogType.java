@@ -1,11 +1,14 @@
 package cn.edu.jxnu.blog.domin;
 
+import java.io.Serializable;
+
 
 /**
  * 
  * @Description 博客类别实体类
  */
-public class BlogType {
+@SuppressWarnings("serial")
+public class BlogType implements Serializable{
 
 	/**
 	 * 

@@ -66,10 +66,12 @@
 	<select id="listByPage" resultMap="BlogTypeResult">
 		SELECT
 		t2.id,type_name,order_num,COUNT(t1.id) AS blog_count
-		from db_blog.t_blogtype t2
+		from
+		db_blog.t_blogtype t2
 		left join t_blog t1
 		on t2.id=t1.type_id
-		group by t2.id
+		group by
+		t2.id
 		order by order_num
 		limit #{start} ,#{end}
 	</select>
@@ -97,4 +99,5 @@
 		ORDER BY
 		t2.order_num
 	</select>
+	<cache flushInterval="600000"></cache>
 </mapper>

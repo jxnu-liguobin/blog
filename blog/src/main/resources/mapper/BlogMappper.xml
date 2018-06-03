@@ -28,10 +28,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		BY DATE_FORMAT(releaseDate,'%Y年%m月') DESC;
 	</select>
 
-	<!-- 分页查询博客并分页排序 -->
+	<!-- 分页查询博客并分页排序 按照点击量排序 -->
 	<select id="listBlog" parameterType="Map" resultMap="BlogResult">
 		SELECT id,title
-		,summary,releaseDate,clickHit,replyHit,content,keyWord,type_id,DATE_FORMAT(releaseDate,'%Y年%m月') AS releaseDateStr FROM
+		,summary,releaseDate,clickHit,replyHit,content,keyWord,type_id,DATE_FORMAT(releaseDate,'%Y年%m月')
+		AS releaseDateStr FROM
 		t_blog
 		<where>
 			<if test="title!=null and title!=''">
@@ -44,7 +45,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				and DATE_FORMAT(releaseDate,'%Y年%m月')=#{releaseDateStr}
 			</if>
 		</where>
-		ORDER BY releaseDate DESC
+		<if test="orderBy!=null and orderBy!=''">
+		ORDER BY ${orderBy}  DESC
+			</if>
 		<if test="start!=null and end!=null">
 			limit #{start},#{end}
 		</if>
@@ -100,6 +103,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="keyWord!=null and keyWord!=''">
 				keyWord=#{keyWord},
 			</if>
+			<if test="releaseDate!=null">
+				releaseDate=now(),
+			</if>
 		</set>
 		where id=#{id}
 	</update>
@@ -116,18 +122,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		,summary,releaseDate,clickHit,replyHit,content,keyWord,type_id from
 		t_blog where id=#{id}
 	</select>
-
-	<select id="getPrevBlog" parameterType="Integer" resultMap="BlogResult">
-		SELECT id,title
-		,summary,releaseDate,clickHit,replyHit,content,keyWord,type_id
-		FROM
-		t_blog WHERE id&lt;#{id} ORDER BY id DESC LIMIT 1
-	</select>
-
-	<select id="getNextBlog" parameterType="Integer" resultMap="BlogResult">
-		SELECT id,title
-		,summary,releaseDate,clickHit,replyHit,content,keyWord,type_id
-		FROM
-		t_blog WHERE id&gt;#{id} ORDER BY id ASC LIMIT 1
-	</select>
+	<!-- <select id="getPrevBlog" parameterType="Integer" resultMap="BlogResult"> 
+		SELECT id,title ,summary,releaseDate,clickHit,replyHit,content,keyWord,type_id 
+		FROM t_blog WHERE id&lt;#{id} ORDER BY id DESC LIMIT 1 </select> <select 
+		id="getNextBlog" parameterType="Integer" resultMap="BlogResult"> SELECT id,title 
+		,summary,releaseDate,clickHit,replyHit,content,keyWord,type_id FROM t_blog 
+		WHERE id&gt;#{id} ORDER BY id ASC LIMIT 1 </select> -->
 </mapper> 

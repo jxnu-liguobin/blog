@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<title>公告</title>
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, maximum-scale=1">
+<link rel="stylesheet" th:href="@{/layui/css/layui.css}" media="all">
+<script th:src="@{/layui/layui.js}"></script>
+<script type="text/javascript">
+
+layui.use(['form', 'layedit', 'laydate', 'jquery'],
+function() {
+    var form = layui.form;
+    var $ = layui.jquery;
+    var layer = layui.layer;
+    var layedit = layui.layedit;
+    var laydate = layui.laydate;
+    var id = '[[${#httpServletRequest.getParameter('id')}]]'; //获取传过来的id值
+    var content = '[[${#httpServletRequest.getParameter('content')}]]'; //获取传过来的类型名称值
+    var level = '[[${#httpServletRequest.getParameter('level')}]]'; //获取传过来的序列值
+    if(id!=null) {
+    	$("#idd").val(id);
+    }
+    $("#content").val(content);
+    $("#level").val(level);
+    //自定义验证规则  
+    form.verify({
+        noticeContent: function(value) {
+            if (value.length < 2) {
+                return '公告至少得2个字符';
+            }
+        },
+        level: [/^[0-2]{1}$/, '只能是0~2的数字！0~2重要级别依次增大！']
+    });
+    form.on('submit(demo1)',
+    function(data) {
+        var idd = data.field["idd"]
+        var content = data.field["content"]
+        var level = data.field["level"] 
+        var noticePublisher = [[${session.currentUser.userName}]]
+		$.ajax({
+            async: false,
+            url: '../admin/notice/save',
+            data: {
+                'id': idd,
+                'content': content,
+                'level': level,
+                'noticePublisher':noticePublisher
+                
+            },
+            type: 'post',
+            success: function(result) {
+	           if(typeof result === 'string') {
+					 result = JSON.parse(result)
+				}
+                if (result.success) {
+                    layer.alert('操作成功！', {
+                        title: '系统提示',
+                        icon: 6,
+                        closeBtn: 0,
+                    },
+                    function(index) {
+                        layer.close(index); //关闭
+                        parent.location.reload(); // 父页面刷新                 
+                    });
+                } else {
+                    layer.alert('操作失败。。。', {
+                        title: '系统提示',
+                        icon: 5,
+                        closeBtn: 0,
+                    },
+                    function(index) {
+                        layer.close(index); //关闭
+                        parent.location.reload(); // 父页面刷新                
+                    });
+                }
+            } // end success
+        }); //end ajax
+        return false;
+    }); //end form.on
+});
+</script>
+</head>
+<body>
+	<form class="layui-form" action="" id="demo1">
+		<div class="layui-form-item layui-form-text" >
+			<!-- id无法修改  -->
+			<input type="hidden" id="idd" name="idd" value=""> <label
+				class="layui-form-label">公告内容：</label>
+			<div class="layui-input-block"
+				style="width: 200px; margin-top: 15px;">
+				 <textarea placeholder="请输入内容" id="content" name="content" required lay-verify="noticeContent" 
+				 class="layui-textarea"></textarea>
+			</div>
+		</div>
+		<div class="layui-form-item ">
+			<label class="layui-form-label">公告等级：</label>
+			<div class="layui-input-block" style="width: 200px">
+				<input type="text" name="level" required lay-verify="level"
+					placeholder="公告等级" autocomplete="off" class="layui-input"
+					id="level" value="">
+			</div>
+		</div>
+
+		<div class="layui-form-item">
+			<div class="layui-input-block">
+				<button class="layui-btn" lay-submit="" lay-filter="demo1">确定</button>
+				<button type="reset" class="layui-btn layui-btn-primary">清空</button>
+			</div>
+		</div>
+	</form>
+</body>
+</html>

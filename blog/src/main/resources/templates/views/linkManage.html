@@ -23,7 +23,7 @@
 	</div>
 	<table class="layui-hide" id="LAY_table_user" lay-filter="demo"></table>
 	<script type="text/html" id="barDemo">
-  		<a class="layui-btn layui-btn-mini" lay-event="edit">修改</a>
+  		<a class="layui-btn layui-btn-xs" lay-event="edit">修改</a>
 	</script>
 	<script th:src="@{/layui/layui.js}" charset="utf-8"></script>
 	<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
@@ -40,49 +40,48 @@
 	        elem: '#LAY_table_user' //指定原始表格元素选择器（推荐id选择器）
 	        ,
 	        url: '/admin/link/list',
-	        cols: [[{
+	        cols: [ [{
 	            checkbox: true,
 	            fixed: true
 	        },
 	        {
 	            field: 'id',
-	            title: '链接编号',
-	            width: 150,
+	            title: 'ID',
+	            width: '10%',
 	            sort: true,
 	            fixed: true,
 	            align: 'center',
 	        },
 	        {
 	            field: 'linkName',
-	            title: '链接名称',
-	            width: 300,
+	            title: '名称',
+	            width: '20%',
 	            align: 'center',
 	        },
 	        {
 	            field: 'linkUrl',
-	            title: '链接Url',
-	            width: 250,
+	            title: 'Url',
+	            width: '25%',
 	            align: 'center',
 	        },
 	        {
 	         	field: 'orderNum',
-	            title: '链接排序',
-	            width: 250,
+	            title: '排序',
+	            width: '10%',
 	            sort: true,
 	            align: 'center',
 	        },
 	         {
 	            field: 'right',
 	            title: '操作',
-	            width: '85',
+	            width: '30%',
 	            align: 'center',
 	            toolbar: '#barDemo',
 	            align: 'center',
-	        }]],
+	        }] ],
 	        id: 'tableId',
 	        page: true,
 	        height: 'auto',
-	        width: '1090'
 	    });
 
     //监听表格复选框选择
@@ -150,7 +149,10 @@
                     type: "post",
                     dataType: 'json',
                     success: function(data) {
-                        if ([[data.success]]) {
+	                   if(typeof data === 'string') {
+							 data = JSON.parse(data)
+						}
+                        if (data.success) {
                             layer.msg("删除成功！");
                             table.reload('tableId');
                         }else{

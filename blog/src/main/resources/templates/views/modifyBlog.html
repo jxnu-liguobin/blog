@@ -57,7 +57,7 @@
 		<div class="layui-form-item">
 			<div class="layui-input-block">
 				<button class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button>
-				<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+				<button data-type="del" class="layui-btn layui-btn-primary">重置</button>
 			</div>
 		</div>
 	</form>
@@ -81,21 +81,24 @@
 					type: "get" ,
 					dataType:'json',
 					success:function(result){
-					if([[result.success]]){
-						//location.reload();
-						//已经到了这步了。
-						var index = layer.load(2, {time: 5*1000}); //又换了种风格，并且设定最长等待5秒 
-						 /* var resultt = eval("(" + result.responseText + ")"); */
-	                 	 /* result = JSON.parse(result.responseText); */
-	                    $("#title").val(result.title);
-	                    $("#keyWord").val(result.keyWord);
-	                    $("#blogTypeId").val(result.blogType.id);
-	                    form.render('select'); //刷新select选择框渲染
-	                    $("#LAY_demo_editor").val(result.content);
-						layer.close(index);     
-					}else{
-							layer.msg("加载失败！");
+						if(typeof result === 'string') {
+							 result = JSON.parse(result)
 						}
+						if(result.success){
+							//location.reload();
+							//已经到了这步了。
+							var index = layer.load(2, {time: 5*1000}); //又换了种风格，并且设定最长等待5秒 
+							 /* var resultt = eval("(" + result.responseText + ")"); */
+		                 	 /* result = JSON.parse(result.responseText); */
+		                    $("#title").val(result.title);
+		                    $("#keyWord").val(result.keyWord);
+		                    $("#blogTypeId").val(result.blogType.id);
+		                    form.render('select'); //刷新select选择框渲染
+		                    $("#LAY_demo_editor").val(result.content);
+							layer.close(index);     
+						}else{
+								layer.msg("加载失败！");
+							}
 					} //end success
 				});//end ajax
 								
@@ -123,6 +126,15 @@ function() {
     //创建一个编辑器  id=LAY_demo_editor
     var editIndex = layedit.build('LAY_demo_editor');
     //自定义验证规则（只要非空即可）
+        //自定义验证规则（只要非空即可）
+    form.verify({
+	content : function(value) {
+		value = $.trim(layedit.getText(editIndex));
+		if (value == "")
+			return "至少得有一个字吧";
+			layedit.sync(editIndex);
+		}
+});
     //监听提交
     form.on('submit(demo1)',
     function(data) {
@@ -132,12 +144,12 @@ function() {
         var blogTypeId = data.field["blogTypeId"]
         //获取博客内容 带标记
         var content = layedit.getContent(editIndex)
-        //截取博客前155字符 作为博客简介
-        var summary = layedit.getText(editIndex).substr(0, 155);
         //博客关键词
         var keyWord = data.field["keyWord"]
         //获取博客内容  不带标签 纯文本
         var contentNoTag = layedit.getText(editIndex) ;
+        //截取博客前155字符 作为博客简介
+		var summary = layedit.getText(editIndex).substr(0, 155);
         $.ajax({
             async: false,
             url: '../admin/blog/save',
@@ -149,24 +161,29 @@ function() {
                 'content': content,
                 'summary': summary,
                 'keyWord': keyWord,
-                'contentNoTag': contentNoTag
+                'contentNoTag': contentNoTag,
             },
             type: 'post',
             success: function(result) {	
-                if ([[result.success]]) {
+            	if(typeof result === 'string') {
+					 result = JSON.parse(result)
+				}
+                if (result.success) {
                     layer.alert('修改成功！', {
                         title: '系统提示',
                         icon: 6,
+                        closeBtn: 0,
                     },
                     function(index) {
                         //下拉框不会清空，需要手动设值，设置value==selected的为默认选中
                         layer.close(index); //关闭并回到管理页面
-                        window.location.href = '/views/blogManage'
+                        window.location.href = '/views/blogManage';
                     });
                 } else {
                     layer.alert('修改失败。。', {
                         title: '系统提示',
                         icon: 5,
+                        closeBtn: 0,
                     },
                     function(index) {
                         location.reload() //重写加载表格
@@ -181,6 +198,20 @@ function() {
         }); //end ajax
         return false;
     }); //end form on
+    
+        //清空富文本编辑器  
+   var $ = layui.$,
+	active = {
+       del: function() {
+           	$('#LAY_layedit_1').contents().find('body').html('');
+           },
+       };
+       
+   $('.del .layui-btn').on('click',
+    function() {
+        var type = $(this).data('type');
+        active[type] ? active[type].call(this) : '';
+    });
 });	
 /*]]>*/
 	</script>

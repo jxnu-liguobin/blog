@@ -18,7 +18,7 @@
 		id,username,password,profile,nickname,sign,imagename
 	</sql>
 	<!-- 接口中getBloggerData 具体实现 -->
-	<select id="getBloggerData" resultMap="BloggerResult" useCache="false">
+	<select id="getBloggerData" resultMap="BloggerResult" flushCache="true">
 		select
 		<include refid="BloggerColumns" />
 		from t_blogger where id = 1
@@ -34,6 +34,9 @@
 	<update id="updateBlogger" parameterType="Blogger">
 		UPDATE t_blogger
 		<set>
+			<if test="userName!=null and userName!=''">
+				username=#{userName},
+			</if>
 			<if test="nickName!=null and nickName!=''">
 				nickname=#{nickName},
 			</if>
@@ -52,5 +55,5 @@
 		</set>
 		where id=1
 	</update>
-	<cache />
+	<cache flushInterval="600000" />
 </mapper>

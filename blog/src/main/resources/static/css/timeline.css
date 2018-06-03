@@ -1,12 +1,4 @@
-﻿/*
-
-@Name：不落阁整站模板源码 
-@Author：Absolutely 
-@Site：http://www.lyblogs.cn
-
-*/
-
-.timeline-box {
+﻿.timeline-box {
     background: #fff;
     padding: 8px;
     position: relative;
@@ -17,7 +9,9 @@
     position: relative;
     min-height: 85vh;
 }
-
+.child-nav-btn-this >a{
+	color:white;
+}
     .timeline-main > h1 {
         font-size: 18px;
         background: #fff;
@@ -134,6 +128,8 @@
         padding: 15px;
         position: relative;
         min-height: 90vh;
+        font-family: monospace; /*笔记墙  */
+        font-size: 15px;/* 笔记墙 */
     }
 
     .timeline-main > h1 {

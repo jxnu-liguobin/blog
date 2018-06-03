@@ -24,7 +24,7 @@
 		<div class="layui-form-item">
 			<label class="layui-form-label">所属类别：</label>
 			<div class="layui-input-block">
-				<select id="blogTypeId" lay-verify="required" name="blogTypeId"
+				<select id="blogTypeId" lay-verify="type" name="blogTypeId"
 					lay-search>
 					<option value="selected"></option>
 					<option th:each="blogType:${application.blogTypeList}"
@@ -51,7 +51,7 @@
 		<div class="layui-form-item">
 			<div class="layui-input-block">
 				<button class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button>
-				<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+				<button data-type="del" class="layui-btn layui-btn-primary">重置</button>
 			</div>
 		</div>
 	</form>
@@ -63,9 +63,8 @@
 	<script th:src="@{/layui/layui.js}" charset="utf-8"></script>
 	<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
 	<script th:inline="javascript" type="text/javascript">
-		/*<![CDATA[*/
-		layui.use(['form', 'layedit', 'laydate', 'jquery', 'layer'],
-function() {
+ layui.use(['form', 'layedit', 'laydate', 'jquery', 'layer'],
+ function() {
     var form = layui.form,
     layer = layui.layer,
     layedit = layui.layedit,
@@ -89,6 +88,18 @@ function() {
     //创建一个编辑器  id=LAY_demo_editor
     var editIndex = layedit.build('LAY_demo_editor');
     //自定义验证规则（只要非空即可）
+   	form.verify({
+	content : function(value) {
+		value = $.trim(layedit.getText(editIndex));
+		if (value == "")
+			return "至少得有一个字吧";
+		layedit.sync(editIndex);
+	},type :function(value){
+		if(value=='selected') {
+			return '请选择分类'
+		}
+	}
+	});
     //监听提交
     form.on('submit(demo1)',
     function(data) {
@@ -98,12 +109,12 @@ function() {
         var blogTypeId = data.field["blogTypeId"]
         //获取博客内容 带标记
         var content = layedit.getContent(editIndex)
-        //截取博客前155字符 作为博客简介
-        var summary = layedit.getText(editIndex).substr(0, 155);
         //博客关键词
         var keyWord = data.field["keyWord"]
         //获取博客内容  不带标签 纯文本
         var contentNoTag = layedit.getText(editIndex) ;
+        //截取博客前155字符 作为博客简介
+		var summary = layedit.getText(editIndex).substr(0, 155);
         $.ajax({
             async: false,
             url: '../admin/blog/save',
@@ -117,10 +128,14 @@ function() {
             },
             type: 'post',
             success: function(result) {
-                if ([[result.success]]) {
+          	   if(typeof result === 'string') {
+            		 result = JSON.parse(result)
+            	}
+                if (result.success) {
                     layer.alert('保存成功！', {
                         title: '系统提示',
                         icon: 6,
+                        closeBtn: 0,
                     },
                     function(index) {
 
@@ -133,6 +148,7 @@ function() {
                     layer.alert('保存失败。。', {
                         title: '系统提示',
                         icon: 5,
+                        closeBtn: 0,
                     },
                     function(index) {
                         location.reload() //重写加载表格
@@ -145,9 +161,23 @@ function() {
         });
         return false;
     });
+    
+    //清空富文本编辑器  
+    var $ = layui.$,
+	active = {
+        /* 搜索框 */
+        del: function() {
+            	$('#LAY_layedit_1').contents().find('body').html('');
+            },
+        };
+        
+    $('.del .layui-btn').on('click',
+	    function() {
+	        var type = $(this).data('type');
+	        active[type] ? active[type].call(this) : '';
+	    });
 });
-		/*]]>*/
-	</script>
-
+	
+</script>
 </body>
 </html>

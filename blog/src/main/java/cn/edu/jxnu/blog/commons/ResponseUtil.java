@@ -9,6 +9,7 @@ import java.io.PrintWriter;
  * @author liguobin
  * 
  */
+@Deprecated
 public class ResponseUtil {
 	/**
 	 * 向response对象写入数据

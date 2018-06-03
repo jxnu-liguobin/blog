@@ -8,7 +8,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import cn.edu.jxnu.blog.commons.VaildataCodeUtil;
-
+/**
+ * @Description 验证码
+ * @author liguobin
+ *
+ */
+@Deprecated
 @Controller
 @RequestMapping("/blog")
 public class ValidataImageController {
@@ -27,7 +32,6 @@ public class ValidataImageController {
 		response.setHeader("Cache-Control", "no-cache");
 		response.setDateHeader("Expires", 0);
 		HttpSession session = request.getSession();
-		session.setMaxInactiveInterval(60);//60S
 		VaildataCodeUtil vCode = new VaildataCodeUtil(120, 38, 5, 100);
 		session.setAttribute("code", vCode.getCode());
 		vCode.write(response.getOutputStream());

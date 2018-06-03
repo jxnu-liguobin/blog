@@ -1,14 +1,16 @@
 package cn.edu.jxnu.blog.controller.admin;
 
+import java.util.Date;
+
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
-import cn.edu.jxnu.blog.commons.ResponseUtil;
 import cn.edu.jxnu.blog.domin.Blog;
 import cn.edu.jxnu.blog.domin.PageBean;
 import cn.edu.jxnu.blog.lucene.BlogIndex;
@@ -21,19 +23,21 @@ import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 
 /**
- * 此处不需要@ResponseBody 或者@RestController
+ * @Description 此处不需要@ResponseBody 或者@RestController
  * 
  * @Description 管理员博客Controller层
  */
-@Controller
+@RestController
 @RequestMapping("/admin/blog")
 public class BlogAdminController {
-
+	
+	private static final Logger log = org.slf4j.LoggerFactory
+			.getLogger(BlogAdminController.class);
 	@Resource
 	private BlogService blogService;
 	@Resource
 	private BlogIndex blogIndex;
-	
+
 	@Autowired
 	private CommentService commentService;
 
@@ -43,8 +47,8 @@ public class BlogAdminController {
 			@RequestParam(value = "page", required = false) String page,
 			@RequestParam(value = "limit", required = false) String limit,
 			@RequestParam(value = "title", required = false) String title,
-			Blog s_blog, HttpServletResponse response) throws Exception {
-
+			Blog s_blog) throws Exception {
+		log.info("当前请求管理博客。。。");
 		PageBean<Blog> pageBean = null;
 		// 创建json对象
 		JSONObject result = new JSONObject();
@@ -63,8 +67,7 @@ public class BlogAdminController {
 			} else {
 				result.put("count", 0);// 无数据
 				result.put("code", 0);// 封装接口，成功返回0
-				ResponseUtil.write(response, result);
-				return null;
+				return result.toJSONString();
 			}
 		} else { // title 为空,正常分页
 			pageBean = new PageBean<Blog>(Integer.parseInt(page),
@@ -81,16 +84,18 @@ public class BlogAdminController {
 		result.put("count", pageBean.getTotal());
 		result.put("code", 0);// 封装接口，成功返回0
 		// 返回 一个Blog
-		ResponseUtil.write(response, result);
-		return null;
+		return result.toJSONString();
 	}
 
 	// 更新或者新增博客
-	@RequestMapping(value = "/save")
-	public String saveBlog(Blog blog, HttpServletResponse response)
-			throws Exception {
+	@RequestMapping(value = "/save", method = RequestMethod.POST)
+	public String saveBlog(Blog blog) throws Exception {
+		log.info("当前请求更新博客。。。");
 		int resultTotal = 0;
+		// 博客id 不为空则是对博客的修改
 		if (blog.getId() != null) {
+			Date time = new Date();
+			blog.setReleaseDate(time);
 			// 更新操作
 			resultTotal = blogService.updateBlog(blog);
 			// 更新索引
@@ -107,38 +112,35 @@ public class BlogAdminController {
 		} else {
 			result.put("success", false);
 		}
-		ResponseUtil.write(response, result);
-		return null;
+		return result.toJSONString();
 	}
 
 	// 删除博客
-	@RequestMapping(value = "/delete")
-	public String deleteBlog(@RequestParam("ids") String ids,
-			HttpServletResponse response) throws Exception {
+	@RequestMapping(value = "/delete", method = RequestMethod.POST)
+	public String deleteBlog(@RequestParam("ids") String ids) throws Exception {
+		log.info("当前请求删除博客。。。");
 		String[] idsStr = ids.split(",");
 		for (int i = 0; i < idsStr.length; i++) {
 			int id = Integer.parseInt(idsStr[i]);
 			// 先删除博客所关联的评论 现在没有完成评论的功能 先注释
 			commentService.deleteCommentByBlogId(id);
 			blogService.deleteBlog(id);
+			blogIndex.deleteIndex(String.valueOf(id));// 删除索引
 		}
 		JSONObject result = new JSONObject();
 		result.put("success", true);
-		ResponseUtil.write(response, result);
-		return null;
+		return result.toJSONString();
 	}
 
 	// 通过id获取博客
-	@RequestMapping(value = "/get",produces="application/json;charset=UTF-8")
-	public String getById(@RequestParam("id") String id,
-			HttpServletResponse response) throws Exception {
+	@RequestMapping(value = "/get", produces = "application/json;charset=UTF-8")
+	public String getById(@RequestParam("id") String id) throws Exception {
 
 		Blog blog = blogService.getById(Integer.parseInt(id));
 		String jsonStr = JSONObject.toJSONString(blog);
 		JSONObject result = JSONObject.parseObject(jsonStr);
 		result.put("success", true);
-		ResponseUtil.write(response, result);
-		return null;
+		return result.toJSONString();
 	}
 
 }
