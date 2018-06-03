@@ -13,7 +13,7 @@
 
     JDK:1.8 (开发环境是8，未使用1.8特性,发布目标1.7)修改->application-dev.properties, cmd-> java -jar blog.jar 即可运行项目 
     注：本地不要使用java -jar运行最好，需要改为发布的服务器路径而且坑多，使用eclipse运行application.java最好，使用war则需要添加一 个转换和修改打包方方式具体百度。 
-    主要需要修改配置如下：日志位置，PV文件，索引位置，tomcat虚拟路径配置，sql url配置，https证书位置（我自己的会删除，CA的，也可以自己用jdk工具生成，不再赘述） 均需要保证路径C:/web/uploads/存在（tomcat的虚拟路径，已经写死在代码中，默认在服务器与本机创建c:\web与uploads,linux按着改分隔符吧）在web里新建文件夹filenames,filenames存放静态资源file,则访问方式为ip:port/filenames/file,以此类推，注意Shiro拦截）
+    主要需要修改配置如下：增加个PV文件，sql url配置，https证书位置（我自己的会删除，CA的，也可以自己用jdk工具生成，不再赘述） 均需要保证路径C:/web/uploads/存在（tomcat的虚拟路径，已经写死在代码中，默认在服务器与本机创建c:\web与uploads,linux按着改分隔符吧）如：在web里新建文件夹filenames,filenames存放静态资源file,则访问方式为ip:port/filenames/file,以此类推，注意Shiro拦截）
     前端模板：来自国产开源框架Layui社区的分享“不落阁”，含百度分享等插件
     全文检索：Lucene
     前端模板引擎：Thymeleaf3.0（nekohtml）
