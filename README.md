@@ -39,7 +39,7 @@
   
 ###  如果对您有帮助欢迎点个star, 预览地址www.dreamylost.cn
 后台预览图：
-![](https://github.com/jxnu-liguobin/SpringBoot-Blog-Personal/blob/master/blog/src/main/resources/%E5%90%8E%E5%8F%B0%E9%A2%84%E8%A7%88.png)
+![](https://github.com/jxnu-liguobin/blog/blob/master/src/main/resources/%E5%90%8E%E5%8F%B0%E9%A2%84%E8%A7%88.png)
 
     sql中文乱码是因为编码一开始忘记改，后来改完没有清空数据导致的乱码，全部清空数据，以UTF-8建表即可。
     本项目的Shiro部分因为第一次接触，实在没有写好 甚至配置都是错误冗余的，所有请忽略
