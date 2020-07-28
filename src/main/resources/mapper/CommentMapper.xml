@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.edu.jxnu.blog.dao.CommentDao">
+	<!-- 属性到表列名的映射 -->
+	<resultMap id="CommentResultMap" type="Comment">
+		<id property="id" column="id" />
+		<result property="userIp" column="user_ip" />
+		<result property="content" column="content" />
+		<result property="commentDate" column="comment_date" />
+		<result property="commentDateStr" column="commentDateStr" />
+		<result property="state" column="state" />
+		<result property="address" column="address" />
+		<association property="blog" column="blog_id"
+			select="cn.edu.jxnu.blog.dao.BlogDao.getById" />
+	</resultMap>
+	<!-- 获取评论分页，按日期排序 -->
+	<select id="listByPage" parameterType="java.util.Map" resultMap="CommentResultMap">
+		SELECT id,user_ip,content,comment_date,state, blog_id,address
+		,DATE_FORMAT(comment_date,'%Y年%m月%d日 %H:%i:%S') AS commentDateStr
+		from
+		t_comment
+		<where>
+			<if test="blogId!=null">
+				and blog_id=#{blogId}
+			</if>
+			<if test="state!=null">
+				and state=#{state}
+			</if>
+		</where>
+		ORDER BY comment_date
+		<if test="start!=null and end!=null">
+			limit #{start},#{end}
+		</if>
+	</select>
+	<!-- 根据id获取评论信息 -->
+	<select id="getById" parameterType="java.lang.Integer"
+		resultMap="CommentResultMap">
+		select id,user_ip,content,comment_date,state,address,
+		blog_id,DATE_FORMAT(comment_date,'%Y年%m月%d日 %H:%i:%S') AS
+		commentDateStr from
+		t_comment
+		where id=#{id}
+	</select>
+
+	<select id="getTotal" parameterType="java.util.Map" resultType="java.lang.Long">
+		SELECT count(*) from t_comment
+		<where>
+			<if test="state != null">
+				state = #{state}
+			</if>
+		</where>
+	</select>
+	<!-- 添加评论 -->
+	<insert id="saveComment">
+		insert into t_comment VALUES
+		(null,#{userIp},#{blog.id},#{content},now(),0,#{address})
+	</insert>
+	<!--删除评论 -->
+	<delete id="deleteComment" parameterType="java.lang.Integer">
+		DELETE FROM t_comment
+		where id=#{id}
+	</delete>
+	<!-- 修改评论 -->
+	<update id="updateComment" parameterType="Comment">
+		update t_comment
+		<set>
+			<if test="state != null">
+				state = #{state}
+			</if>
+		</set>
+		where id=#{id}
+	</update>
+	<!-- 根据blog id查询评论信息  已经审核过的 -->
+	<select id="queryByBlogId" resultMap="CommentResultMap"
+		parameterType="java.lang.Integer">
+		SELECT id,user_ip,content,comment_date,state,address,
+		blog_id,DATE_FORMAT(comment_date,'%Y年%m月%d日 %H:%i:%S') AS
+		commentDateStr
+		FROM t_comment
+		where state=1 and blog_id=#{blogId} 
+	</select>
+	<!-- 删除评论 -->
+	<delete id="deleteCommentByBlogId" parameterType="java.lang.Integer">
+		delete from
+		t_comment
+		where blog_id=#{blogId}
+	</delete>
+</mapper>

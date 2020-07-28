@@ -1,0 +1,189 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; Charset=utf-8">
+<meta http-equiv="Content-Language" content="zh-CN">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, user-scalable=no" />
+<title>梦境迷离 - 点点滴滴 - 笔记墙</title>
+<link rel="shortcut icon" th:href="@{/images/Logo_40.png}"
+	type="image/x-icon">
+<!--Layui-->
+<link th:href="@{/layui/css/layui.css}" rel="stylesheet" />
+<!--font-awesome-->
+<link th:href="@{/plug/font-awesome/css/font-awesome.min.css}"
+	rel="stylesheet" />
+<!-- animate.css -->
+<link th:href="@{/css/animate.min.css}" rel="stylesheet" />
+<!--全局样式表-->
+<link th:href="@{/css/global.css}" rel="stylesheet" />
+<!-- 本页样式表 与笔记墙一样 -->
+<link th:href="@{/css/timeline.css}" rel="stylesheet" />
+</head>
+<body>
+	<!-- 导航 -->
+	<nav class="blog-nav layui-header">
+		<div class="blog-container">
+			<!-- QQ互联登陆 -->
+			<!-- <a target="_blank" th:href="@{/login}"
+			 class="blog-user"><span style="color: white;text-align: right;font-size: 15px;">
+			 <i class="layui-icon" style="font-size: 15px;">&#xe614;</i></span>
+			</a> --><!--  <a href="javascript:;" class="blog-user layui-hide"> <img
+				th:src="@{/images/Absolutely.jpg}" alt="jxnu-liguobin"
+				title="jxnu-liguobin" />
+			</a> --> <a class="blog-logo" th:href="@{/index/home.html}">梦境迷离</a>
+			<ul class="layui-nav" lay-filter="nav">
+				<li class="layui-nav-item"><a th:href="@{/index/home.html}"><i
+						class="fa fa-home fa-fw"></i>&nbsp;网站首页</a></li>
+				<li class="layui-nav-item"><a th:href="@{/index/article.html}"><i
+						class="fa fa-file-text fa-fw"></i>&nbsp;文章专栏</a></li>
+				<li class="layui-nav-item"><a
+					th:href="@{/indexViews/resource.html}"><i
+						class="fa fa-tags fa-fw"></i>&nbsp;资源分享</a></li>
+				<li class="layui-nav-item"><a
+					th:href="@{/indexViews/timeline.html}"><i
+						class="fa fa-hourglass-half fa-fw layui-this"></i>&nbsp;点点滴滴</a></li>
+				<li class="layui-nav-item"><a th:href="@{/index/about.html}"><i
+						class="fa fa-info fa-fw"></i>&nbsp;关于本站</a></li>
+			</ul>
+			<!-- 手机和平板的导航开关 -->
+			<a class="blog-navicon" href="javascript:;"> <i
+				class="fa fa-navicon"></i>
+			</a>
+		</div>
+	</nav>
+	<!-- 主体（一般只改变这里的内容） -->
+	<div class="blog-body">
+		<div class="blog-container">
+			<blockquote class="layui-elem-quote sitemap layui-breadcrumb shadow">
+				<a th:href="@{index/home.html}" title="网站首页">网站首页</a> <a
+					th:href="@{/indexViews/timeline.html}" title="点点滴滴">点点滴滴</a> <cite><a>笔记墙</a></cite>
+			</blockquote>
+			<div class="blog-main">
+				<div class="child-nav shadow">
+					<span class="child-nav-btn "><a
+						th:href="@{/indexViews/timeline.html}">时光轴</a></span> 
+						<span class="child-nav-btn child-nav-btn-this"><a
+						th:href="@{/indexViews/note.html}">笔记墙</a></span>
+				</div>
+				<div class="timeline-box shadow">
+					<h2>笔记墙内容，暂没有实现。以下为剩余bug或待完善部分</h2>
+					1、http错误拦截不够准确，网络攻击未考虑（XSS跨站脚本攻击、CSRF跨站请求伪造攻击、http Heads、Cookie攻击、上传文件攻击、溢出攻击）<br>
+					2、对某一链接必须使用http,而本站使用https无法解决。如百度分享， 根据网上修复已成功但是不治本<br>
+					3、浏览量采用双hashMap遍历控制，时间复杂度较高且占资源，不如cookie，<br>
+					4、对于使用nginx等代理上网的客户端无法获取转发前的真实ip,x-forwarded-for之类的字段对师大网关无效<br>
+					5、点赞基于ip,同样有问题且无并发处理，使用volatile不行，改为synchronized<br>
+					6、相册的悬浮大图，使用jquery控制只处理了向右悬浮，且手机上效果极差<br>
+					7、session的验证码生命周期与shiro冲突，使用redis简单代替session存储验证码，太浪费<br>
+					8、未知原因导致shiro的rememberMe和拦截无效<br>
+					9、layui流加载函数中无法使用thymeleaf标签遍历<br>
+					10、lucene无法对blog下的博客分类对象索引导致全文检索取消了博客分类的显示<br>
+					11、开启mybatis二级缓存导致的只要项目重启就发生严重错误，仅对友情链接和博主信息开启了缓存,useCache=false无效，刷新系统缓存功能bug<br>
+					12、重写treemap的compare方法实现重复id但是由于排序算法本身属于不稳定算法，相同id位置序列未知<br>
+					13、后台没有jsr303验证、仅前端验证不安全<br>
+					14、数据库设计的时候未考虑存储空间，数据类型待优化<br>
+					15、后台没有数据库定时备份功能，不安全<br>
+					16、尝试提取thymeleaf公共页、但是ui出现问题。未提取<br>
+					17、音乐播放器在切换页面的时候将停止<br>
+					18、基于原模板的侧栏的ui问题<br>
+					19、等比缩略图只是在前端显示的时候进行了处理，加载过程中大图很明显在瞬间能看见。<br>
+					由于一张图需要用在预览和文章详情不好直接在后台上传的时候处理像素大小<br>
+					20、layui的富文本编辑器没有代码插入功能，在ie内核和谷歌内核的浏览器中存在加载初始化数据失败问题（禁用缓存可以正常）<br>
+					而火狐正常
+					21、开启thymeleaf缓存，数据显示不正确，关闭了缓存，导致模板渲染速度较慢。<br>
+					22、淘宝ip库的ip查询效率不稳定，影响系统<br>
+					23、由于评论与留言也是使用了流加载，但是没有想到好的办法遍历子留言。（准确的说是th:each等不能生效，<br>
+					应该是模板渲染和layui的渲染顺序问题，页面直接输出了th:each ....）<br>
+					<h1 style="padding-top:4px;padding-bottom:2px;margin-top:40px;">
+						<i class="fa fa-hourglass-end"></i>THE END
+					</h1>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- 底部 -->
+	<footer class="blog-footer">
+		<p>
+			<span>Copyright</span><span>&copy;</span><span>2017</span><a href="https://www.dreamylost.cn">梦境迷离</a><span>Design
+				By jxnu-liguobin</span>
+		</p>
+		<p>
+			<a href="http://www.miitbeian.gov.cn" target="_blank">赣ICP备17017283号-1</a>
+		</p>
+	</footer>
+	<!--侧边导航-->
+	<ul
+		class="layui-nav layui-nav-tree layui-nav-side blog-nav-left layui-hide"
+		lay-filter="nav">
+		<li class="layui-nav-item"><a th:href="@{/index/home.html}"><i
+				class="fa fa-home fa-fw"></i>&nbsp;网站首页</a></li>
+		<li class="layui-nav-item"><a th:href="@{/index/article.html}"><i
+				class="fa fa-file-text fa-fw"></i>&nbsp;文章专栏</a></li>
+		<li class="layui-nav-item"><a
+			th:href="@{/indexViews/resource.html}"><i
+				class="fa fa-tags fa-fw"></i>&nbsp;资源分享</a></li>
+		<li class="layui-nav-item layui-this"><a
+			th:href="@{/indexViews/timeline.html}"><i
+				class="fa fa-road fa-fw"></i>&nbsp;点点滴滴</a></li>
+		<li class="layui-nav-item"><a th:href="@{/index/about.html}"><i
+				class="fa fa-info fa-fw"></i>&nbsp;关于本站</a></li>
+	</ul>
+	<!--分享窗体-->
+	<div class="blog-share layui-hide">
+		<div class="blog-share-body">
+			<div style="width: 200px;height:100%;">
+				<div class="bdsharebuttonbox">
+					<a class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a> <a
+						class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a> <a
+						class="bds_weixin" data-cmd="weixin" title="分享到微信"></a> <a
+						class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+				</div>
+			</div>
+		</div>
+	</div>
+	 <!-- 音乐播放器 -->
+    <div id="QPlayer">
+	<ol id="playlist"></ol>
+	<div id="pContent">
+		<div id="player">
+			<span class="cover"></span>
+			<div class="ctrl">
+				<div class="musicTag marquee">
+					<strong>Title</strong>
+					 <span> - </span>
+					<span class="artist">Artist</span>
+				</div>
+				<div class="progress">
+					<div class="timer left">0:00</div>
+					<div class="contr">
+						<div class="rewind icon"></div>
+						<div class="playback icon"></div>
+						<div class="fastforward icon"></div>
+					</div>
+					<div class="right">
+						<div class="liebiao icon"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="ssBtn">
+		        <div class="adf"></div>
+	    </div>
+	</div>
+	</div>
+    
+	<!--遮罩-->
+	<div class="blog-mask animated layui-hide"></div>
+	<!-- layui.js -->
+	<script th:src="@{/layui/layui.js}"></script>
+	<!-- 全局脚本 -->
+	<script th:src="@{/js/global.js}"></script>
+	<!-- 本页脚本 -->
+	<script th:src="@{/js/jquery.min.js}"></script>
+    <script th:src="@{/js/jquery.marquee.min.js}"></script>
+	<script th:src="@{/js/player.js}"></script>
+	<script th:inline="javascript" type="text/javascript">
+    
+    </script>
+</body>
+</html>

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<title>分类管理</title>
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, maximum-scale=1">
+<link rel="stylesheet" th:href="@{/layui/css/layui.css}" media="all">
+<script th:src="@{/layui/layui.js}"></script>
+</head>
+<body>
+	<div class="linkManage" style="margin-top: 15px;margin-left: 2px;">
+		<button class="layui-btn layui-btn-danger" style="margin-left: 2px"
+			data-type="delLink">
+			<i class="layui-icon">&#xe640;</i> 删除
+		</button>
+		<button class="layui-btn" style="margin-left: 2px" data-type="refresh">
+			<i class="layui-icon">&#x1002;</i>刷新
+		</button>
+
+	</div>
+	<table class="layui-hide" id="LAY_table_user" lay-filter="demo"></table>
+	<script type="text/html" id="barDemo">
+  		<a class="layui-btn layui-btn-xs" lay-event="edit">修改</a>
+	</script>
+	<script th:src="@{/layui/layui.js}" charset="utf-8"></script>
+	<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+	<script th:inline="javascript" type="text/javascript">
+/*<![CDATA[*/
+	layui.use('table',
+	function() {
+	    var table = layui.table;
+	    //方法级渲染
+	    table.render({
+	        limits: [5, 10, 30, 50, 100],
+	        limit: 10 //默认采用60
+	        ,
+	        elem: '#LAY_table_user' //指定原始表格元素选择器（推荐id选择器）
+	        ,
+	        url: '/admin/link/list',
+	        cols: [ [{
+	            checkbox: true,
+	            fixed: true
+	        },
+	        {
+	            field: 'id',
+	            title: 'ID',
+	            width: '10%',
+	            sort: true,
+	            fixed: true,
+	            align: 'center',
+	        },
+	        {
+	            field: 'linkName',
+	            title: '名称',
+	            width: '20%',
+	            align: 'center',
+	        },
+	        {
+	            field: 'linkUrl',
+	            title: 'Url',
+	            width: '25%',
+	            align: 'center',
+	        },
+	        {
+	         	field: 'orderNum',
+	            title: '排序',
+	            width: '10%',
+	            sort: true,
+	            align: 'center',
+	        },
+	         {
+	            field: 'right',
+	            title: '操作',
+	            width: '30%',
+	            align: 'center',
+	            toolbar: '#barDemo',
+	            align: 'center',
+	        }] ],
+	        id: 'tableId',
+	        page: true,
+	        height: 'auto',
+	    });
+
+    //监听表格复选框选择
+    table.on('checkbox(demo)',
+    function(obj) {
+        console.log(obj);
+    });
+    //监听工具条
+    table.on('tool(demo)',
+    function(obj) {
+        if (obj.event === 'edit') {
+            var data = obj.data;
+            var id = data["id"];
+            var linkName = data["linkName"];
+            var linkUrl = data["linkUrl"];
+            var orderNum = data["orderNum"];
+            layer.open({
+                id: 'name',
+                type: 2,
+                area: ['370px', '270px'],
+                title: '修改链接',
+                shade: 0.6,
+                anim: 2,
+                content: encodeURI('/views/modifyLinkForm?id=' + id + '&linkName=' + linkName + '&linkUrl=' + linkUrl+'&orderNum='+orderNum),
+            });
+        }
+    });
+    var $ = layui.$,
+    active = {
+        /**
+		 *定义函数绑定到按钮的data-type上 delLink
+		 */
+        refresh: function() {
+            table.reload('tableId');
+        },
+        delLink: function() {
+
+            var checkStatus = table.checkStatus('tableId');
+            var checkNums = checkStatus.data.length
+            if (checkNums == 0) {
+                layer.alert('请选择需要删除的链接！', {
+                    title: '系统提示',
+                    icon: 2,
+                    anim: 6,
+                });
+                return false;
+            }
+            var ids = '';
+            data = checkStatus.data; //数据
+            //循环把所有要删除的ID整成12,13,545
+            for (var i = 0; i < checkNums; i++) {
+                ids += data[i].id + ",";
+            }
+            ids = ids.substring(0, ids.length - 1); //组装好1，2，3
+            layer.confirm('确认删除该' + checkNums + '条链接吗？',
+            function(index) {
+                //obj.del();
+                layer.close(index);
+                //关闭的时候发送ajax请求
+                $.ajax({
+                    url: "../admin/link/delete",
+                    data: {
+                        'ids': ids
+                    },
+                    type: "post",
+                    dataType: 'json',
+                    success: function(data) {
+	                   if(typeof data === 'string') {
+							 data = JSON.parse(data)
+						}
+                        if (data.success) {
+                            layer.msg("删除成功！");
+                            table.reload('tableId');
+                        }else{
+                        	layer.msg("删除失败！");
+                        }
+                    },
+                    //success end
+                }); //ajax end
+            }); //confirm end
+        } //del end
+    };
+    $('.linkManage .layui-btn').on('click',
+    function() {
+        var type = $(this).data('type');
+        active[type] ? active[type].call(this) : '';
+    });
+
+});
+/*]]>*/
+</script>
+</body>
+</html>

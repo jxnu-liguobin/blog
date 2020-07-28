@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<title>刷新缓存</title>
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, maximum-scale=1">
+<link rel="stylesheet" th:href="@{/layui/css/layui.css}" media="all">
+<script th:src="@{/layui/layui.js}"></script>
+<script type="text/javascript" th:inline="javascript">
+
+layui.use(['jquery','layer','element'],
+	function() {
+    var $ = layui.jquery;
+    var layer = layui.layer;
+    var element = layui.element;
+    $.ajax({
+            async: false,
+            url: '../admin/system/refreshSystem',
+            type: 'post',
+            success: function(result) {
+           		if(typeof result === 'string') {
+					 result = JSON.parse(result)
+				}
+            	 if (result.success) {
+                    layer.msg('缓存刷新成功', {
+                        title: '系统提示',
+                        icon: 6,
+                        closeBtn: 0,
+                    },function(index) {
+                    	parent.location.reload();
+                    })
+            	}
+            }
+     });
+});
+</script>
+</head>
+<body>
+	
+</body>
+</html>

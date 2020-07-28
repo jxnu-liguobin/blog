@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta name="baidu-site-verification" content="jtk7WuRmGu" />
+<meta http-equiv="Content-Type" content="text/html; Charset=utf-8">
+<meta http-equiv="Content-Language" content="zh-CN">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, user-scalable=no" />
+<title>梦境迷离 - 一位Java程序员的学习记录与分享之路</title>
+<link rel="shortcut icon" th:href="@{/images/Logo_40.png}"
+	type="image/x-icon">
+<!--Layui-->
+<link th:href="@{/layui/css/layui.css}" rel="stylesheet" />
+<!--font-awesome-->
+<link th:href="@{/plug/font-awesome/css/font-awesome.min.css}"
+	rel="stylesheet" />
+<!--全局样式表-->
+<link th:href="@{/css/global.css}" rel="stylesheet" />
+<!-- 本页样式表 -->
+<link th:href="@{/css/home.css}" rel="stylesheet" />
+</head>
+<body>
+	<!-- 导航 -->
+	<nav class="blog-nav layui-header">
+		<div class="blog-container">
+			<!-- QQ互联登陆 --没有做--> 
+			<!-- <a target="_blank" th:href="@{/login}"
+			 class="blog-user"><span style="color: white;text-align: right;font-size: 15px;">
+			 <i class="layui-icon" style="font-size: 15px;">&#xe614;</i></span>
+			</a> -->
+			<!--  <a href="javascript:;" class="blog-user layui-hide"> <img
+				th:src="@{/images/Absolutely.png}" alt="jxnu-liguobin"
+				title="jxnu-liguobin" />
+			</a> -->
+			 <a class="blog-logo" th:href="@{/index/home.html}">梦境迷离</a>
+			<!-- 导航菜单 -->
+			<ul class="layui-nav" lay-filter="nav">
+				<li class="layui-nav-item layui-this"><a
+					th:href="@{/index/home.html}"><i class="fa fa-home fa-fw"></i>&nbsp;网站首页</a>
+				</li>
+				<li class="layui-nav-item"><a
+					th:href="@{/index/article.html}"><i
+						class="fa fa-file-text fa-fw"></i>&nbsp;文章专栏</a></li>
+				<li class="layui-nav-item"><a
+					th:href="@{/indexViews/resource.html}"><i
+						class="fa fa-tags fa-fw"></i>&nbsp;资源分享</a></li>
+				<li class="layui-nav-item"><a
+					th:href="@{/indexViews/timeline.html}"><i
+						class="fa fa-hourglass-half fa-fw"></i>&nbsp;点点滴滴</a></li>
+				<li class="layui-nav-item"><a
+					th:href="@{/index/about.html}"><i class="fa fa-info fa-fw"></i>&nbsp;关于本站</a>
+				</li>
+			</ul>
+			<!-- 手机和平板的导航开关 -->
+			<a class="blog-navicon" href="javascript:;"> <i
+				class="fa fa-navicon"></i>
+			</a>
+		</div>
+	</nav>
+	<!-- 主体（一般只改变这里的内容） -->
+	<div class="blog-body">
+		<!-- canvas -->
+		<canvas id="canvas-banner" style="background: #393D49;"></canvas>
+		<!--为了及时效果需要立即设置canvas宽高，否则就在home.js中设置-->
+		<script type="text/javascript">
+			var canvas = document.getElementById('canvas-banner');
+			canvas.width = window.document.body.clientWidth - 10;//减去滚动条的宽度
+			if (screen.width >= 992) {
+				canvas.height = window.innerHeight * 1 / 3;
+			} else {
+				canvas.height = window.innerHeight * 2 / 7;
+			}
+		</script>
+		<!-- 这个一般才是真正的主体内容 -->
+		<div class="blog-container">
+			<div class="blog-main">
+			  <div class="home-tips shadow">
+                    <i style="float:left;line-height:17px;" class="fa fa-volume-up"></i>
+                    <!-- 如果存在重要公告则优先显示  -->
+                    <div class="home-tips-container">
+                        <span th:if="${notice.level} eq 2" style="color: red" th:each="notice : ${application.notice}" th:text="${notice.content}">这个是公告 </span>
+                        <span th:if="${notice.level} eq 1" style="color: #1E9FFF;" th:each="notice : ${application.notice}" th:text="${notice.content}"></span>
+                        <span th:if="${notice.level} eq 0" style="color: #009688" th:each="notice : ${application.notice}" th:text="${notice.content}"></span>
+                    </div>
+                </div>
+				<!--左边文章列表-->
+				<div class="blog-main-left">
+					<div id="imageForArticle" class="article shadow"
+						th:each="blog : ${application.pageBean.result}">
+						<div class="article-left"
+							th:if="${not #lists.isEmpty(blog.imageList)}">
+							<div th:utext="${blog.imageList[0]}"></div>
+						</div>
+						<div class="article-left"
+							th:if="${#lists.isEmpty(blog.imageList)}">
+							<img th:src="@{/images/cover/201703181909057125.jpg}" alt="默认显示的图片" />
+						</div>
+						<div class="article-right">
+							<!-- 文章标题 -->
+							<div class="article-title">
+								<a th:href="@{'/blog/articles/'+${blog.id}}"> <span th:text="${blog.title}">标题</span></a>
+							</div>
+							<!-- 文章摘要 -->
+							<div class="article-abstract">
+								<p style="overflow:hidden" th:text="${blog.summary}">摘要</p>
+							</div>
+						</div>
+						<div class="clear"></div>
+						<div class="article-footer">
+							<!-- 文章的访问信息 -->
+							<span><i class="fa fa-clock-o"></i>&nbsp;&nbsp;<span
+								th:text="${blog.releaseDateStr}">日期</span></span> <span><i
+								class="fa fa-tag"></i>&nbsp;&nbsp;<a th:href="@{'/index/home.html?typeId='+${blog.blogType.id}}"><span
+									th:text="${blog.blogType.typeName}">类型</span></a></span> <span
+								class="article-viewinfo"><i class="fa fa-eye"></i>&nbsp;<span
+								th:text="${blog.clickHit}">浏览量</span></span> <span
+								class="article-viewinfo"><i class="fa fa-commenting"></i>&nbsp;
+								<span th:attr="id='sourceId::'+${blog.id}"class = "cy_cmt_count" ></span>
+								<script id="cy_cmt_num" 
+									src="https://changyan.sohu.com/upload/plugins/plugins.list.count.js?clientId=cytoujWAK">
+								</script>
+		
+								</span>
+						</div>
+					</div>
+					<fieldset class="layui-elem-field layui-field-title"
+						style="margin-top: 30px;">
+						<legend></legend>
+					</fieldset>
+
+					<div id="demo2"></div>
+				</div>
+
+				<!--右边小栏目-->
+				<div class="blog-main-right">
+					<div class="blogerinfo shadow">
+						<div class="blogerinfo-figure">
+							<img alt="jxnu-liguobin" id="imageName" style="width: 100px;height: 100px;" />
+						</div>
+						<p class="blogerinfo-nickname">
+							<span th:text="${application.blogger.nickName}"> </span>
+						</p>
+						<p class="blogerinfo-introduce">
+							<span th:text="${application.blogger.sign}"> </span>
+						</p>
+						<p class="blogerinfo-location">
+							<i class="fa fa-location-arrow"></i>&nbsp;江西 - 南昌
+						</p>
+						<hr />
+						<div class="blogerinfo-contact">
+							<a target="_blank" title="QQ交流"
+								th:href="@{http://wpa.qq.com/msgrd?v=3&uin=568845948&site=qq&menu=yes}"><i
+								class="fa fa-qq fa-2x"></i></a> <a target="_blank" title="给我写信"
+								th:href="@{mailto:568845948@qq.com?subject=blogQuestions}"><i
+								class="fa fa-envelope fa-2x"></i></a> <a target="_blank"
+								title="新浪微博" th:href="@{https://weibo.com/p/1005053803958567/home?from=page_100505&mod=TAB&is_all=1#place}"><i
+								class="fa fa-weibo fa-2x"></i></a> <a target="_blank" title="码云"
+								th:href="@{https://github.com/jxnu-liguobin}"><i
+								class="fa fa-git fa-2x"></i></a></div>
+								<div><a id="jiaqun" href="javascript:addQun();"><span class="blogerinfo-introduce"  >群（禁止广告）</span></a>
+						</div>
+					</div>
+					<div></div>
+					<!--占位-->
+					<div class="blog-module shadow">
+						<div class="blog-module-title">文章存档</div>
+						<ul class="fa-ul blog-module-ul" style="margin-left: 0px;"
+							th:each="dateList : ${application.blogCountList}"
+							th:if="${not #lists.isEmpty(application.blogCountList)}">
+							<li><i class="layui-icon"
+								style="color: #1E9FFF;margin-left: 0px;">&#xe637;</i> 
+								<a th:href="@{'/index/home.html?releaseDateStr='+${#uris.escapePath(dateList.releaseDateStr)}}">
+								<span th:text="${dateList.releaseDateStr}">
+								</span>
+									（<span th:text="${dateList.blogCount }"></span>）</a>
+							</li>
+							<li th:if="${#lists.isEmpty(application.blogCountList)}">
+							<span>暂无信息！</span>
+							</li>
+						</ul>
+					</div>
+					<div class="blog-module shadow">
+					<div class="blog-module-title">统计信息</div>
+						<ul style="margin-left: 10px;" class="fa-ul blog-module-ul">
+						<li>文章数：<span style="font-style: italic;" th:text="${application.articleCount}"></span></li>
+						<li>留言量：<span style="font-style: italic;" th:text="${application.messageList}"></span></li>
+						<li>公告数：<span style="font-style: italic;" th:text="${application.noticeCount}"></span></li>
+						<li>图片数：<span style="font-style: italic;" th:text="${application.pictureCount}"></span></li>
+						<!-- <li>文章评论量：<span style="font-style: italic;"  th:text="${application.commentCount}"></span></li> -->
+						<li>文章浏览量：<span style="font-style: italic;" th:text="${application.blogClickCount}"></span></li>
+						<li>网站PV：<span style="font-style: italic;" th:text="${application.countPV}"></span></li>
+						<li>您的IP：<span style="font-style: italic;" th:text="${application.ip}"></span></li>
+						<li>访问时间：<span style="font-style: italic;" th:text="${application.str}"></span></li>
+							
+						</ul>
+					</div>
+					<div class="blog-module shadow">
+					<div class="blog-module-title">热门文章</div>
+					<div  style="margin-left: 0px;" id="cyWallvertical" role="cylabs" data-use="wallvertical"></div>
+					<div  style="margin-left: 0px;" id="cyHotnews" role="cylabs" data-use="hotnews"></div>
+					<script type="text/javascript" charset="utf-8" src="https://changyan.itc.cn/js/lib/jquery.js"></script>
+					<script type="text/javascript" charset="utf-8" src="https://changyan.sohu.com/js/changyan.labs.https.js?appid=cytoujWAK"></script>
+					</div>
+					<div class="blog-module shadow">
+						<div class="blog-module-title">友情链接</div>
+						<fieldset class="layui-elem-field">
+							  <div class="layui-field-box">
+							  	<i class="fa fa-close"></i>经常宕机&nbsp;
+                                    <i class="fa fa-close"></i>不合法规&nbsp;
+                                    <i class="fa fa-close"></i>插边球站&nbsp;
+                                    <i class="fa fa-close"></i>红标报毒&nbsp;
+                                    <i class="fa fa-check"></i>原创优先&nbsp;
+                                    <i class="fa fa-check"></i>技术优先
+							  </div>
+							</fieldset>
+						<ul class="blogroll" th:each="link : ${application.linkList}"
+							th:if="${not #lists.isEmpty(application.linkList)}">
+							<li><i class="layui-icon" style="font-size: 15px; color: #1E9FFF;">&#xe64c;</i>  <a target="_blank" th:href="${link.linkUrl}"
+								th:title="${link.linkName}"><span th:text="${link.linkName}+'  '+${link.linkUrl}"></span></a></li>
+						</ul>
+						<ul class="blogroll" th:each="link : ${application.linkList}"
+							th:if="${#lists.isEmpty(application.linkList)}">
+							<li>暂无信息！</li>
+						</ul>
+					</div>
+					<div class="blog-module shadow">
+						<div class="blog-module-title">日历</div>
+							<div id="date"></div>
+					</div>
+				</div>
+				<div class="clear"></div>
+			</div>
+		</div>
+	</div>
+	<!-- 底部 -->
+	<footer class="blog-footer">
+		<p>
+			<span>Copyright</span><span>&copy;</span><span>2017</span><a href="https://www.dreamylost.cn">梦境迷离</a><span>Design
+				By jxnu-liguobin</span>
+		</p>
+		<p>
+			<a href="http://www.miitbeian.gov.cn" target="_blank">赣ICP备17017283号-1</a>
+		</p>
+	</footer>
+	<!--侧边导航-->
+	<ul
+		class="layui-nav layui-nav-tree layui-nav-side blog-nav-left layui-hide"
+		lay-filter="nav">
+		<li class="layui-nav-item layui-this"><a th:href="@{/index/home.html}"><i
+				class="fa fa-home fa-fw"></i>&nbsp;网站首页</a></li>
+		<li class="layui-nav-item"><a th:href="@{/index/article.html}"><i
+				class="fa fa-file-text fa-fw"></i>&nbsp;文章专栏</a></li>
+		<li class="layui-nav-item"><a th:href="@{/indexViews/resource.html}"><i
+				class="fa fa-tags fa-fw"></i>&nbsp;资源分享</a></li>
+		<li class="layui-nav-item"><a th:href="@{/indexViews/timeline.html}"><i
+				class="fa fa-road fa-fw"></i>&nbsp;点点滴滴</a></li>
+		<li class="layui-nav-item"><a th:href="@{/index/about.html}"><i
+				class="fa fa-info fa-fw"></i>&nbsp;关于本站</a></li>
+	</ul>
+	<!--分享窗体-->
+	<div class="blog-share layui-hide">
+		<div class="blog-share-body">
+			<div style="width: 200px;height:100%;">
+				<div class="bdsharebuttonbox">
+					<a class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a> <a
+						class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a> <a
+						class="bds_weixin" data-cmd="weixin" title="分享到微信"></a> <a
+						class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+				</div>
+			</div>
+		</div>
+	</div>
+	 <!-- 音乐播放器 -->
+    <div id="QPlayer">
+	<ol id="playlist"></ol>
+	<div id="pContent">
+		<div id="player">
+			<span class="cover"></span>
+			<div class="ctrl">
+				<div class="musicTag marquee">
+					<strong>Title</strong>
+					 <span> - </span>
+					<span class="artist">Artist</span>
+				</div>
+				<div class="progress">
+					<div class="timer left">0:00</div>
+					<div class="contr">
+						<div class="rewind icon"></div>
+						<div class="playback icon"></div>
+						<div class="fastforward icon"></div>
+					</div>
+					<div class="right">
+						<div class="liebiao icon"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="ssBtn">
+		        <div class="adf"></div>
+	    </div>
+	</div>
+	</div>
+    
+	<!--遮罩-->
+	<div class="blog-mask animated layui-hide"></div>
+	<!-- layui.js -->
+	<script th:src="@{/layui/layui.js}"></script>
+	<!-- 全局脚本 -->
+	<script th:src="@{/js/global.js}"></script>
+	<!-- 本页脚本 -->
+	<!-- 音乐播放器 -->
+    <script th:src="@{/js/jquery.min.js}"></script>
+    <script th:src="@{/js/jquery.marquee.min.js}"></script>
+	<script th:src="@{/js/player.js}"></script>
+	<script th:src="@{/layui/lay/modules/layer.js}"></script>  <!-- 提供自定义js调用  -->
+	<script th:src="@{/js/home.js}"></script>
+	<script th:inline="javascript" type="text/javascript">
+	layui.use(['laypage', 'layer','jquery','laydate'], function(){
+	var laypage = layui.laypage,layer = layui.layer,$ = layui.jquery,laydate = layui.laydate;
+		//嵌套在指定容器中
+		laydate.render({
+		  elem: '#date'
+		  ,position: 'static'
+		  ,change: function(value, date){ //监听日期被切换
+		    lay('#testView').html(value);
+		  }
+		  ,btns: ['now']
+		  ,theme: 'grid'
+		  ,calendar: true
+		  ,mark: {
+    			'2017-12-12': '发布博客'
+  			}
+		});
+	  	//图片缩放
+	window.onload = function() {  
+      var w = $('#imageForArticle').width()-$('.article-title').width()-15;//设置最大宽度,也可根据img的外部容器 而动态获得,比如：$("#demo").width();
+      console.info("当前宽："+w);
+      if(w>0){
+      $("img").each(function() {//如果有很多图片,使用each()遍历   
+            var img_w = $(this).width();//图片宽度   
+            var img_h = $(this).height();//图片高度   
+            if (img_w > w) {//如果图片宽度超出指定最大宽度   
+                var height = (w * img_h) / img_w; //高度等比缩放   
+                $(this).css( {  
+                    "width" : w,"height" : height  
+                });//设置缩放后的宽度和高度   
+            }  
+        });  
+       }
+      }
+	  //自定义样式
+	  $("#imageName").attr('src','../uploads/'+[[${application.blogger.imageName}]]); //显示博主头像
+	  var pindex = [[${application.pageBean.currPage}]];// 当前页
+      var pcount = [[${application.pageBean.total}]];// 总记录数
+      if(pcount==0) {
+      	layer.msg('暂无内容！', {
+                        title: '系统提示',
+                        icon: 5,
+                    },
+                    function(index) {
+                        layer.close(index); //关闭
+                         //window.location.href="/index/home?page=1";
+                    });
+      }
+	  laypage.render({
+	    elem: 'demo2'
+	    ,count: pcount //总记录数
+	    ,theme: '#1E9FFF'
+	    ,limit : 10//每页十条
+	    ,curr :pindex,
+	    jump: function(obj, first){
+	    //obj包含了当前分页的所有参数，比如：
+	    console.log(obj.curr); //得到当前页，以便向服务端请求对应页的数据。
+	    console.log(obj.limit); //得到每页显示的条数
+	    console.log(obj.count); //得到每页显示的条数
+	      if(!first){
+		      var releaseDateStr = [[${application.releaseDateStr}]];
+		      var type = [[${application.type}]];
+		      var flag = [[${application.flag}]];
+		      if(releaseDateStr!=null) {
+		      	 window.location.href=encodeURI("/index/home.html?page="+obj.curr+"&releaseDateStr="+releaseDateStr);
+		      }
+		      else if(type!=null){
+		      	 window.location.href=encodeURI("/index/home.html?page="+obj.curr+"&typeId="+type);
+		      }else if(flag!=null) {
+		      		window.location.href=encodeURI("/index/home.html?page="+obj.curr+"&flag="+flag);
+		      }
+       }
+	  }
+	  });
+	  
+	});
+	
+	function addQun() {
+		layer.open({
+			  title: '群（严禁广告）'
+			  ,content: '<img src="../images/qqqun.png">'
+			});     
+  
+	}
+</script>
+</body>
+</html>

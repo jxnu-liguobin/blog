@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.edu.jxnu.blog.dao.LinkDao">
+	<resultMap id="LinkResultMap" type="Link">
+		<id property="id" column="id" />
+		<result property="linkName" column="link_name" />
+		<result property="linkUrl" column="link_url" />
+		<result property="orderNum" column="order_num" />
+	</resultMap>
+	<!-- end link mapping -->
+	<!-- start crud -->
+	<!-- 得到所有链接并排序 -->
+	<select id="getTotalData" resultMap="LinkResultMap">
+		SELECT
+		id,link_name,link_url,order_num from t_link ORDER BY order_num
+	</select>
+	<!-- 得到所有链接并排序分页 -->
+	<select id="listByPage" resultMap="LinkResultMap">
+		SELECT
+		id,link_name,link_url,order_num FROM t_link ORDER BY order_num
+		LIMIT
+		#{start},#{end}
+	</select>
+	<!-- 得到链接总数 -->
+	<select id="getTotalCount" resultType="java.lang.Long">
+		SELECT count(*) FROM
+		t_link
+	</select>
+	<!-- 添加链接，不用加id -->
+	<insert id="addLink" parameterType="Link">
+		insert INTO t_link VALUES
+		(null,#{linkName},#{linkUrl},#{orderNum})
+	</insert>
+	<!-- 根据id删除链接 -->
+	<delete id="deleteLink" parameterType="Integer">
+		delete from t_link where
+		id=#{id}
+	</delete>
+	<!-- 根据id更新链接信息 -->
+	<update id="updateLink" parameterType="Link">
+		update t_link
+		<set>
+			<if test="linkName!=null and linkName!=''">
+				link_name=#{linkName},
+			</if>
+			<if test="linkUrl!=null and linkUrl!=''">
+				link_url=#{linkUrl},
+			</if>
+			<if test="orderNum!=null">
+				order_num=#{orderNum},
+			</if>
+		</set>
+		where id=#{id}
+	</update>
+	<cache flushInterval="600000"></cache>
+</mapper>

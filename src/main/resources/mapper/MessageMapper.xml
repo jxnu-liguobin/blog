@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.edu.jxnu.blog.dao.MessageDao">
+	<!-- 属性到表列名的映射 -->
+	<resultMap id="MessageResultMap" type="Message">
+		<id property="id" column="id" />
+		<result property="userIp" column="user_ip" />
+		<result property="content" column="content" />
+		<result property="messageDate" column="message_date" />
+		<result property="messageDateStr" column="messageDateStr" />
+		<result property="email" column="email" />
+		<result property="state" column="state" />
+		<result property="address" column="address" />
+	</resultMap>
+	<select id="listByPage" parameterType="java.util.Map" resultMap="MessageResultMap">
+		SELECT id,user_ip,content,message_date,state, email,address
+		,DATE_FORMAT(message_date,'%Y年%m月%d日 %H:%i:%S') AS messageDateStr
+		from
+		t_message
+		<where>
+			<if test="email!=null">
+				and message_date=#{message_date}
+			</if>
+			<if test="state!=null">
+				and state=#{state}
+			</if>
+		</where>
+		ORDER BY message_date
+		<if test="start!=null and end!=null">
+			limit #{start},#{end}
+		</if>
+	</select>
+	<!-- 根据id获取评论信息 -->
+	<select id="getById" parameterType="java.lang.Integer"
+		resultMap="MessageResultMap">
+		select id,user_ip,content,message_date,state,address,
+		email,DATE_FORMAT(message_date,'%Y年%m月%d日 %H:%i:%S') AS messageDateStr
+		from
+		t_message
+		where id=#{id}
+	</select>
+
+	<select id="getTotal" parameterType="java.util.Map" resultType="java.lang.Long">
+		SELECT count(*) from t_message
+		<where>
+			<if test="state != null">
+				state = #{state}
+			</if>
+		</where>
+	</select>
+	<!-- 添加评论 -->
+	<insert id="saveMessage">
+		insert into t_message VALUES
+		(null,#{userIp},#{email},#{content},now(),0,#{address})
+	</insert>
+	<!--删除评论 -->
+	<delete id="deleteMessage" parameterType="java.lang.Integer">
+		DELETE FROM t_message
+		where id=#{id}
+	</delete>
+	<!-- 修改评论 -->
+	<update id="updateMessage" parameterType="message">
+		update t_message
+		<set>
+			<if test="state != null">
+				state = #{state}
+			</if>
+		</set>
+		where id=#{id}
+	</update>
+</mapper>

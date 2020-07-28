@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.jxnu.blog.dao.BlogDao">
+
+	<resultMap type="Blog" id="BlogResult">
+		<id property="id" column="id" />
+		<result property="title" column="title" />
+		<result property="summary" column="summary" />
+		<result property="releaseDate" column="releaseDate" />
+		<result property="releaseDateStr" column="releaseDateStr" />
+		<result property="clickHit" column="clickHit" />
+		<result property="replyHit" column="replyHit" />
+		<result property="content" column="content" />
+		<result property="keyWord" column="keyWord" />
+
+		<association property="blogType" column="type_id"
+			select="cn.edu.jxnu.blog.dao.BlogTypeDao.getById" fetchType="lazy">
+		</association>
+	</resultMap>
+
+	<!-- /** * 根据日期月份分组查询 */ -->
+	<select id="countList" resultMap="BlogResult">
+		SELECT
+		DATE_FORMAT(releaseDate,'%Y年%m月') AS releaseDateStr ,COUNT(*) AS
+		blogCount FROM t_blog GROUP BY DATE_FORMAT(releaseDate,'%Y年%m月') ORDER
+		BY DATE_FORMAT(releaseDate,'%Y年%m月') DESC;
+	</select>
+
+	<!-- 分页查询博客并分页排序 按照点击量排序 -->
+	<select id="listBlog" parameterType="Map" resultMap="BlogResult">
+		SELECT id,title
+		,summary,releaseDate,clickHit,replyHit,content,keyWord,type_id,DATE_FORMAT(releaseDate,'%Y年%m月')
+		AS releaseDateStr FROM
+		t_blog
+		<where>
+			<if test="title!=null and title!=''">
+				and title  like CONCAT('%',#{title},'%')  
+			</if>
+			<if test="typeId!=null and typeId!=''">
+				and type_id=#{typeId}
+			</if>
+			<if test="releaseDateStr!=null and releaseDateStr!=''">
+				and DATE_FORMAT(releaseDate,'%Y年%m月')=#{releaseDateStr}
+			</if>
+		</where>
+		<if test="orderBy!=null and orderBy!=''">
+		ORDER BY ${orderBy}  DESC
+			</if>
+		<if test="start!=null and end!=null">
+			limit #{start},#{end}
+		</if>
+	</select>
+	<!-- 获取博客总数 -->
+	<select id="getTotal" parameterType="Map" resultType="Long">
+		SELECT COUNT(*) FROM t_blog
+		<where>
+			<if test="title!=null and title!=''">
+				and title like CONCAT('%',#{title},'%')  
+			</if>
+			<if test="typeId!=null and typeId!=''">
+				and type_id=#{typeId}
+			</if>
+			<if test="releaseDateStr!=null and releaseDateStr!=''">
+				and DATE_FORMAT(releaseDate,'%Y年%m月')=#{releaseDateStr}
+			</if>
+		</where>
+	</select>
+
+	<!-- 通过类型id获取该类型下博客的数量 -->
+	<select id="getBlogByTypeId" parameterType="Integer" resultType="Integer">
+		select count(*) from t_blog where type_id=#{typeId}
+	</select>
+	<!-- 添加博客 -->
+	<insert id="saveBlog" parameterType="Blog" keyProperty="id"
+		useGeneratedKeys="true">
+		insert into t_blog VALUES (NULL
+		,#{title},#{summary},now(),0,0,#{content},#{keyWord},#{blogType.id})
+	</insert>
+	<!-- 更新博客 -->
+	<update id="updateBlog" parameterType="Blog">
+		update t_blog
+		<set>
+			<if test="title!=null and title!=''">
+				title=#{title},
+			</if>
+			<if test="summary!=null and summary!=''">
+				summary=#{summary},
+			</if>
+			<if test="content!=null and content!=''">
+				content=#{content},
+			</if>
+			<if test="blogType.id!=null">
+				type_id=#{blogType.id},
+			</if>
+			<if test="clickHit!=null">
+				clickHit=#{clickHit},
+			</if>
+			<if test="replyHit!=null">
+				replyHit=#{replyHit},
+			</if>
+			<if test="keyWord!=null and keyWord!=''">
+				keyWord=#{keyWord},
+			</if>
+			<!-- <if test="releaseDate!=null">
+				releaseDate=now(),
+			</if> -->
+		</set>
+		where id=#{id}
+	</update>
+	<!-- 删除博客 -->
+	<delete id="deleteBlog" parameterType="java.lang.Integer">
+		DELETE FROM t_blog
+		where
+		id=#{id}
+	</delete>
+	<!-- 通过博客id获取博客信息 -->
+	<select id="getById" parameterType="java.lang.Integer"
+		resultMap="BlogResult">
+		SELECT id,title
+		,summary,releaseDate,clickHit,replyHit,content,keyWord,type_id from
+		t_blog where id=#{id}
+	</select>
+	<!-- <select id="getPrevBlog" parameterType="Integer" resultMap="BlogResult"> 
+		SELECT id,title ,summary,releaseDate,clickHit,replyHit,content,keyWord,type_id 
+		FROM t_blog WHERE id&lt;#{id} ORDER BY id DESC LIMIT 1 </select> <select 
+		id="getNextBlog" parameterType="Integer" resultMap="BlogResult"> SELECT id,title 
+		,summary,releaseDate,clickHit,replyHit,content,keyWord,type_id FROM t_blog 
+		WHERE id&gt;#{id} ORDER BY id ASC LIMIT 1 </select> -->
+</mapper> 

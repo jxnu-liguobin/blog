@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<title>公告管理</title>
+<meta http-equiv="Content-Type" content="text/html; Charset=utf-8">
+<meta http-equiv="Content-Language" content="zh-CN">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, user-scalable=no" />
+<link rel="stylesheet" th:href="@{/layui/css/layui.css}" media="all">
+<script th:src="@{/layui/layui.js}"></script>
+</head>
+<body>
+	<div class="notice" style="margin-top: 15px;margin-left: 2px;">
+		<button class="layui-btn layui-btn-normal" data-type="addNotice">
+			<i class="layui-icon">&#xe654;</i>添加
+		</button>
+		<button class="layui-btn layui-btn-danger" style="margin-left: 2px"
+			data-type="delNotice">
+			<i class="layui-icon">&#xe640;</i> 删除
+		</button>
+		<button class="layui-btn" style="margin-left: 2px" data-type="refresh">
+			<i class="layui-icon">&#x1002;</i>刷新
+		</button>
+
+	</div>
+	<table class="layui-hide" id="LAY_table_user" lay-filter="demo"></table>
+	<script type="text/html" id="barDemo">
+  		<a class="layui-btn layui-btn-xs" lay-event="edit">修改</a>
+	</script>
+	<script th:inline="javascript" type="text/javascript" id="notice">
+	     {{#  if( d.level == 0){   }}  
+            <span style="color:#009688"> 一般   </span>
+     {{#  } else if (d.level ==  1){ }}
+          <span style="color:#1E9FFF"> 较重要  </span>
+     {{# } else if (d.level ==  2) { }}
+      <span style="color:red"> 很重要  </span>
+     {{#  } }}
+	</script>
+	<script th:src="@{/layui/layui.js}" charset="utf-8"></script>
+	<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+	<script th:inline="javascript" type="text/javascript">
+/*<![CDATA[*/
+	layui.use('table',
+	function() {
+	    var table = layui.table;
+	    //方法级渲染
+	    table.render({
+	        limits: [5, 10, 30, 50, 100],
+	        limit: 10 //默认采用60
+	        ,
+	        elem: '#LAY_table_user' //指定原始表格元素选择器（推荐id选择器）
+	        ,
+	        url: '/admin/notice/list',
+	        cols: [ [{
+	            checkbox: true,
+	            fixed: true
+	        },
+	        {
+	            field: 'id',
+	            title: 'ID',
+	            width: '5%',
+	            sort: true,
+	            fixed: true,
+	            align: 'center',
+	        },
+	        {
+	            field: 'content',
+	            title: '内容',
+	            width: '25%'
+	            ,align: 'center',
+	        },
+	        {
+	            field: 'noticePublisher',
+	            title: '发布人',
+	            width: '15%',
+	            align: 'center',
+	        },
+	        {
+	            field: 'noticeDateStr',
+	            title: '日期',
+	            width: '20%',
+	            sort: true,
+	            align: 'center',
+	        },
+	        {
+	            field: 'level',
+	            title: '重要级别',
+	            width: '20%',
+	            sort: true,
+	            align: 'center',
+	            templet : '#notice'
+	        },
+	        {
+	            field: 'right',
+	            title: '操作',
+	            width: '10%',
+	            align: 'center',
+	            toolbar: '#barDemo',
+	            align: 'center',
+	        }] ],
+	        id: 'tableId',
+	        page: true,
+	        height: 'auto',
+	    });
+
+    //监听表格复选框选择
+    table.on('checkbox(demo)',
+    function(obj) {
+        console.log(obj);
+    });
+    //监听工具条
+    table.on('tool(demo)',
+    function(obj) {
+        if (obj.event === 'edit') {
+            var data = obj.data;
+            var id = data["id"];
+            var content = data["content"];
+            var level = data["level"];
+            layer.open({
+                id: 'name',
+                type: 2,
+                area: ['370px', '285px'],
+                title: '修改公告',
+                shade: 0.6,
+                anim: 2,
+                content: encodeURI('/views/noticeform?id=' + id + '&content=' + content + '&level=' + level),
+            });
+        }
+    });
+    var $ = layui.$,
+    active = {
+        /**
+		 *定义函数绑定到按钮的data-type上 delNotice
+		 */
+        refresh: function() {
+            table.reload('tableId');
+        },
+        addNotice: function() {
+
+            layer.open({
+                type: 2,
+                area: ['370px', '285px'],
+                title: '发布公告',
+                shade: 0.6,
+                anim: 2,
+                content: '/views/noticeform',
+    			});
+
+        },
+        delNotice: function() {
+
+            var checkStatus = table.checkStatus('tableId');
+            var checkNums = checkStatus.data.length
+            if (checkNums == 0) {
+                layer.alert('请选择需要删除的公告！', {
+                    title: '系统提示',
+                    icon: 2,
+                    anim: 6,
+                });
+                return false;
+            }
+            var ids = '';
+            data = checkStatus.data; //数据
+            //循环把所有要删除的ID整成12,13,545
+            for (var i = 0; i < checkNums; i++) {
+                ids += data[i].id + ",";
+            }
+            ids = ids.substring(0, ids.length - 1); //组装好1，2，3
+            layer.confirm('确认删除该' + checkNums + '条公告吗？',
+            function(index) {
+                //obj.del();
+                layer.close(index);
+                //关闭的时候发送ajax请求
+                $.ajax({
+                    url: "../admin/notice/delete",
+                    data: {
+                        'ids': ids
+                    },
+                    type: "post",
+                    dataType: 'json',
+                    success: function(result) {
+                        if(typeof result === 'string') {
+					       result = JSON.parse(result)
+					    }
+                        if (result) {
+                            layer.msg("删除成功！");
+                            table.reload('tableId');
+                        } else {
+                        	layer.msg("删除失败！");
+                        }
+                    },
+                    //success end
+                }); //ajax end
+            }); //confirm end
+        } //delAll end
+    };
+    $('.notice .layui-btn').on('click',
+    function() {
+        var type = $(this).data('type');
+        active[type] ? active[type].call(this) : '';
+    });
+
+});
+/*]]>*/
+</script>
+</body>
+</html>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.edu.jxnu.blog.dao.GreatDao">
+	<resultMap id="GreatResultMap" type="Great">
+		<id property="id" column="id" />
+		<result property="userIp" column="user_ip" />
+		<result property="imageId" column="image_id" />
+	</resultMap>
+	<insert id="addGreat" parameterType="Great">
+		insert INTO t_great
+		VALUES
+		(null,#{userIp},#{imageId})
+	</insert>
+	<delete id="deleteGreat" parameterType="Integer">
+		delete from t_great
+		where
+		id=#{id}
+	</delete>
+	<!-- 根据用户ip进行判断点赞表是否有用户点过赞 -->
+	<select id="getByUserIpAndImageId"
+		resultMap="GreatResultMap">
+		select id,user_ip,image_id
+		from
+		t_great
+		where user_ip=#{userIp}
+		and image_id=#{imageId}
+	</select>
+	<!-- 根据imageid 删除所有对应的记录 -->
+	<delete id="deleteGreatByImageId" parameterType="Integer">
+		delete from t_great
+		where
+		image_id=#{imageId}
+	</delete>
+</mapper>

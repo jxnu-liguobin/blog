@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<title>写博客</title>
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, maximum-scale=1">
+<link rel="stylesheet" th:href="@{/layui/css/layui.css}" media="all">
+</head>
+<body>
+
+
+	<form class="layui-form" action="" style="margin-top: 15px;">
+		<div class="layui-form-item">
+			<label class="layui-form-label">博客标题：</label>
+			<div class="layui-input-block">
+				<input type="text" name="title" lay-verify="required"
+					placeholder="请输入" autocomplete="off" class="layui-input" id="title">
+			</div>
+		</div>
+
+		<div class="layui-form-item">
+			<label class="layui-form-label">所属类别：</label>
+			<div class="layui-input-block">
+				<select id="blogTypeId" lay-verify="type" name="blogTypeId"
+					lay-search>
+					<option value="selected"></option>
+					<option th:each="blogType:${application.blogTypeList}"
+						th:value="${blogType.id}" th:text="${blogType.typeName}">博客类型A</option>
+				</select>
+			</div>
+		</div>
+
+		<div class="layui-form-item layui-form-text">
+			<label class="layui-form-label">博客内容：</label>
+			<div class="layui-input-block">
+				<textarea class="layui-textarea layui-hide" name="content"
+					lay-verify="content" id="LAY_demo_editor"></textarea>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">关键字：</label>
+			<div class="layui-input-block">
+				<input type="text" name="keyWord" lay-verify="required"
+					placeholder="多个关键字用空格隔开" autocomplete="off" class="layui-input">
+			</div>
+		</div>
+
+		<div class="layui-form-item">
+			<div class="layui-input-block">
+				<button class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button>
+				<button data-type="del" class="layui-btn layui-btn-primary">重置</button>
+			</div>
+		</div>
+	</form>
+
+	<!-- <div class="site-demo-button" id="layerDemo" style="margin-bottom: 0;">
+		<button data-method="offset" data-type="auto"
+			class="layui-btn layui-btn-normal">我知道了！</button>
+	</div> -->
+	<script th:src="@{/layui/layui.js}" charset="utf-8"></script>
+	<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+	<script th:inline="javascript" type="text/javascript">
+ layui.use(['form', 'layedit', 'laydate', 'jquery', 'layer'],
+ function() {
+    var form = layui.form,
+    layer = layui.layer,
+    layedit = layui.layedit,
+    laydate = layui.laydate,
+    $ = layui.jquery;
+
+    //日期
+    laydate.render({
+        elem: '#date'
+    });
+    laydate.render({
+        elem: '#date1'
+    });
+    //上传图片,必须放在 创建一个编辑器前面
+    layedit.set({
+        uploadImage: {
+            url: '../uploadFile' //接口url
+            ,type: 'post' //默认post
+        }
+    });
+    //创建一个编辑器  id=LAY_demo_editor
+    var editIndex = layedit.build('LAY_demo_editor');
+    //自定义验证规则（只要非空即可）
+   	form.verify({
+	content : function(value) {
+		value = $.trim(layedit.getText(editIndex));
+		if (value == "")
+			return "至少得有一个字吧";
+		layedit.sync(editIndex);
+	},type :function(value){
+		if(value=='selected') {
+			return '请选择分类'
+		}
+	}
+	});
+    //监听提交
+    form.on('submit(demo1)',
+    function(data) {
+        //获取博客标题
+        var title = data.field["title"]
+        //获取博客类别id
+        var blogTypeId = data.field["blogTypeId"]
+        //获取博客内容 带标记
+        var content = layedit.getContent(editIndex)
+        //博客关键词
+        var keyWord = data.field["keyWord"]
+        //获取博客内容  不带标签 纯文本
+        var contentNoTag = layedit.getText(editIndex) ;
+        //截取博客前155字符 作为博客简介
+		var summary = layedit.getText(editIndex).substr(0, 155);
+        $.ajax({
+            async: false,
+            url: '../admin/blog/save',
+            data: {
+                'title': title,
+                'blogType.id': blogTypeId,
+                'content': content,
+                'summary': summary,
+                'keyWord': keyWord,
+                'contentNoTag': contentNoTag
+            },
+            type: 'post',
+            success: function(result) {
+          	   if(typeof result === 'string') {
+            		 result = JSON.parse(result)
+            	}
+                if (result.success) {
+                    layer.alert('保存成功！', {
+                        title: '系统提示',
+                        icon: 6,
+                        closeBtn: 0,
+                    },
+                    function(index) {
+
+                        location.reload() //重写加载表格
+                        //下拉框不会清空，需要手动设值，设置value==selected的为默认选中
+                        $("#blogTypeId").val("selected");
+                        layer.close(index); //关闭
+                    });
+                } else {
+                    layer.alert('保存失败。。', {
+                        title: '系统提示',
+                        icon: 5,
+                        closeBtn: 0,
+                    },
+                    function(index) {
+                        location.reload() //重写加载表格
+                        //下拉框不会清空，需要手动设值，设置value==selected的为默认选中
+                        $("#blogTypeId").val("selected");
+                        layer.close(index); //关闭
+                    });
+                }
+            }
+        });
+        return false;
+    });
+    
+    //清空富文本编辑器  
+    var $ = layui.$,
+	active = {
+        /* 搜索框 */
+        del: function() {
+            	$('#LAY_layedit_1').contents().find('body').html('');
+            },
+        };
+        
+    $('.del .layui-btn').on('click',
+	    function() {
+	        var type = $(this).data('type');
+	        active[type] ? active[type].call(this) : '';
+	    });
+});
+	
+</script>
+</body>
+</html>

@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<title>相册管理</title>
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, maximum-scale=1">
+<link rel="stylesheet" th:href="@{/layui/css/layui.css}" media="all">
+<script th:src="@{/layui/layui.js}"></script>
+</head>
+<body>
+	<!-- 此处class dellAllPicture 对应于最下面一个绑定click事件 -->
+	<div class="dellAllPicture" style="margin-top: 15px;margin-left: 2px;">
+		<button class="layui-btn" data-type="refresh">
+			<i class="layui-icon">&#x1002;</i>刷新
+		</button>
+		<div class="layui-btn-group pictureTableId">
+			<!-- 获取表格选中的数据 -->
+			<button class="layui-btn layui-btn-danger" data-type="delAll">
+				<i class="layui-icon">&#xe640;</i>删除
+			</button>
+		</div>
+	</div>
+	<table class="layui-hide" id="LAY_table_user" lay-filter="demo"></table>
+	<script type="text/html" id="barDemo">
+ 	  	<a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看预览</a>
+   		<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+	</script>
+	<script th:src="@{/layui/layui.js}" charset="utf-8"></script>
+	<script th:inline="javascript" type="text/javascript">
+		/*<![CDATA[*/
+		layui.use('table',function() {
+			var table = layui.table;
+			//方法级渲染
+			table.render({
+				limits : [ 5, 10, 30, 50, 100 ],
+				limit : 10 //默认采用60
+				,
+				elem : '#LAY_table_user' //指定原始表格元素选择器（推荐id选择器）
+				,
+				url : '/admin/picture/list',
+				cols : [ [ {
+					checkbox : true,
+					fixed : true
+				}, {
+					field : 'id',
+					title : 'ID',
+					width : '5%',
+					sort : true,
+					fixed : true,
+					align : 'center',
+				}, {
+					field : 'name',
+					title : '图片名称',
+					edit: 'text',
+					width : '20%',
+					align : 'center',
+					sort : true,
+					fixed : true
+				}
+				,{
+					field : 'url',
+					title : '图片地址',
+					width : '20%',
+					align : 'center',
+					fixed : true
+				}, {
+					field : 'publisher',
+					title : '发布人',
+					width : '10%',
+					align : 'center',
+				}, {
+					field : 'dateStr',
+					title : '日期',
+					width : '15%',
+					align : 'center',
+					id : 'content',
+					sort : true
+				}, {
+					field : 'click',
+					title : '被赞次数',
+					width : '10%',
+					align : 'center',
+					sort : true
+				},{
+					field : 'right',
+					width : '15%',
+					align : 'center',
+					toolbar : '#barDemo',
+					title : '操作'
+				} ] ],
+				id : 'pictureTableId',
+				page : true,
+				height : 'auto',
+			});
+
+			//监听表格复选框选择
+			table.on('checkbox(demo)', function(obj) {
+				console.log(obj);
+			});
+			//监听单元格编辑
+			  table.on('edit(demo)', function(obj){
+			  	var date = new Date();
+			    var value = obj.value //得到修改后的值
+			    ,data = obj.data //得到所在行所有键值
+			    if(value.length>10){
+			    	layer.msg("图片名称必须小于6个汉字,11个英文字符");
+			    	table.reload("pictureTableId");
+			    	return false;
+			    }
+			    $.ajax({
+							url : "../admin/picture/save",
+							data : {
+								'id' : data.id,
+								'name':value,
+								'url' :data.url,
+								'publisher':data.publisher,
+								'date' : new Date(),
+								'click' :data.click,
+							},
+							type : "post",
+							dataType : 'json',
+							success : function(data) {
+								if(typeof data === 'string') {
+									 data = JSON.parse(data)
+								}
+								if (data.success) {
+									//location.reload();
+									//表格重载
+									layer.msg("修改成功！");
+									table.reload('pictureTableId');
+									
+								} else {
+									layer.msg("修改失败！");
+								}
+							} //end success
+						}); //end
+			  });
+			//监听工具条
+			table.on('tool(demo)', function(obj) {
+				var data = obj.data;
+				var url = data['url'];
+				//var img = '<img src="'+url+'" />'
+				console.info("当前url:"+url);
+				if (obj.event === 'detail') {
+				layer.open({
+					  type: 2,
+					  shade: false,
+					  area : ['600px','400px'],
+					  maxmin: true,
+					  content: url,
+					  zIndex: layer.zIndex, //重点1
+					  success: function(layero){
+					    layer.setTop(layero); //重点2
+					  }
+					}); 
+			/* 	layer.open({
+					  type: 2,
+					  title : '详情',
+					  shade: false,
+					  area : ['600px','400px'],
+					  maxmin: true,
+					  content : '<img src="'+url+'" />',
+					  zIndex: layer.zIndex, //重点1
+					  success: function(layero){
+					    layer.setTop(layero); //重点2
+					  }
+					}); */ 
+					//layer.msg('ID：' + data.id + ' 的查看操作');
+				}
+				if (obj.event === 'del') {
+					layer.confirm('确认删除ID:' + data.id + '这张图片吗？', function(index) {
+						obj.del();
+						layer.close(index);
+						//关闭的时候发送ajax请求
+						$.ajax({
+							url : "../admin/picture/delete",
+							data : {
+								'ids' : data.id
+							},
+							type : "post",
+							dataType : 'json',
+							success : function(data) {
+								if(typeof data === 'string') {
+									 data = JSON.parse(data)
+								}
+								if (data.success) {
+									//location.reload();
+									//表格重载
+									layer.msg("删除成功！");
+									table.reload('pictureTableId');
+									
+								} else {
+									layer.msg("删除失败！");
+								}
+							} //end success
+						}); //end ajax
+					}); //end function(index)
+				}// end if
+			}); // end table.on
+			//定义函数绑定到按钮的data-type上 delAll
+			var $ = layui.$, active = {
+			    refresh: function(){
+					      table.reload('pictureTableId');
+					    },
+				delAll : function() {
+					var checkStatus = table.checkStatus('pictureTableId');
+					var checkNums = checkStatus.data.length
+					if (checkNums == 0) {
+						layer.alert('请选择需要删除的图片！', {
+							title : '系统提示',
+							icon : 2,
+							anim : 6,
+						});
+						return false;
+					}
+					var ids = '';
+					data = checkStatus.data; //数据
+					//循环把所有要删除的ID整成12,13,545
+					for ( var i = 0; i < checkNums; i++) {
+						ids += data[i].id + ",";
+					}
+					ids = ids.substring(0, ids.length - 1); //组装好1，2，3
+					layer.confirm('确认删除该' + checkNums + '张图片吗？',
+							function(index) {
+								//obj.del();
+								layer.close(index);
+								//关闭的时候发送ajax请求
+								$.ajax({
+									url : "../admin/picture/delete",
+									data : {
+										'ids' : ids
+									},
+									type : "post",
+									dataType : 'json',
+									success : function(data) {
+										if(typeof data === 'string') {
+											 data = JSON.parse(data)
+										}
+										if (data.success) {
+											//location.reload();
+											//表格重载
+											layer.msg("删除成功！");
+											table.reload('pictureTableId');
+										} else {
+											layer.msg("删除失败！");
+										}
+									}, //success end
+								}); //ajax end
+							});//confirm end
+				}//delAll end
+			};
+			$('.dellAllPicture .layui-btn').on('click', function() {
+				var type = $(this).data('type');
+				active[type] ? active[type].call(this) : '';
+			});
+
+		});
+		/*]]>*/
+	</script>
+</body>
+</html>

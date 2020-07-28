@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<title>评论管理</title>
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, maximum-scale=1">
+<link rel="stylesheet" th:href="@{/layui/css/layui.css}" media="all">
+<script th:src="@{/layui/layui.js}"></script>
+</head>
+<body>
+<!-- 此处class dellAllComment 对应于最下面一个绑定click事件 -->
+	<div class="dellAllComment" style="margin-top: 15px;margin-left: 2px;">
+		<button class="layui-btn" data-type="refresh">
+			<i class="layui-icon">&#x1002;</i>刷新
+		</button>
+		<div class="layui-btn-group commentTableId">
+			<!-- 获取表格选中的数据 -->
+
+			<button class="layui-btn layui-btn-danger" data-type="delAll">
+				<i class="layui-icon">&#xe640;</i>删除
+			</button>
+		</div>
+	</div>
+	<table class="layui-hide" id="LAY_table_user" lay-filter="demo"></table>
+	<script type="text/html" id="barDemo">
+ 	  	<a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看详情</a>
+   		<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+	</script>
+	<script th:src="@{/layui/layui.js}" charset="utf-8"></script>
+	<script th:inline="javascript" type="text/javascript" id="blogTitle">
+ 	 {{#  if( d.blog != null){   }}  
+            {{ d.blog.title }}  
+     {{#  } else { }}
+       <span style="color:red"> 该博客已经被删除！   </span>
+     {{# }}} 
+	</script>
+	<script th:inline="javascript" type="text/javascript" id="AuditStatus">
+	     {{#  if( d.state == 1){   }}  
+            <span style="color:blue"> 审核通过   </span>
+     {{#  } else if (d.state == 0 ){ }}
+          <span style="color:#5FB878"> 待审核  </span>
+     {{# } else { }}
+      <span style="color:red"> 审核未通过  </span>
+     {{#  } }}
+	</script>
+	<script th:inline="javascript" type="text/javascript">
+		/*<![CDATA[*/
+		layui.use('table',function() {
+			var table = layui.table;
+			//方法级渲染
+			table.render({
+				limits : [ 5, 10, 30, 50, 100 ],
+				limit : 10 //默认采用60
+				,
+				elem : '#LAY_table_user' //指定原始表格元素选择器（推荐id选择器）
+				,
+				url : '/admin/comment/list',
+				cols : [ [ {
+					checkbox : true,
+					fixed : true
+				}, {
+					field : 'id',
+					title : 'ID',
+					width : '5%',
+					sort : true,
+					fixed : true,
+					align : 'center',
+				}, {
+					field : 'userIp',
+					title : '评论者IP',
+					width : '10%',
+					align : 'center',
+					sort : true,
+					fixed : true
+				}
+				,{
+					field : 'address',
+					title : '地址',
+					width : '15%',
+					align : 'center',
+					sort : true,
+					fixed : true
+				}, {
+					field : 'blog',
+					title : '标题',
+					width : '15%',
+					sort : true,
+					align : 'center',
+					templet : '#blogTitle'
+				}, {
+					field : 'content',
+					title : '评论内容',
+					width : '15%',
+					align : 'center',
+					id : 'content'
+				}, {
+					field : 'commentDate',
+					title : '评论日期',
+					width : '10%',
+					align : 'center',
+					sort : true
+				}, {
+					field : 'state',
+					title : '审核状态',
+					width : '10%',
+					align : 'center',
+					templet : '#AuditStatus'
+				}, {
+					field : 'right',
+					width : '15%',
+					align : 'center',
+					toolbar : '#barDemo',
+					title : '操作'
+				} ] ],
+				id : 'commentTableId',
+				page : true,
+				height : 'auto',
+			});
+
+			//监听表格复选框选择
+			table.on('checkbox(demo)', function(obj) {
+				console.log(obj);
+			});
+			//监听工具条
+			table.on('tool(demo)', function(obj) {
+				var data = obj.data;
+				if (obj.event === 'detail') {
+				layer.open({
+						  title : '详情',
+						  type : 1,
+						  content : data.content,//这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
+						  area : ['500px', '300px'],
+						  anim : 1
+						});
+					//layer.msg('ID：' + data.id + ' 的查看操作');
+				}
+				if (obj.event === 'del') {
+					layer.confirm('确认删除ID:' + data.id + '这条评论吗？', function(index) {
+						obj.del();
+						layer.close(index);
+						//关闭的时候发送ajax请求
+						$.ajax({
+							url : "../admin/comment/delete",
+							data : {
+								'ids' : data.id
+							},
+							type : "post",
+							dataType : 'json',
+							success : function(data) {
+								if(typeof data === 'string') {
+					      			 data = JSON.parse(data)
+					   			 }
+								if (data.success) {
+									//location.reload();
+									//表格重载
+									layer.msg("删除成功！");
+									table.reload('commentTableId');
+									
+								} else {
+									layer.msg("删除失败！");
+								}
+							} //end success
+						}); //end ajax
+					}); //end function(index)
+				}// end if
+			}); // end table.on
+			//定义函数绑定到按钮的data-type上 delAll
+			var $ = layui.$, active = {
+			    refresh: function(){
+					      table.reload('commentTableId');
+					    },
+				delAll : function() {
+					var checkStatus = table.checkStatus('commentTableId');
+					var checkNums = checkStatus.data.length
+					if (checkNums == 0) {
+						layer.alert('请选择需要删除的评论！', {
+							title : '系统提示',
+							icon : 2,
+							anim : 6,
+						});
+						return false;
+					}
+					var ids = '';
+					data = checkStatus.data; //数据
+					//循环把所有要删除的ID整成12,13,545
+					for ( var i = 0; i < checkNums; i++) {
+						ids += data[i].id + ",";
+					}
+					ids = ids.substring(0, ids.length - 1); //组装好1，2，3
+					layer.confirm('确认删除该' + checkNums + '条评论吗？',
+							function(index) {
+								//obj.del();
+								layer.close(index);
+								//关闭的时候发送ajax请求
+								$.ajax({
+									url : "../admin/comment/delete",
+									data : {
+										'ids' : ids
+									},
+									type : "post",
+									dataType : 'json',
+									success : function(data) {
+										if(typeof data === 'string') {
+					       					data = JSON.parse(data)
+					  					  }
+										if (data.success) {
+											//location.reload();
+											//表格重载
+											layer.msg("删除成功！");
+											table.reload('commentTableId');
+										} else {
+											layer.msg("删除失败！");
+										}
+									}, //success end
+								}); //ajax end
+							});//confirm end
+				}//delAll end
+			};
+			$('.dellAllComment .layui-btn').on('click', function() {
+				var type = $(this).data('type');
+				active[type] ? active[type].call(this) : '';
+			});
+
+		});
+		/*]]>*/
+	</script>
+</body>
+</html>

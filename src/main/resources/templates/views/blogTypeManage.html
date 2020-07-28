@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<title>分类管理</title>
+<meta http-equiv="Content-Type" content="text/html; Charset=utf-8">
+<meta http-equiv="Content-Language" content="zh-CN">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, user-scalable=no" />
+<link rel="stylesheet" th:href="@{/layui/css/layui.css}" media="all">
+<script th:src="@{/layui/layui.js}"></script>
+</head>
+<body>
+	<div class="blogTypeName" style="margin-top: 15px;margin-left: 2px;">
+		<button class="layui-btn layui-btn-normal" data-type="addBlogType">
+			<i class="layui-icon">&#xe654;</i>添加
+		</button>
+		<button class="layui-btn layui-btn-danger" style="margin-left: 2px"
+			data-type="delBlogType">
+			<i class="layui-icon">&#xe640;</i> 删除
+		</button>
+		<button class="layui-btn" style="margin-left: 2px" data-type="refresh">
+			<i class="layui-icon">&#x1002;</i>刷新
+		</button>
+
+	</div>
+	<table class="layui-hide" id="LAY_table_user" lay-filter="demo"></table>
+	<script type="text/html" id="barDemo">
+  		<a class="layui-btn layui-btn-xs" lay-event="edit">修改</a>
+	</script>
+	<script th:src="@{/layui/layui.js}" charset="utf-8"></script>
+	<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+	<script th:inline="javascript" type="text/javascript">
+/*<![CDATA[*/
+	layui.use('table',
+	function() {
+	    var table = layui.table;
+	    //方法级渲染
+	    table.render({
+	        limits: [5, 10, 30, 50, 100],
+	        limit: 10 //默认采用60
+	        ,
+	        elem: '#LAY_table_user' //指定原始表格元素选择器（推荐id选择器）
+	        ,
+	        url: '/admin/blogType/list',
+	        cols: [([[)]{
+	            checkbox: true,
+	            fixed: true
+	        },
+	        {
+	            field: 'id',
+	            title: 'ID',
+	            width: '15%',
+	            sort: true,
+	            fixed: true,
+	            align: 'center',
+	        },
+	        {
+	            field: 'typeName',
+	            title: '名称',
+	            width: '20%'
+	            ,align: 'center',
+	        },
+	        {
+	            field: 'orderNum',
+	            title: '排序',
+	            width: '20%',
+	            sort: true,
+	            align: 'center',
+	        },
+	        {
+	            field: 'blogCount',
+	            title: '博客数量',
+	            width: '20%',
+	            sort: true,
+	            align: 'center',
+	        },
+	        {
+	            field: 'right',
+	            title: '操作',
+	            width: '20%',
+	            align: 'center',
+	            toolbar: '#barDemo',
+	            align: 'center',
+	        }[(]])],
+	        id: 'tableId',
+	        page: true,
+	        height: 'auto',
+	    });
+
+    //监听表格复选框选择
+    table.on('checkbox(demo)',
+    function(obj) {
+        console.log(obj);
+    });
+    //监听工具条
+    table.on('tool(demo)',
+    function(obj) {
+        if (obj.event === 'edit') {
+            var data = obj.data;
+            var id = data["id"];
+            var typeName = data["typeName"];
+            var orderNum = data["orderNum"];
+            layer.open({
+                id: 'name',
+                type: 2,
+                area: ['360px', '225px'],
+                title: '修改分类',
+                shade: 0.6,
+                anim: 2,
+                content: encodeURI('/views/form?id=' + id + '&typeName=' + typeName + '&orderNum=' + orderNum),
+            });
+        }
+    });
+    var $ = layui.$,
+    active = {
+        /**
+		 *定义函数绑定到按钮的data-type上 delBlogType
+		 */
+        refresh: function() {
+            table.reload('tableId');
+        },
+        addBlogType: function() {
+
+            layer.open({
+                type: 2,
+                area: ['360px', '225px'],
+                title: '添加分类',
+                shade: 0.6,
+                anim: 2,
+                content: '/views/form',
+    			});
+
+        },
+        delBlogType: function() {
+
+            var checkStatus = table.checkStatus('tableId');
+            var checkNums = checkStatus.data.length
+            if (checkNums == 0) {
+                layer.alert('请选择需要删除的分类！', {
+                    title: '系统提示',
+                    icon: 2,
+                    anim: 6,
+                });
+                return false;
+            }
+            var ids = '';
+            data = checkStatus.data; //数据
+            //循环把所有要删除的ID整成12,13,545
+            for (var i = 0; i < checkNums; i++) {
+                ids += data[i].id + ",";
+            }
+            ids = ids.substring(0, ids.length - 1); //组装好1，2，3
+            layer.confirm('确认删除该' + checkNums + '条分类吗？',
+            function(index) {
+                //obj.del();
+                layer.close(index);
+                //关闭的时候发送ajax请求
+                $.ajax({
+                    url: "../admin/blogType/delete",
+                    data: {
+                        'ids': ids
+                    },
+                    type: "post",
+                    dataType: 'json',
+                    success: function(data) {
+                    	if(typeof data === 'string') {
+					        data = JSON.parse(data)
+					    }
+                        if (data.success==0) {
+                            //location.reload();
+                            //表格重载
+                            layer.msg("删除成功！");
+                            table.reload('tableId');
+                        } else if (data.success==1) {
+                            layer.alert('请删除分类下的博客！', {
+                                title: '系统提示',
+                                icon: 2,
+                                anim: 6,
+                            });
+                            return false;
+                        } else {
+                        	layer.msg("删除失败！");
+                        }
+                    },
+                    //success end
+                }); //ajax end
+            }); //confirm end
+        } //delAll end
+    };
+    $('.blogTypeName .layui-btn').on('click',
+    function() {
+        var type = $(this).data('type');
+        active[type] ? active[type].call(this) : '';
+    });
+
+});
+/*]]>*/
+</script>
+</body>
+</html>
